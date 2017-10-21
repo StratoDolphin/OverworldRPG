@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace AssemblyCSharp
 {
@@ -16,6 +17,16 @@ namespace AssemblyCSharp
 		/// </summary>
 		/// <value>The main player.</value>
 		public static Player MainPlayer { get { return _mainPlayer; } }
+
+		public static void setMainPlayer(Player player) {
+			if (_mainPlayer != null) {
+				Debug.LogError ("MainPlayer already set!");
+				return;
+			}
+
+			Debug.Log ("Setting Player to: " + player.GetInstanceID().ToString());
+			_mainPlayer = player;
+		}
 
 		/// <summary>
 		/// Initialize the global variables in this class for the game.
