@@ -16,13 +16,19 @@ public class EnemyAI : FeistyGameCharacter {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		Debug.Log ("Distance from player: " + this.getDistanceFromObject (Game.MainPlayer.gameObject).magnitude.ToString());
-		if (this.canSeeObject (Game.MainPlayer.CharacterObject)) {
-			this.setDesiredMovementDestination (Game.MainPlayer.gameObject.transform.position);
+	protected void Update () {
+		Debug.Log ("==========================================================");
+		if (this.canSeeObject (Game.MainPlayer.gameObject)) {
+			this.setDesireToApproach (Game.MainPlayer.gameObject.transform.position, true);
 		} else {
-			this.determineToStop ();
+			this.setDesireToMove (false);
 		}
-		animateMove (this._desiredMovementDestination);
+
+		if (this.isNextToObject (Game.MainPlayer.gameObject))
+			this.setDesireToSwing (Game.MainPlayer.gameObject);
+		else
+			this.setDesireStopSwinging ();
+
+		base.Update ();
 	}
 }

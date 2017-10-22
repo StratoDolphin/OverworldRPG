@@ -10,56 +10,83 @@ public abstract class GameCharacter : MonoBehaviour
 {
 
 	#region Protected Variables
-	/// <summary>
-	/// <para>
-	/// Determines how far away from this character a given object
-	/// can be in order for this object to see and evaluate
-	/// that object.
-	/// </para>
-	/// <para>
-	/// This value only represents the magnitude of a single
-	/// vector. It ignores direction because the sight is
-	/// assumed to be at a 360 degree angle.
-	/// </para>
-	/// </summary>
-	protected float _viewRange = 60.0f;
 
-	/// <summary>
-	/// <para>
-	/// The distance from this characters game object that a
-	/// given other object must be for this character to be
-	/// considered next to that object.
-	/// </para>
-	/// <para>
-	/// This value only represents the magnitude of a single
-	/// vector. It ignores direction because the sight is
-	/// assumed to be at a 360 degree angle.
-	/// </para>
-	/// </summary>
-	protected float _nextToThreshold = 0.5f;
+		#region Movement
+		/// <summary>
+		/// The ratation damping for this character. Higher numbers will
+		/// make this character turn quicker.
+		/// </summary>
+		protected int _ratationDamping = 2;
 
-	/// <summary>
-	/// <para>
-	/// A point on the map that this character desires to move.
-	/// The flow of movement for the ai should be as follows:
-	/// </para>
-	/// <para>
-	/// 1. In the backend, set the destination that the character
-	/// wants to move. This is the variable that the destination
-	/// should be stored in.
-	/// 2. When update is called, it should animate the object
-	/// moving towards this location.
-	/// </para>
-	/// </summary>
-	protected Vector3 _desiredMovementDestination;
-	#endregion
+		/// <summary>
+		/// <para>
+		/// Determines how far away from this character a given object
+		/// can be in order for this object to see and evaluate
+		/// that object.
+		/// </para>
+		/// <para>
+		/// This value only represents the magnitude of a single
+		/// vector. It ignores direction because the sight is
+		/// assumed to be at a 360 degree angle.
+		/// </para>
+		/// </summary>
+		protected float _viewRange = 60.0f;
 
-	#region Public Attributes
-	/// <summary>
-	/// The game object that represents this character that this
-	/// AI controlls.
-	/// </summary>
-	public GameObject CharacterObject;
+		/// <summary>
+		/// <para>
+		/// The distance from this characters game object that a
+		/// given other object must be for this character to be
+		/// considered next to that object.
+		/// </para>
+		/// <para>
+		/// This value only represents the magnitude of a single
+		/// vector. It ignores direction because the sight is
+		/// assumed to be at a 360 degree angle.
+		/// </para>
+		/// </summary>
+		protected float _nextToThreshold = 1.8f;
+
+		/// <summary>
+		/// <para>
+		/// A point on the map that this character desires to move.
+		/// The flow of movement for the ai should be as follows:
+		/// </para>
+		/// <para>
+		/// 1. In the backend, set the destination that the character
+		/// wants to move. This is the variable that the destination
+		/// should be stored in.
+		/// 2. When update is called, it should animate the object
+		/// moving towards this location.
+		/// </para>
+		/// </summary>
+		protected Vector3 _desiredMovementDestination;
+
+		/// <summary>
+		/// <para>
+		/// Determines whether or not this character wants to start moving
+		/// towards the vector stored in _desiredMovementDestination. If
+		/// this is true, this character will start moving. Otherwise, it
+		/// will stop moving.
+		/// </para>
+		/// <para>
+		/// This variable can be used to stop movement of this character.
+		/// </para>
+		/// </summary>
+		protected bool _isDesiredToMove;
+
+		/// <summary>
+		/// <para>
+		/// The desire of this character to face a game object at the given
+		/// vector.
+		/// </para>
+		/// <para>
+		/// If this is null, then it is assumed that this character has
+		/// no target that it wants to face.
+		/// </para>
+		/// </summary>
+		protected Vector3 _desiredTargetToFace;
+		#endregion
+
 	#endregion
 
 	#region Relationship To Objects
@@ -69,7 +96,8 @@ public abstract class GameCharacter : MonoBehaviour
 	/// </summary>
 	/// <returns>The distance from thing.</returns>
 	protected Vector3 getDistanceFromObject(GameObject thing) {
-		return this.CharacterObject.transform.position - Game.MainPlayer.transform.position;
+		Debug.Log ("Distance from player: " + (this.gameObject.transform.position - Game.MainPlayer.transform.position).magnitude.ToString());
+		return this.gameObject.transform.position - Game.MainPlayer.transform.position;
 	}
 
 	/// <summary>
@@ -166,39 +194,80 @@ public abstract class GameCharacter : MonoBehaviour
 	/// <returns><c>true</c>, if next to object was ised, <c>false</c> otherwise.</returns>
 	/// <param name="vectorToThing">Vector to thing.</param>
 	protected bool isNextToObject(Vector3 vectorToThing) {
+		Debug.Log ((vectorToThing.magnitude <= this._nextToThreshold).ToString());
 		return (vectorToThing.magnitude <= this._nextToThreshold);
 	}
 	#endregion
 
 	#region Backend Actions
-	/// <summary>
-	/// <para>
-	/// Sets the desired movement destination. This is the same as
-	/// making the AI "decide" to move somewhere.
-	/// </para>
-	/// <para>
-	/// This method does not actually do the moving, it just sets
-	/// the determination to move.
-	/// </para> 
-	/// </summary>
-	/// <param name="destination">Destination.</param>
-	public void setDesiredMovementDestination(Vector3 destination) {
-		this._desiredMovementDestination = destination;
-	}
 
-	/// <summary>
-	/// Makes the AI decide to stop moving. This sets the value of
-	/// <see cref="_desiredMovementDestination"/> to the vector that
-	/// represents the position of this character's game object.
-	/// </summary>
-	public void determineToStop() {
-		this.setDesiredMovementDestination (this.CharacterObject.transform.position);
-	}
+		#region Movement
+		/// <summary>
+		/// <para>
+		/// Sets the desired movement destination. This is the same as
+		/// making the AI "decide" to move somewhere.
+		/// </para>
+		/// <para>
+		/// This method does not actually do the moving, it just sets
+		/// the determination to move.
+		/// </para> 
+		/// </summary>
+		/// <param name="destination">Destination.</param>
+		protected void setDesiredMovementDestination(Vector3 destination) {
+			this._desiredMovementDestination = destination;
+		}
+
+		/// <summary>
+		/// Sets the desire to move for this character. This method
+		/// simply sets the <see cref="_isDesiredToMove"/> attribute
+		/// for this character to the value of desireToMove.
+		/// </summary>
+		/// <param name="desireToMove">If set to <c>true</c> desire to move.</param>
+		protected void setDesireToMove(bool desireToMove) {
+			this._isDesiredToMove = desireToMove;
+		}
+
+		/// <summary>
+		/// <para>
+		/// Sets the vector towards which this character will face.
+		/// </para>
+		/// </summary>
+		/// <param name="target">Target.</param>
+		protected void setDesireToFace(Vector3 target) {
+			this._desiredTargetToFace = target;
+		}
+
+		/// <summary>
+		/// <para>
+		/// Sets the desire to approach a given object at the given destination.
+		/// This method sets the target to approach, sets the desire to face that
+		/// target, and sets the desire to start moving to true.
+		/// </para>
+		/// <para>
+		/// When the update method is called, the result of this will be that
+		/// this character faces the destination (if isDesiredToFace is true)
+		/// and starts moving towards that destination.
+		/// </para>
+		/// </summary>
+		/// <param name="destination">Destination.</param>
+		/// <param name="isDesiredToFace">If set to <c>true</c> is desired to face.</param>
+		protected void setDesireToApproach(Vector3 destination, bool isDesiredToFace) {
+			this.setDesiredMovementDestination (destination);
+			if (isDesiredToFace) this.setDesireToFace (destination);
+			this.setDesireToMove (true);
+		}
+		#endregion
+
 	#endregion
 
 	#region Animated Actions
 	/// <summary>
 	/// animates the movement of this character to a given point.
+	/// This method does not contain the logic that looks at the
+	/// variables that determine whether or not this character
+	/// even wants to move. This method always does the animation.
+	/// If you want to factor in those variables, put this method
+	/// call inside the if statements.
 	/// </summary>
 	/// <param name="destination">Destination.</param>
 	protected void animateMove(Vector3 destination) {
@@ -216,6 +285,80 @@ public abstract class GameCharacter : MonoBehaviour
 		// Also use Vector3.LookTowards to make the enemy face
 		// the player.
 		Debug.Log("Moving to " + destination.ToString());
+	}
+
+	/// <summary>
+	/// animates the turnign of this character to a given direction.
+	/// This method does not contain the logic that looks at the
+	/// variables that determine whether or not this character
+	/// even wants to move. This method always does the animation.
+	/// If you want to factor in those variables, put this method
+	/// call inside the if statements.
+	/// </summary>
+	/// <param name="direction">Direction.</param>
+	protected void animateTurn(Vector3 direction) {
+		// TODO: animate legs moving to look like this
+		// character is stepping.
+
+		Vector3 lookPos = direction - this.gameObject.transform.position;
+		Quaternion rotation = Quaternion.LookRotation(lookPos);
+		transform.rotation = Quaternion.Slerp(this.gameObject.transform.rotation, rotation, Time.deltaTime * this._ratationDamping);
+		Debug.Log("Turning to " + direction.ToString());
+	}
+
+	/// <summary>
+	/// Animates the approaching of this object to an object at the
+	/// the vector in destination. This method will make this
+	/// character turn to face the destination and move towards it.
+	/// </summary>
+	/// <param name="destination">Destination.</param>
+	protected void animateApproach(Vector3 destination) {
+		this.animateTurn (destination);
+		this.animateMove (destination);
+	}
+	#endregion
+
+	#region Action Executions
+	/// <summary>
+	/// <para>
+	/// Executes the approach desire. If this character has determined
+	/// that it wants to approach an object, then it will call the
+	/// <see cref="animateApproach"/> method, making it carry out that
+	/// desire.
+	/// </para>
+	/// </summary>
+	protected void executeApproachDesire() {
+		if (this._isDesiredToMove) this.animateApproach (this._desiredMovementDestination);
+	}
+
+	/// <summary>
+	/// <para>
+	/// Executes the face desire. This will make the character face
+	/// the vector stored in <see cref="_desiredTargetToFace"/>.
+	/// desire.
+	/// </para>
+	/// </summary>
+	protected void executeFaceingDesire() {
+		this.animateTurn (this._desiredTargetToFace);
+	}
+
+	/// <summary>
+	/// Executes the desires of this character. If the character
+	/// wants to approach an object, it will call the method that
+	/// executes the approach desire. Otherwise, it will simply
+	/// face the vector stored in <see cref="_desiredTargetToFace"/>.
+	/// </summary>
+	protected virtual void executeDesires() {
+		if (!this._isDesiredToMove)
+			this.executeFaceingDesire ();
+		else
+			this.executeApproachDesire ();
+	}
+	#endregion
+
+	#region Frames
+	protected void Update() {
+		this.executeDesires ();
 	}
 	#endregion
 }
