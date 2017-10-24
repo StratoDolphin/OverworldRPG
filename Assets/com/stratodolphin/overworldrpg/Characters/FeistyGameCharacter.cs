@@ -45,12 +45,30 @@ public abstract class FeistyGameCharacter : GameCharacter
 	#endregion
 
 	#region Animated Actions
+	/// <summary>
+	/// <para>
+	/// Animates the swing. This will make the character start swinging
+	/// at a given object. Assume the desire is there. No logic to check
+	/// that is needed in this method.
+	/// </para>
+	/// <para>
+	/// You may not need the target parameter. If you don't, remove the
+	/// parameter.
+	/// </para>
+	/// </summary>
+	/// <param name="target">Target.</param>
 	protected void animateSwing(GameObject target) {
 		Debug.Log ("Swinging at: " + target.ToString ());
 	}
 	#endregion
 
 	#region Actions Execution
+	/// <summary>
+	/// <para>
+	/// Executes the swing desire. If this character wants to swing, the
+	/// animateSwing method will be called.
+	/// </para>
+	/// </summary>
 	protected void executeSwingDesire() {
 		if (this._swingAttackTarget != null)
 			this.animateSwing (this._swingAttackTarget);
