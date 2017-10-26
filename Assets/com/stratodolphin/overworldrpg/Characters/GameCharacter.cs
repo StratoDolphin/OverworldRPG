@@ -30,7 +30,7 @@ public abstract class GameCharacter : MonoBehaviour
 		/// assumed to be at a 360 degree angle.
 		/// </para>
 		/// </summary>
-		protected float _viewRange = 60.0f;
+		protected float _viewRange = 15.0f;
 
 		/// <summary>
 		/// <para>
@@ -45,6 +45,12 @@ public abstract class GameCharacter : MonoBehaviour
 		/// </para>
 		/// </summary>
 		protected float _nextToThreshold = 1.8f;
+
+		/// <summary>
+		/// The movement speed of this character. Higher numbers
+		/// will result in higher speeds.
+		/// </summary>
+		protected float _movementSpeed = 3.5f;
 
 		/// <summary>
 		/// <para>
@@ -79,12 +85,21 @@ public abstract class GameCharacter : MonoBehaviour
 		/// The desire of this character to face a game object at the given
 		/// vector.
 		/// </para>
-		/// <para>
-		/// If this is null, then it is assumed that this character has
-		/// no target that it wants to face.
-		/// </para>
 		/// </summary>
 		protected Vector3 _desiredTargetToFace;
+
+		/// <summary>
+		/// <para>
+		/// Determines whether or not this character wants to start turning
+		/// towards the vector stored in _desiredTargetToFace. If this is
+		/// true, this character will start turning. Otherwise, it will stop
+		/// turning.
+		/// </para>
+		/// <para>
+		/// This variable can be used to stop turning of this character.
+		/// </para>
+		/// </summary>
+		protected bool _isDesiredToFace;
 		#endregion
 
 	#endregion
@@ -96,7 +111,7 @@ public abstract class GameCharacter : MonoBehaviour
 	/// </summary>
 	/// <returns>The distance from thing.</returns>
 	protected Vector3 getDistanceFromObject(GameObject thing) {
-		Debug.Log ("Distance from player: " + (this.gameObject.transform.position - Game.MainPlayer.transform.position).magnitude.ToString());
+		//Debug.Log ("Distance from player: " + (this.gameObject.transform.position - Game.MainPlayer.transform.position).magnitude.ToString());
 		return this.gameObject.transform.position - Game.MainPlayer.transform.position;
 	}
 
@@ -194,7 +209,7 @@ public abstract class GameCharacter : MonoBehaviour
 	/// <returns><c>true</c>, if next to object was ised, <c>false</c> otherwise.</returns>
 	/// <param name="vectorToThing">Vector to thing.</param>
 	protected bool isNextToObject(Vector3 vectorToThing) {
-		Debug.Log ((vectorToThing.magnitude <= this._nextToThreshold).ToString());
+		//Debug.Log ((vectorToThing.magnitude <= this._nextToThreshold).ToString());
 		return (vectorToThing.magnitude <= this._nextToThreshold);
 	}
 	#endregion
@@ -233,8 +248,18 @@ public abstract class GameCharacter : MonoBehaviour
 		/// </para>
 		/// </summary>
 		/// <param name="target">Target.</param>
-		protected void setDesireToFace(Vector3 target) {
+		protected void setDesiredTargetToFace(Vector3 target) {
 			this._desiredTargetToFace = target;
+		}
+
+		/// <summary>
+		/// Sets the desire to turn for this character. This method
+		/// simply sets the <see cref="_isDesiredToFace"/> attribute
+		/// for this character to the value of desireToFace.
+		/// </summary>
+		/// <param name="desireToFace">If set to <c>true</c> desire to face.</param>
+		protected void setDesireToFace(bool desireToFace) {
+			this._isDesiredToFace = desireToFace;
 		}
 
 		/// <summary>
@@ -253,7 +278,10 @@ public abstract class GameCharacter : MonoBehaviour
 		/// <param name="isDesiredToFace">If set to <c>true</c> is desired to face.</param>
 		protected void setDesireToApproach(Vector3 destination, bool isDesiredToFace) {
 			this.setDesiredMovementDestination (destination);
-			if (isDesiredToFace) this.setDesireToFace (destination);
+			if (isDesiredToFace) {
+			this.setDesiredTargetToFace (destination);
+				this.setDesireToFace (isDesiredToFace);
+			}
 			this.setDesireToMove (true);
 		}
 		#endregion
@@ -284,7 +312,9 @@ public abstract class GameCharacter : MonoBehaviour
 		//
 		// Also use Vector3.LookTowards to make the enemy face
 		// the player.
-		Debug.Log("Moving to " + destination.ToString());
+		Vector3 flatVector = new Vector3 (destination.x, this.gameObject.transform.position.y, destination.z);
+		transform.position = Vector3.MoveTowards (transform.position, flatVector, _movementSpeed * Time.deltaTime);
+		//Debug.Log("Moving to " + destination.ToString());
 	}
 
 	/// <summary>
@@ -303,7 +333,7 @@ public abstract class GameCharacter : MonoBehaviour
 		Vector3 lookPos = direction - this.gameObject.transform.position;
 		Quaternion rotation = Quaternion.LookRotation(lookPos);
 		transform.rotation = Quaternion.Slerp(this.gameObject.transform.rotation, rotation, Time.deltaTime * this._ratationDamping);
-		Debug.Log("Turning to " + direction.ToString());
+		//Debug.Log("Turning to " + direction.ToString());
 	}
 
 	/// <summary>
@@ -339,7 +369,7 @@ public abstract class GameCharacter : MonoBehaviour
 	/// </para>
 	/// </summary>
 	protected void executeFaceingDesire() {
-		this.animateTurn (this._desiredTargetToFace);
+		if (this._isDesiredToFace) this.animateTurn (this._desiredTargetToFace);
 	}
 
 	/// <summary>
