@@ -46,19 +46,22 @@ public class EnemyAI : FeistyGameCharacter {
 		this._targetEnemy = target;
 	}
 
-	/// <summary>
-	/// Make the AI determine what to do with the Games main player.
-	/// If he can see him, then this AI should move towards the
-	/// player. If he is next to the player, he should start swinging
-	/// at him (I haven't implemented archery yet).
-	/// </summary>
-	protected virtual void think() {
-		this.setTargetEnemy (Game.MainPlayer.gameObject);
+    /// <summary>
+    /// Make the AI determine what to do with the Games main player.
+    /// If he can see him, then this AI should move towards the
+    /// player. If he is next to the player, he should stop approaching
+    /// him and start swinging
+    /// at him (I haven't implemented archery yet).
+    /// </summary>
+    protected virtual void think() {
+        this.setTargetEnemy(Game.MainPlayer.gameObject);
 
-		if (this.canSeeObject (this._targetEnemy)) this.setDesireToApproach (this._targetEnemy.transform.position, true);
+        if (this.canSeeObject(this._targetEnemy)) this.setDesireToApproach(this._targetEnemy.transform.position, true);
 
-		if (this.isNextToObject (this._targetEnemy))
-			this.setDesireToSwing (this._targetEnemy);
+        if (this.isNextToObject(this._targetEnemy)) {
+            this.setDesireToSwing(this._targetEnemy);
+            this.setDesireToMove(false);
+        }
 		else
 			this.setDesireStopSwinging ();
 	}
