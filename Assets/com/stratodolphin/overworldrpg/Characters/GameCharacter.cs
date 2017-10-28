@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using AssemblyCSharp;
+using Assets.com.stratodolphin.overworldrpg.Characters;
 
 /// <summary>
 /// Represents the contoller for basic operations on a character
@@ -100,17 +101,37 @@ public abstract class GameCharacter : MonoBehaviour
 		/// </para>
 		/// </summary>
 		protected bool _isDesiredToFace;
-		#endregion
+    #endregion
 
-	#endregion
+    /// <summary>
+    /// The inventory of this game character. This contains all
+    /// of the <see cref="Storable"/>s taht this character can
+    /// hold and carry.
+    /// </summary>
+    protected Inventory _inventory;
 
-	#region Relationship To Objects
-	/// <summary>
-	/// Returns the distance from this character's game object to the game
-	/// object refered to in thing using the two objects' transform object.
-	/// </summary>
-	/// <returns>The distance from thing.</returns>
-	protected Vector3 getDistanceFromObject(GameObject thing) {
+    /// <summary>
+    /// The inventory for this characters left hand. This will
+    /// contain all thing that the character is holding in it's
+    /// left hand.
+    /// </summary>
+    protected Inventory _leftHandInventory;
+
+    /// <summary>
+    /// The inventory for this characters right hand. This will
+    /// contain all thing that the character is holding in it's
+    /// right hand.
+    /// </summary>
+    protected Inventory _rightHandInventory;
+    #endregion
+
+    #region Relationship To Objects
+    /// <summary>
+    /// Returns the distance from this character's game object to the game
+    /// object refered to in thing using the two objects' transform object.
+    /// </summary>
+    /// <returns>The distance from thing.</returns>
+    protected Vector3 getDistanceFromObject(GameObject thing) {
 		//Debug.Log ("Distance from player: " + (this.gameObject.transform.position - Game.MainPlayer.transform.position).magnitude.ToString());
 		return this.gameObject.transform.position - Game.MainPlayer.transform.position;
 	}
@@ -332,7 +353,9 @@ public abstract class GameCharacter : MonoBehaviour
 
 		Vector3 lookPos = direction - this.gameObject.transform.position;
 		Quaternion rotation = Quaternion.LookRotation(lookPos);
-		transform.rotation = Quaternion.Slerp(this.gameObject.transform.rotation, rotation, Time.deltaTime * this._ratationDamping);
+        rotation.x = this.gameObject.transform.rotation.x;
+        rotation.z = this.gameObject.transform.rotation.z;
+        transform.rotation = Quaternion.Slerp(this.gameObject.transform.rotation, rotation, Time.deltaTime * this._ratationDamping);
 		//Debug.Log("Turning to " + direction.ToString());
 	}
 
@@ -387,7 +410,14 @@ public abstract class GameCharacter : MonoBehaviour
 	#endregion
 
 	#region Frames
-	protected void Update() {
+    protected virtual void Start()
+    {
+        this._inventory = new Inventory();
+        this._leftHandInventory = new Inventory(1);
+        this._rightHandInventory = new Inventory(1);
+    }
+
+	protected virtual void Update() {
 		this.executeDesires ();
 	}
 	#endregion
