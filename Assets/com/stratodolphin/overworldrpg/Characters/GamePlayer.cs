@@ -2,7 +2,7 @@
 using System.Collections;
 using AssemblyCSharp;
 
-public class Player : FeistyGameCharacter
+public class GamePlayer : FeistyGameCharacter
 {
 	// Use this for initialization
 	void Start ()

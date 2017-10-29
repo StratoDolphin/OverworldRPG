@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using AssemblyCSharp;
 using Assets.com.stratodolphin.overworldrpg.Characters;
+using AggregatGames.AI.Pathfinding;
 
 /// <summary>
 /// Extension of FeistyGameCharacter that adds actual AI to the
@@ -61,6 +62,22 @@ public class EnemyAI : FeistyGameCharacter {
     /// this is the range of its bow.
     /// </summary>
     protected float _archeryRange = 10f;
+
+	#region Pathfinding
+	/// <summary>
+	/// The pathfinder. Provides methods that enable pathfinding
+	/// for this ai.
+	/// </summary>
+	protected Pathfinder _pathfinder;
+
+	protected PathKnot[] _knots;
+
+	/// <summary>
+	/// The index in the list of PathKnots for the current knot.
+	/// </summary>
+	protected int _knotIndex = -1;
+	#endregion
+
     #endregion
 
     #region Rules
@@ -105,6 +122,13 @@ public class EnemyAI : FeistyGameCharacter {
 		this._targetEnemy = target;
 	}
 
+	protected void resetDesires() {
+		this.setDesireToFace (false);
+		this.setDesireToMove (false);
+		this.setDesireStopSwinging ();
+		this.setDesireStopFiringWeapon ();
+	}
+
     /// <summary>
     /// Make the AI determine what to do with the Games main player.
     /// If he can see him, then this AI should move towards the
@@ -113,7 +137,8 @@ public class EnemyAI : FeistyGameCharacter {
     /// at him (I haven't implemented archery yet).
     /// </summary>
     protected virtual void think() {
-        if (this._leftHandInventory.getItemsByType(Storable.TYPE_RANGE).Count == 1)
+		this.resetDesires ();
+		if (this._leftHandInventory.getItemsByType(Storable.TYPE_RANGE).Count == 1)
         {
             this.thinkAsArcher();
         } else
@@ -136,18 +161,14 @@ public class EnemyAI : FeistyGameCharacter {
         if (this.isNextToObject(this._targetEnemy))
         {
             this.setDesireToSwing(this._targetEnemy);
-            this.setDesireToMove(false);
-            this.setDesireStopFiringWeapon();
         }
         else if (this.isWithinArcheryRange(this._targetEnemy))
         {
             this.setDesireToFireWeapon(this._targetEnemy);
-            this.setDesireToMove(false);
-            this.setDesireStopSwinging();
         }
         else if (this.canSeeObject(this._targetEnemy))
         {
-            this.setDesireToApproach(this._targetEnemy.transform.position, true);
+			this.approachTargetViaKnots (this._targetEnemy.gameObject.transform.position);
         }
     }
 
@@ -162,7 +183,8 @@ public class EnemyAI : FeistyGameCharacter {
     {
         this.setTargetEnemy(Game.MainPlayer.gameObject);
 
-        if (this.canSeeObject(this._targetEnemy)) this.setDesireToApproach(this._targetEnemy.transform.position, true);
+		if (this.canSeeObject (this._targetEnemy))
+			this.approachTargetViaKnots (this._targetEnemy.gameObject.transform.position);
 
         if (this.isNextToObject(this._targetEnemy))
         {
@@ -172,6 +194,53 @@ public class EnemyAI : FeistyGameCharacter {
         else
             this.setDesireStopSwinging();
     }
+
+	#region Pathfinding
+	protected void approachTargetViaKnots(Vector3 target) {
+		// Find path at first to the target. This is only called when
+		// the target is first set or no pathfinding has been done.
+		Debug.Log ("Recalculating.");
+		this.findPathToTarget (target);
+		Debug.Log("Moving to " + this._knots[this._knotIndex].position.ToString());
+		this.setDesireToApproach (this._knots[this._knotIndex + 1].position, true);
+		this._knotIndex++;
+	}
+
+	/// <summary>
+	/// Sets the path to target that this AI wants to approach. After
+	/// calling this method, the next spot to go can be found in the
+	/// list <see cref="_knots"/> at index <see cref="_knotIndex"/>.
+	/// </summary>
+	/// <param name="target">Target.</param>
+	protected void findPathToTarget(Vector3 target) {
+		Debug.Log ("finding path from: " + this.gameObject.transform.position.ToString () + " to: " + target.ToString ());
+			this._pathfinder.findPath (this.gameObject.transform.position, target, this.foundPath);
+	}
+
+	/// <summary>
+	/// <para>
+	/// Method that is used to set the path to the finish for this AI.
+	/// This will take the path found by the pathfinder and set the path
+	/// to the finish (<see cref="_knots"/>) to the path in the pathfinder.
+	/// The first index in that path is the index that this AI is at
+	/// currently.
+	/// </para>
+	/// </summary>
+	/// <param name="pathinfo">Pathinfo.</param>
+	public void foundPath(Pathinfo pathinfo) {
+		if (pathinfo.foundPath) {
+			Debug.Log ("Found path: " + this._pathfinder.getPath().ToString());
+			Debug.Log ("Found path: " + this._pathfinder.getPath().Length.ToString());
+			this._knots = this._pathfinder.getPath ();
+			this._knotIndex = 0;
+		} else {
+			// No path found.
+			Debug.Log("No path found. " + pathinfo.comment);
+			this._knotIndex = -2;
+		}
+	}
+	#endregion
+
     #endregion
 
     #region Frame Updates
@@ -181,6 +250,9 @@ public class EnemyAI : FeistyGameCharacter {
         Storable sword = this.transform.Find("sword_prefab").GetComponent<Storable>();
         this._leftHandInventory.add(sword);
         Debug.Log(this._leftHandInventory.all());
+
+		this._pathfinder = this.gameObject.GetComponent<Pathfinder> ();
+		Debug.Log (this._pathfinder);
 	}
 	
 	// Update is called once per frame

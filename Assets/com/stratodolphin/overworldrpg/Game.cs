@@ -10,21 +10,21 @@ namespace AssemblyCSharp
 		/// only be accessed by the Attribute <see cref="Game.MainPlayer"/>
 		/// except by the initialize function.
 		/// </summary>
-		private static Player _mainPlayer;
+		private static GamePlayer _mainPlayer;
 
 		/// <summary>
 		/// Accessor for Game._mainPlayer.
 		/// </summary>
 		/// <value>The main player.</value>
-		public static Player MainPlayer { get { return _mainPlayer; } }
+		public static GamePlayer MainPlayer { get { return _mainPlayer; } }
 
-		public static void setMainPlayer(Player player) {
+		public static void setMainPlayer(GamePlayer player) {
 			if (_mainPlayer != null) {
 				Debug.LogError ("MainPlayer already set!");
 				return;
 			}
 
-			Debug.Log ("Setting Player to: " + player.GetInstanceID().ToString());
+			Debug.Log ("Setting Game Player to: " + player.GetInstanceID().ToString());
 			_mainPlayer = player;
 		}
 

@@ -30,16 +30,16 @@ namespace Assets.com.stratodolphin.overworldrpg.Characters
 
         #region Public Attributes
         /// <summary>
-        /// Name of this item.
-        /// </summary>
-        public String Name;
-
-        /// <summary>
         /// Type of item that this <see cref="Storable"/> is. The options
         /// for this property are the constants in this class that
         /// start with "TYPE_".
         /// </summary>
         public int Type;
+
+		public Inventory Owner {
+			get { return this._owner; }
+			set { this._owner = value; }
+		}
         #endregion
     }
 }

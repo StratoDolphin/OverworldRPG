@@ -77,7 +77,9 @@ namespace Assets.com.stratodolphin.overworldrpg.Characters
         public void add(Storable item)
         {
             if (this.isFull()) throw new IndexOutOfRangeException("This inventory is already full. Item not added.");
+
             this._items.Add(item);
+			item.Owner = this;
         }
 
         /// <summary>
