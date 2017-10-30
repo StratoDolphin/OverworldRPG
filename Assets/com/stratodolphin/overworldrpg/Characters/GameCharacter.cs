@@ -132,9 +132,33 @@ public abstract class GameCharacter : MonoBehaviour
     /// </summary>
     /// <returns>The distance from thing.</returns>
     protected Vector3 getDistanceFromObject(GameObject thing) {
-		//Debug.Log ("Distance from player: " + (this.gameObject.transform.position - Game.MainPlayer.transform.position).magnitude.ToString());
-		return this.gameObject.transform.position - Game.MainPlayer.transform.position;
+        return this.getDistanceFromObject(thing.transform.position);
 	}
+
+    /// <summary>
+    /// Returns the distance from this character's game object to the
+    /// vector refered to in target.
+    /// </summary>
+    /// <returns>The distance from the target</returns>
+    protected Vector3 getDistanceFromObject(Vector3 target)
+    {
+        return this.gameObject.transform.position - target;
+    }
+
+    /// <summary>
+    /// <para>
+    /// Returns the direction to the given game object using quaternions.
+    /// </para>
+    /// </summary>
+    /// <param name="thing"></param>
+    /// <returns></returns>
+    protected Quaternion getDirectionToObject(Vector3 target)
+    {
+        Quaternion direction = Quaternion.LookRotation(this.getDistanceFromObject(target));
+        direction.x = 0;
+        direction.z = 0;
+        return direction;
+    }
 
 	/// <summary>
 	/// <para>

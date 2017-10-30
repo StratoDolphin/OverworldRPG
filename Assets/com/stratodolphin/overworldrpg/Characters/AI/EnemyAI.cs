@@ -196,14 +196,55 @@ public class EnemyAI : FeistyGameCharacter {
     }
 
 	#region Pathfinding
+    /// <summary>
+    /// <para>
+    /// Determines whether or not there is a clear path in front leading
+    /// straight to the target. It is determined that there is a clear
+    /// path only if there is a straight line that can be drawn from this
+    /// character to the vector at target that is not interupted by any
+    /// collider.
+    /// </para>
+    /// <para>
+    /// Returns true if a clear, straight path can be seen. false otherwise.
+    /// </para>
+    /// </summary>
+    /// <param name="target"></param>
+    /// <returns></returns>
+    protected bool hasClearPathToTarget(Vector3 target)
+    {
+        bool seesObsticle = Physics.Raycast(this.gameObject.transform.position, target, this._viewRange);
+        return !seesObsticle;
+    }
+
+    /// <summary>
+    /// Aproaches the target.
+    /// <para>
+    /// If a straight path is available to the target that does not contain
+    /// obsticles (<see cref="hasClearPathToTarget(Vector3)"/> returns true),
+    /// then this method does not use the knots or A* algorithm via
+    /// <see cref="_pathfinder"/>. Instead, it just moves straight towards
+    /// the target blindly without pathfinding.
+    /// </para>
+    /// <para>
+    /// Otherwise, if an obsticle blocks his way, this character will use the
+    /// <see cref="_pathfinder"/> to approach the target.
+    /// </para>
+    /// </summary>
+    /// <param name="target"></param>
 	protected void approachTargetViaKnots(Vector3 target) {
-		// Find path at first to the target. This is only called when
-		// the target is first set or no pathfinding has been done.
-		Debug.Log ("Recalculating.");
-		this.findPathToTarget (target);
-		Debug.Log("Moving to " + this._knots[this._knotIndex].position.ToString());
-		this.setDesireToApproach (this._knots[this._knotIndex + 1].position, true);
-		this._knotIndex++;
+        if (this.hasClearPathToTarget(target))
+        {
+            this.setDesireToApproach(target, true);
+        }
+        else
+        {
+            // Find path at first to the target. This is only called when
+            // the target is first set or no pathfinding has been done.
+            Debug.Log("Recalculating.");
+            this.findPathToTarget(target);
+            this.setDesireToApproach(this._knots[this._knotIndex + 1].position, true);
+            this._knotIndex++;
+        }
 	}
 
 	/// <summary>
@@ -214,7 +255,7 @@ public class EnemyAI : FeistyGameCharacter {
 	/// <param name="target">Target.</param>
 	protected void findPathToTarget(Vector3 target) {
 		Debug.Log ("finding path from: " + this.gameObject.transform.position.ToString () + " to: " + target.ToString ());
-			this._pathfinder.findPath (this.gameObject.transform.position, target, this.foundPath);
+        this._pathfinder.findPath (this.gameObject.transform.position, target, this.foundPath);
 	}
 
 	/// <summary>
