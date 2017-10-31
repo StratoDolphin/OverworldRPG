@@ -475,6 +475,9 @@ GameObject:
   - component: {fileID: 95115210574528226}
   - component: {fileID: 114035546734356576}
   - component: {fileID: 114133852866932526}
+  - component: {fileID: 114781176418442846}
+  - component: {fileID: 54148649329533906}
+  - component: {fileID: 136534926394745256}
   m_Layer: 0
   m_Name: Ethan_AI
   m_TagString: Untagged
@@ -536,12 +539,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4032998980979040}
   - component: {fileID: 137372904503998208}
-  - component: {fileID: 54003113822002158}
-  - component: {fileID: 136153007606156360}
-  - component: {fileID: 114281711806440264}
   m_Layer: 0
   m_Name: EthanBody
-  m_TagString: Untagged
+  m_TagString: AI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1963,7 +1963,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1337382402901810}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 464.90594, y: 0, z: 429.82278}
+  m_LocalPosition: {x: 465.39, y: 0, z: 435.54}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4032998980979040}
@@ -2625,20 +2625,20 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1067743180877062}
   m_Mesh: {fileID: 4300000, guid: 03a0a1cfefec7a244b7722a322fde50b, type: 3}
---- !u!54 &54003113822002158
+--- !u!54 &54148649329533906
 Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1399926424338398}
+  m_GameObject: {fileID: 1337382402901810}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
+  m_Mass: 10
+  m_Drag: 10
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 1
-  m_Constraints: 0
+  m_Interpolate: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!95 &95115210574528226
 Animator:
@@ -2734,30 +2734,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 1
---- !u!114 &114281711806440264
+--- !u!114 &114781176418442846
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1399926424338398}
+  m_GameObject: {fileID: 1337382402901810}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -526419386, guid: 21532754d129b4885a30c5276267f3e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!136 &136153007606156360
+--- !u!136 &136534926394745256
 CapsuleCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1399926424338398}
-  m_Material: {fileID: 13400000, guid: 3aeb7dadc0c69d54d9e5777e9d5631f1, type: 2}
-  m_IsTrigger: 1
+  m_GameObject: {fileID: 1337382402901810}
+  m_Material: {fileID: 13400000, guid: c2815a7ab32e42c4bb42f59caacb8ec1, type: 2}
+  m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.77
-  m_Height: 1.6047969
+  m_Radius: 0.5
+  m_Height: 1.6
   m_Direction: 1
-  m_Center: {x: 0.0002884468, y: 0.7777108, z: -0.040623844}
+  m_Center: {x: 0, y: 0.78, z: 0}
 --- !u!137 &137372904503998208
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

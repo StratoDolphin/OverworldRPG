@@ -433,6 +433,21 @@ public abstract class GameCharacter : MonoBehaviour
 	}
 	#endregion
 
+	#region Inventory
+	protected void loadInventory() {
+		foreach (Transform thing in this.gameObject.GetComponentsInChildren<Transform>()) {
+			if (thing.name.StartsWith ("storable_")) {
+				
+			}
+		}
+	}
+
+	protected void addToInventory(Transform storableTransform) {
+		Storable storableScript = storableTransform.GetComponent<Storable> ();
+
+	}
+	#endregion
+
 	#region Frames
     protected virtual void Start()
     {

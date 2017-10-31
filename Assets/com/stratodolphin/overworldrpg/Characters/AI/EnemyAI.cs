@@ -4,6 +4,7 @@ using UnityEngine;
 using AssemblyCSharp;
 using Assets.com.stratodolphin.overworldrpg.Characters;
 using AggregatGames.AI.Pathfinding;
+using System;
 
 /// <summary>
 /// Extension of FeistyGameCharacter that adds actual AI to the
@@ -76,6 +77,10 @@ public class EnemyAI : FeistyGameCharacter {
 	/// The index in the list of PathKnots for the current knot.
 	/// </summary>
 	protected int _knotIndex = -1;
+	#endregion
+
+	#region Inventory
+
 	#endregion
 
     #endregion
@@ -168,7 +173,7 @@ public class EnemyAI : FeistyGameCharacter {
         }
         else if (this.canSeeObject(this._targetEnemy))
         {
-			this.approachTargetViaKnots (this._targetEnemy.gameObject.transform.position);
+			this.approachTarget (this._targetEnemy.gameObject.transform.position);
         }
     }
 
@@ -184,7 +189,7 @@ public class EnemyAI : FeistyGameCharacter {
         this.setTargetEnemy(Game.MainPlayer.gameObject);
 
 		if (this.canSeeObject (this._targetEnemy))
-			this.approachTargetViaKnots (this._targetEnemy.gameObject.transform.position);
+			this.approachTarget (this._targetEnemy.gameObject.transform.position);
 
         if (this.isNextToObject(this._targetEnemy))
         {
@@ -231,20 +236,31 @@ public class EnemyAI : FeistyGameCharacter {
     /// </para>
     /// </summary>
     /// <param name="target"></param>
-	protected void approachTargetViaKnots(Vector3 target) {
+	protected void approachTarget(Vector3 target) {
+		bool approachWithoutKnots = false;
         if (this.hasClearPathToTarget(target))
         {
-            this.setDesireToApproach(target, true);
+			approachWithoutKnots = true;
         }
         else
         {
             // Find path at first to the target. This is only called when
             // the target is first set or no pathfinding has been done.
             Debug.Log("Recalculating.");
-            this.findPathToTarget(target);
-            this.setDesireToApproach(this._knots[this._knotIndex + 1].position, true);
-            this._knotIndex++;
+			try {
+				this.findPathToTarget(target);
+				if (this._knotIndex >= 0 && this._knotIndex < this._knots.Length - 1) {
+					this.setDesireToApproach (this._knots [this._knotIndex + 1].position, true);
+					this._knotIndex++;
+				} else {
+					approachWithoutKnots = true;
+				}
+			} catch (IndexOutOfRangeException e) {
+				approachWithoutKnots = true;
+			}
         }
+
+		if (approachWithoutKnots) this.setDesireToApproach(target, true);
 	}
 
 	/// <summary>
@@ -283,6 +299,12 @@ public class EnemyAI : FeistyGameCharacter {
 	#endregion
 
     #endregion
+
+	#region Inventory
+	protected void initializePrimaryWeapon() {
+
+	}
+	#endregion
 
     #region Frame Updates
     // Use this for initialization
