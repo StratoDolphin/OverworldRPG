@@ -83,7 +83,7 @@ GameObject:
   - component: {fileID: 23777024270330198}
   - component: {fileID: 114195870895875526}
   m_Layer: 0
-  m_Name: sword_prefab
+  m_Name: storable_sword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -946,7 +946,7 @@ GameObject:
   - component: {fileID: 4877467228966402}
   - component: {fileID: 114106787527259402}
   m_Layer: 0
-  m_Name: Elven Long Bow
+  m_Name: storable_bow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1963,7 +1963,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1337382402901810}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 465.39, y: 0, z: 435.54}
+  m_LocalPosition: {x: 464.90594, y: 0, z: 429.82278}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4032998980979040}

@@ -41,5 +41,15 @@ namespace Assets.com.stratodolphin.overworldrpg.Characters
 			set { this._owner = value; }
 		}
         #endregion
+
+		#region Utility Methods
+		/// <summary>
+		/// Returns a string representation of this storable item..
+		/// </summary>
+		/// <returns>The string.</returns>
+		public String ToString() {
+			return this.Type.ToString () + " item";
+		}
+		#endregion
     }
 }

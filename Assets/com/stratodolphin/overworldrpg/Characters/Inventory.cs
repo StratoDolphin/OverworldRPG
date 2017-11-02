@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace Assets.com.stratodolphin.overworldrpg.Characters
 {
@@ -154,6 +155,32 @@ namespace Assets.com.stratodolphin.overworldrpg.Characters
         {
             return new List<Storable>(from item in this._items where item.Type == type select item);
         }
-        #endregion
+
+		/// <summary>
+		/// Determines whether or not this inventory contains an item
+		/// of the type in the parameter type.
+		/// </summary>
+		/// <returns><c>true</c>, if this inventory has an item of type,
+		/// <c>false</c> otherwise.</returns>
+		/// <param name="type">Type.</param>
+		public bool hasItemType(int type) {
+			return this.getItemsByType (type).Count > 1;
+		}
+		#endregion
+
+		#region Utility Methods
+		/// <summary>
+		/// Returns a string representation of this inventory.
+		/// </summary>
+		/// <returns>The string.</returns>
+		public String ToString() {
+			String val = "[";
+			for (int i = 0; i < (this.all ().Count); i++) {
+				val = val + (this.all () [i].ToString()) + ", ";
+			}
+			val = val + "]";
+			return val;
+		}
+		#endregion
     }
 }

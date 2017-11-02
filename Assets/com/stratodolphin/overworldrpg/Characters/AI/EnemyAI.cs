@@ -143,7 +143,7 @@ public class EnemyAI : FeistyGameCharacter {
     /// </summary>
     protected virtual void think() {
 		this.resetDesires ();
-		if (this._leftHandInventory.getItemsByType(Storable.TYPE_RANGE).Count == 1)
+		if (this._leftHandInventory.hasItemType(Storable.TYPE_RANGE))
         {
             this.thinkAsArcher();
         } else
@@ -173,7 +173,7 @@ public class EnemyAI : FeistyGameCharacter {
         }
         else if (this.canSeeObject(this._targetEnemy))
         {
-			this.approachTarget (this._targetEnemy.gameObject.transform.position);
+			//this.approachTarget (this._targetEnemy.gameObject.transform.position);
         }
     }
 
@@ -189,7 +189,7 @@ public class EnemyAI : FeistyGameCharacter {
         this.setTargetEnemy(Game.MainPlayer.gameObject);
 
 		if (this.canSeeObject (this._targetEnemy))
-			this.approachTarget (this._targetEnemy.gameObject.transform.position);
+			//this.approachTarget (this._targetEnemy.gameObject.transform.position);
 
         if (this.isNextToObject(this._targetEnemy))
         {
@@ -286,23 +286,57 @@ public class EnemyAI : FeistyGameCharacter {
 	/// <param name="pathinfo">Pathinfo.</param>
 	public void foundPath(Pathinfo pathinfo) {
 		if (pathinfo.foundPath) {
-			Debug.Log ("Found path: " + this._pathfinder.getPath().ToString());
-			Debug.Log ("Found path: " + this._pathfinder.getPath().Length.ToString());
 			this._knots = this._pathfinder.getPath ();
 			this._knotIndex = 0;
 		} else {
 			// No path found.
-			Debug.Log("No path found. " + pathinfo.comment);
 			this._knotIndex = -2;
 		}
 	}
 	#endregion
 
-    #endregion
+	#endregion
 
 	#region Inventory
-	protected void initializePrimaryWeapon() {
+	/// <summary>
+	/// Loads the inventory.
+	/// </summary>
+	protected void loadInventory() {
+		foreach (Transform thing in this.gameObject.GetComponentsInChildren<Transform>()) {
+			Debug.Log (thing.ToString ());
+			if (thing.name.StartsWith ("storable_")) {
+				this.addToInventory (thing);
+			}
+		}
+	}
 
+	/// <summary>
+	/// <para>
+	/// Adds the storableTransform to this ai's inventory.
+	/// </para>
+	/// <para>
+	/// If storableTransform is a ranged weapon, it is put into this
+	/// characters left hand. If it is a melee weapon, it's put into
+	/// the right hand. Otherwise, it's just put in this characters
+	/// regular inventory.
+	/// </para>
+	/// </summary>
+	/// <param name="storableTransform">Storable transform.</param>
+	protected void addToInventory(Transform storableTransform) {
+		Storable storableScript = storableTransform.GetComponent<Storable> ();
+		if (storableScript.Type == Storable.TYPE_RANGE) {
+			this._leftHandInventory.add (storableScript);
+		} else if (storableScript.Type == Storable.TYPE_MELEE) {
+			if (this._leftHandInventory.hasItemType(Storable.TYPE_RANGE)) {
+				// If the player has a bow, just put the melee weapon
+				// in the regular inventory for now.
+				this._inventory.add (storableScript);
+			} else {
+				this._rightHandInventory.add (storableScript);
+			}
+		} else {
+			this._inventory.add (storableScript);
+		}
 	}
 	#endregion
 
@@ -310,12 +344,13 @@ public class EnemyAI : FeistyGameCharacter {
     // Use this for initialization
     protected override void Start () {
         base.Start();
-        Storable sword = this.transform.Find("sword_prefab").GetComponent<Storable>();
-        this._leftHandInventory.add(sword);
-        Debug.Log(this._leftHandInventory.all());
+		this.loadInventory ();
+
+		Debug.Log ("left hand: " + this._leftHandInventory.ToString ());
+		Debug.Log ("right hand: " + this._rightHandInventory.ToString ());
+		Debug.Log ("inventory: " + this._inventory.ToString ());
 
 		this._pathfinder = this.gameObject.GetComponent<Pathfinder> ();
-		Debug.Log (this._pathfinder);
 	}
 	
 	// Update is called once per frame
