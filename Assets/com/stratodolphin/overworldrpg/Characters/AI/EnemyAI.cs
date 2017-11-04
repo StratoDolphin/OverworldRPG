@@ -5,6 +5,7 @@ using AssemblyCSharp;
 using Assets.com.stratodolphin.overworldrpg.Characters;
 using AggregatGames.AI.Pathfinding;
 using System;
+using System.Threading;
 
 /// <summary>
 /// Extension of FeistyGameCharacter that adds actual AI to the
@@ -43,19 +44,7 @@ public class EnemyAI : FeistyGameCharacter {
     /// will dictate the AI's actions such as who it approaches
     /// and who it swings at (Those targets will be this target).
     /// </summary>
-    protected GameObject _targetEnemy;
-
-    /// <summary>
-    /// <para>
-    /// Type of enemy that this character is. This could be things
-    /// such as archer, mage, or warrior.
-    /// </para>
-    /// <para>
-    /// The available types for this variable are the constants
-    /// in this class that are pre-pended by "ENEMY_TYPE_".
-    /// </para>
-    /// </summary>
-    protected int _enemyType;
+    protected volatile GameObject _targetEnemy;
 
     /// <summary>
     /// Designates how far this enemy can stand away from its
@@ -64,19 +53,34 @@ public class EnemyAI : FeistyGameCharacter {
     /// </summary>
     protected float _archeryRange = 10f;
 
-	#region Pathfinding
+    #region Pathfinding
+    /// <summary>
+    /// The thread that the pathfinding process is run on. This
+    /// thread is a background process that is meant to run
+    /// continuously whether there is a target or not.
+    /// </summary>
+    protected Thread _pathfindingThread;
+
+    /// <summary>
+    /// Determines weather or not the AI wants to run the
+    /// pathfinding routine. This is only to be set to false
+    /// if the thread is to be killed altogether. There is no
+    /// way to restart the pathfinding thread.
+    /// </summary>
+    protected volatile bool _pathfindingThreadControl;
+
 	/// <summary>
 	/// The pathfinder. Provides methods that enable pathfinding
 	/// for this ai.
 	/// </summary>
-	protected Pathfinder _pathfinder;
+	protected volatile Pathfinder _pathfinder;
 
-	protected PathKnot[] _knots;
+	protected volatile PathKnot[] _knots;
 
 	/// <summary>
 	/// The index in the list of PathKnots for the current knot.
 	/// </summary>
-	protected int _knotIndex = -1;
+	protected volatile int _knotIndex = -1;
 	#endregion
 
 	#region Inventory
@@ -173,7 +177,7 @@ public class EnemyAI : FeistyGameCharacter {
         }
         else if (this.canSeeObject(this._targetEnemy))
         {
-			//this.approachTarget (this._targetEnemy.gameObject.transform.position);
+			this.approachTarget ();
         }
     }
 
@@ -189,7 +193,7 @@ public class EnemyAI : FeistyGameCharacter {
         this.setTargetEnemy(Game.MainPlayer.gameObject);
 
 		if (this.canSeeObject (this._targetEnemy))
-			//this.approachTarget (this._targetEnemy.gameObject.transform.position);
+			this.approachTarget ();
 
         if (this.isNextToObject(this._targetEnemy))
         {
@@ -201,6 +205,39 @@ public class EnemyAI : FeistyGameCharacter {
     }
 
 	#region Pathfinding
+    /// <summary>
+    /// Starts the background thread that runs the pathfinding. If the thread
+    /// is not null, it is assumed that a thread is already running. So a
+    /// warning is printed to Debug and nothing is done. The existing thread
+    /// is left alone.
+    /// </summary>
+    protected void startPathfindingRoutine()
+    {
+        if (this._pathfindingThread != null)
+        {
+            Debug.LogWarning("A pathfinder is already running. Cannot start another.");
+            return;
+        }
+
+        this._pathfindingThreadControl = true;
+        this._pathfindingThread = new Thread(pathfindingWorker);
+        this._pathfindingThread.Start();
+    }
+
+    /// <summary>
+    /// The process that is run by the pathfinding thread. This runs the
+    /// method that finds the path to the target until the control variable
+    /// for the thread is false. This will be run in the background and
+    /// will look for the path continuously.
+    /// </summary>
+    protected void pathfindingWorker()
+    {
+        while (this._pathfindingThreadControl)
+        {
+            this.findPathToTarget(this._targetEnemy.transform.position);
+        }
+    }
+
     /// <summary>
     /// <para>
     /// Determines whether or not there is a clear path in front leading
@@ -236,8 +273,10 @@ public class EnemyAI : FeistyGameCharacter {
     /// </para>
     /// </summary>
     /// <param name="target"></param>
-	protected void approachTarget(Vector3 target) {
-		bool approachWithoutKnots = false;
+	protected void approachTarget()
+    {
+        Vector3 target = this._targetEnemy.transform.position;
+        bool approachWithoutKnots = false;
         if (this.hasClearPathToTarget(target))
         {
 			approachWithoutKnots = true;
@@ -248,7 +287,6 @@ public class EnemyAI : FeistyGameCharacter {
             // the target is first set or no pathfinding has been done.
             Debug.Log("Recalculating.");
 			try {
-				this.findPathToTarget(target);
 				if (this._knotIndex >= 0 && this._knotIndex < this._knots.Length - 1) {
 					this.setDesireToApproach (this._knots [this._knotIndex + 1].position, true);
 					this._knotIndex++;
@@ -351,6 +389,7 @@ public class EnemyAI : FeistyGameCharacter {
 		Debug.Log ("inventory: " + this._inventory.ToString ());
 
 		this._pathfinder = this.gameObject.GetComponent<Pathfinder> ();
+        this.startPathfindingRoutine();
 	}
 	
 	// Update is called once per frame
