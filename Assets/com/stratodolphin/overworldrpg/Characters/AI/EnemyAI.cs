@@ -232,10 +232,15 @@ public class EnemyAI : FeistyGameCharacter {
     /// </summary>
     protected void pathfindingWorker()
     {
+        Debug.Log("control: " + this._pathfindingThreadControl.ToString());
         while (this._pathfindingThreadControl)
         {
+            Debug.Log("control in loop: " + this._pathfindingThreadControl.ToString());
+            Debug.Log("worker is calculating.");
             this.findPathToTarget(this._targetEnemy.transform.position);
+            Debug.Log("control in loop 2: " + this._pathfindingThreadControl.ToString());
         }
+        Debug.Log("control 3: " + this._pathfindingThreadControl.ToString());
     }
 
     /// <summary>
@@ -276,6 +281,7 @@ public class EnemyAI : FeistyGameCharacter {
 	protected void approachTarget()
     {
         Vector3 target = this._targetEnemy.transform.position;
+        /*
         bool approachWithoutKnots = false;
         if (this.hasClearPathToTarget(target))
         {
@@ -298,7 +304,16 @@ public class EnemyAI : FeistyGameCharacter {
 			}
         }
 
-		if (approachWithoutKnots) this.setDesireToApproach(target, true);
+        if (approachWithoutKnots) this.setDesireToApproach(target, true);
+        */
+
+        //Debug.Log("going to path.");
+        if (this._knotIndex >= 0 && this._knotIndex < this._knots.Length - 1)
+        {
+            //Debug.Log("Path: " + this._knots);
+            this.setDesireToApproach(this._knots[this._knotIndex + 1].position, true);
+            this._knotIndex++;
+        }
 	}
 
 	/// <summary>
@@ -324,9 +339,11 @@ public class EnemyAI : FeistyGameCharacter {
 	/// <param name="pathinfo">Pathinfo.</param>
 	public void foundPath(Pathinfo pathinfo) {
 		if (pathinfo.foundPath) {
+            Debug.Log("Path found");
 			this._knots = this._pathfinder.getPath ();
 			this._knotIndex = 0;
 		} else {
+            Debug.Log("No path found.");
 			// No path found.
 			this._knotIndex = -2;
 		}
@@ -341,7 +358,6 @@ public class EnemyAI : FeistyGameCharacter {
 	/// </summary>
 	protected void loadInventory() {
 		foreach (Transform thing in this.gameObject.GetComponentsInChildren<Transform>()) {
-			Debug.Log (thing.ToString ());
 			if (thing.name.StartsWith ("storable_")) {
 				this.addToInventory (thing);
 			}
@@ -383,10 +399,6 @@ public class EnemyAI : FeistyGameCharacter {
     protected override void Start () {
         base.Start();
 		this.loadInventory ();
-
-		Debug.Log ("left hand: " + this._leftHandInventory.ToString ());
-		Debug.Log ("right hand: " + this._rightHandInventory.ToString ());
-		Debug.Log ("inventory: " + this._inventory.ToString ());
 
 		this._pathfinder = this.gameObject.GetComponent<Pathfinder> ();
         this.startPathfindingRoutine();
