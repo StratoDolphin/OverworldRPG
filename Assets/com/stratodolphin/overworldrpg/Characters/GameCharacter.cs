@@ -12,96 +12,107 @@ public abstract class GameCharacter : MonoBehaviour
 
 	#region Protected Variables
 
-		#region Movement
-		/// <summary>
-		/// The ratation damping for this character. Higher numbers will
-		/// make this character turn quicker.
-		/// </summary>
-		protected int _ratationDamping = 2;
+	#region Movement
+	/// <summary>
+	/// The ratation damping for this character. Higher numbers will
+	/// make this character turn quicker.
+	/// </summary>
+	protected int _ratationDamping = 2;
 
-		/// <summary>
-		/// <para>
-		/// Determines how far away from this character a given object
-		/// can be in order for this object to see and evaluate
-		/// that object.
-		/// </para>
-		/// <para>
-		/// This value only represents the magnitude of a single
-		/// vector. It ignores direction because the sight is
-		/// assumed to be at a 360 degree angle.
-		/// </para>
-		/// </summary>
-		protected float _viewRange = 15.0f;
+	/// <summary>
+	/// <para>
+	/// Determines how far away from this character a given object
+	/// can be in order for this object to see and evaluate
+	/// that object.
+	/// </para>
+	/// <para>
+	/// This value only represents the magnitude of a single
+	/// vector. It ignores direction because the sight is
+	/// assumed to be at a 360 degree angle.
+	/// </para>
+	/// </summary>
+	protected float _viewRange = 15.0f;
 
-		/// <summary>
-		/// <para>
-		/// The distance from this characters game object that a
-		/// given other object must be for this character to be
-		/// considered next to that object.
-		/// </para>
-		/// <para>
-		/// This value only represents the magnitude of a single
-		/// vector. It ignores direction because the sight is
-		/// assumed to be at a 360 degree angle.
-		/// </para>
-		/// </summary>
-		protected float _nextToThreshold = 1.8f;
+	/// <summary>
+	/// <para>
+	/// The distance from this characters game object that a
+	/// given other object must be for this character to be
+	/// considered next to that object.
+	/// </para>
+	/// <para>
+	/// This value only represents the magnitude of a single
+	/// vector. It ignores direction because the sight is
+	/// assumed to be at a 360 degree angle.
+	/// </para>
+	/// </summary>
+	protected float _nextToThreshold = 1.8f;
 
-		/// <summary>
-		/// The movement speed of this character. Higher numbers
-		/// will result in higher speeds.
-		/// </summary>
-		protected float _movementSpeed = 3.5f;
+	/// <summary>
+	/// The movement speed of this character. Higher numbers
+	/// will result in higher speeds.
+	/// </summary>
+	protected float _movementSpeed = 3.5f;
 
-		/// <summary>
-		/// <para>
-		/// A point on the map that this character desires to move.
-		/// The flow of movement for the ai should be as follows:
-		/// </para>
-		/// <para>
-		/// 1. In the backend, set the destination that the character
-		/// wants to move. This is the variable that the destination
-		/// should be stored in.
-		/// 2. When update is called, it should animate the object
-		/// moving towards this location.
-		/// </para>
-		/// </summary>
-		protected Vector3 _desiredMovementDestination;
+	/// <summary>
+	/// <para>
+	/// A point on the map that this character desires to move.
+	/// The flow of movement for the ai should be as follows:
+	/// </para>
+	/// <para>
+	/// 1. In the backend, set the destination that the character
+	/// wants to move. This is the variable that the destination
+	/// should be stored in.
+	/// 2. When update is called, it should animate the object
+	/// moving towards this location.
+	/// </para>
+	/// </summary>
+	protected Vector3 _desiredMovementDestination;
 
-		/// <summary>
-		/// <para>
-		/// Determines whether or not this character wants to start moving
-		/// towards the vector stored in _desiredMovementDestination. If
-		/// this is true, this character will start moving. Otherwise, it
-		/// will stop moving.
-		/// </para>
-		/// <para>
-		/// This variable can be used to stop movement of this character.
-		/// </para>
-		/// </summary>
-		protected bool _isDesiredToMove;
+	/// <summary>
+	/// <para>
+	/// Determines whether or not this character wants to start moving
+	/// towards the vector stored in _desiredMovementDestination. If
+	/// this is true, this character will start moving. Otherwise, it
+	/// will stop moving.
+	/// </para>
+	/// <para>
+	/// This variable can be used to stop movement of this character.
+	/// </para>
+	/// </summary>
+	protected bool _isDesiredToMove;
 
-		/// <summary>
-		/// <para>
-		/// The desire of this character to face a game object at the given
-		/// vector.
-		/// </para>
-		/// </summary>
-		protected Vector3 _desiredTargetToFace;
+	/// <summary>
+	/// <para>
+	/// The desire of this character to face a game object at the given
+	/// vector.
+	/// </para>
+	/// </summary>
+	protected Vector3 _desiredTargetToFace;
 
-		/// <summary>
-		/// <para>
-		/// Determines whether or not this character wants to start turning
-		/// towards the vector stored in _desiredTargetToFace. If this is
-		/// true, this character will start turning. Otherwise, it will stop
-		/// turning.
-		/// </para>
-		/// <para>
-		/// This variable can be used to stop turning of this character.
-		/// </para>
-		/// </summary>
-		protected bool _isDesiredToFace;
-    #endregion
+	/// <summary>
+	/// <para>
+	/// Determines whether or not this character wants to start turning
+	/// towards the vector stored in _desiredTargetToFace. If this is
+	/// true, this character will start turning. Otherwise, it will stop
+	/// turning.
+	/// </para>
+	/// <para>
+	/// This variable can be used to stop turning of this character.
+	/// </para>
+	/// </summary>
+	protected bool _isDesiredToFace;
+	#endregion
+
+	/// <summary>
+	/// Amount of hit points that this character has left before he
+	/// is dead.
+	/// </summary>
+	protected int _hitPoints;
+
+	/// <summary>
+	/// The initial amount of hitpoints that this character has.
+	/// </summary>
+	protected int _maxHitPoints = 100;
 
     /// <summary>
     /// The inventory of this game character. This contains all
@@ -124,6 +135,17 @@ public abstract class GameCharacter : MonoBehaviour
     /// </summary>
     protected Inventory _rightHandInventory;
     #endregion
+
+	#region Public Attributes
+	/// <summary>
+	/// Public accessor for the initial amount of hitpoints that
+	/// this character has.
+	/// </summary>
+	public int MaxHitPoints {
+		get { return this._maxHitPoints; }
+		set { this._maxHitPoints = value; }
+	}
+	#endregion
 
     #region Relationship To Objects
     /// <summary>
@@ -259,77 +281,99 @@ public abstract class GameCharacter : MonoBehaviour
 	}
 	#endregion
 
+	#region Backend
+	/// <summary>
+	/// Initializes the hitpoints of this character by setting <see cref="_hitpoints"/>
+	/// to the value of startingHealth. This should only be used when initializing
+	/// the character.
+	/// </summary>
+	/// <param name="startingHealth">Starting health.</param>
+	protected void initializeHealth(int startingHealth) {
+		this._hitPoints = startingHealth;
+	}
+
+	/// <summary>
+	/// Initializes the hitpoints of this character by setting <see cref="_hitpoints"/>
+	/// to the value of the default <see cref="_maxHitPoints"/>. This should only be
+	/// used when initializing the character.
+	/// </summary>
+	/// <param name="startingHealth">Starting health.</param>
+	protected void initializeHealth() {
+		this._hitPoints = this._maxHitPoints;
+	}
+	#endregion
+
 	#region Backend Actions
 
-		#region Movement
-		/// <summary>
-		/// <para>
-		/// Sets the desired movement destination. This is the same as
-		/// making the AI "decide" to move somewhere.
-		/// </para>
-		/// <para>
-		/// This method does not actually do the moving, it just sets
-		/// the determination to move.
-		/// </para> 
-		/// </summary>
-		/// <param name="destination">Destination.</param>
-		protected void setDesiredMovementDestination(Vector3 destination) {
-			this._desiredMovementDestination = destination;
-		}
+	#region Movement
+	/// <summary>
+	/// <para>
+	/// Sets the desired movement destination. This is the same as
+	/// making the AI "decide" to move somewhere.
+	/// </para>
+	/// <para>
+	/// This method does not actually do the moving, it just sets
+	/// the determination to move.
+	/// </para> 
+	/// </summary>
+	/// <param name="destination">Destination.</param>
+	protected void setDesiredMovementDestination(Vector3 destination) {
+		this._desiredMovementDestination = destination;
+	}
 
-		/// <summary>
-		/// Sets the desire to move for this character. This method
-		/// simply sets the <see cref="_isDesiredToMove"/> attribute
-		/// for this character to the value of desireToMove.
-		/// </summary>
-		/// <param name="desireToMove">If set to <c>true</c> desire to move.</param>
-		protected void setDesireToMove(bool desireToMove) {
-			this._isDesiredToMove = desireToMove;
-		}
+	/// <summary>
+	/// Sets the desire to move for this character. This method
+	/// simply sets the <see cref="_isDesiredToMove"/> attribute
+	/// for this character to the value of desireToMove.
+	/// </summary>
+	/// <param name="desireToMove">If set to <c>true</c> desire to move.</param>
+	protected void setDesireToMove(bool desireToMove) {
+		this._isDesiredToMove = desireToMove;
+	}
 
-		/// <summary>
-		/// <para>
-		/// Sets the vector towards which this character will face.
-		/// </para>
-		/// </summary>
-		/// <param name="target">Target.</param>
-		protected void setDesiredTargetToFace(Vector3 target) {
-			this._desiredTargetToFace = target;
-		}
+	/// <summary>
+	/// <para>
+	/// Sets the vector towards which this character will face.
+	/// </para>
+	/// </summary>
+	/// <param name="target">Target.</param>
+	protected void setDesiredTargetToFace(Vector3 target) {
+		this._desiredTargetToFace = target;
+	}
 
-		/// <summary>
-		/// Sets the desire to turn for this character. This method
-		/// simply sets the <see cref="_isDesiredToFace"/> attribute
-		/// for this character to the value of desireToFace.
-		/// </summary>
-		/// <param name="desireToFace">If set to <c>true</c> desire to face.</param>
-		protected void setDesireToFace(bool desireToFace) {
-			this._isDesiredToFace = desireToFace;
-		}
+	/// <summary>
+	/// Sets the desire to turn for this character. This method
+	/// simply sets the <see cref="_isDesiredToFace"/> attribute
+	/// for this character to the value of desireToFace.
+	/// </summary>
+	/// <param name="desireToFace">If set to <c>true</c> desire to face.</param>
+	protected void setDesireToFace(bool desireToFace) {
+		this._isDesiredToFace = desireToFace;
+	}
 
-		/// <summary>
-		/// <para>
-		/// Sets the desire to approach a given object at the given destination.
-		/// This method sets the target to approach, sets the desire to face that
-		/// target, and sets the desire to start moving to true.
-		/// </para>
-		/// <para>
-		/// When the update method is called, the result of this will be that
-		/// this character faces the destination (if isDesiredToFace is true)
-		/// and starts moving towards that destination.
-		/// </para>
-		/// </summary>
-		/// <param name="destination">Destination.</param>
-		/// <param name="isDesiredToFace">If set to <c>true</c> is desired to face.</param>
-		protected void setDesireToApproach(Vector3 destination, bool isDesiredToFace) {
-			this.setDesiredMovementDestination (destination);
-			if (isDesiredToFace) {
-			this.setDesiredTargetToFace (destination);
-				this.setDesireToFace (isDesiredToFace);
-			}
-			this.setDesireToMove (true);
+	/// <summary>
+	/// <para>
+	/// Sets the desire to approach a given object at the given destination.
+	/// This method sets the target to approach, sets the desire to face that
+	/// target, and sets the desire to start moving to true.
+	/// </para>
+	/// <para>
+	/// When the update method is called, the result of this will be that
+	/// this character faces the destination (if isDesiredToFace is true)
+	/// and starts moving towards that destination.
+	/// </para>
+	/// </summary>
+	/// <param name="destination">Destination.</param>
+	/// <param name="isDesiredToFace">If set to <c>true</c> is desired to face.</param>
+	protected void setDesireToApproach(Vector3 destination, bool isDesiredToFace) {
+		this.setDesiredMovementDestination (destination);
+		if (isDesiredToFace) {
+		this.setDesiredTargetToFace (destination);
+			this.setDesireToFace (isDesiredToFace);
 		}
-		#endregion
+		this.setDesireToMove (true);
+	}
+	#endregion
 
 	#endregion
 
@@ -436,6 +480,7 @@ public abstract class GameCharacter : MonoBehaviour
 	#region Frames
     protected virtual void Start()
     {
+		this.initializeHealth ();
         this._inventory = new Inventory();
         this._leftHandInventory = new Inventory(1);
         this._rightHandInventory = new Inventory(1);

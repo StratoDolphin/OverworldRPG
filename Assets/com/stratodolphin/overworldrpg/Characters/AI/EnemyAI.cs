@@ -83,10 +83,6 @@ public class EnemyAI : FeistyGameCharacter {
 	protected volatile int _knotIndex = -1;
 	#endregion
 
-	#region Inventory
-
-	#endregion
-
     #endregion
 
     #region Rules
@@ -153,7 +149,9 @@ public class EnemyAI : FeistyGameCharacter {
         } else
         {
             this.thinkAsMelee();
-        }
+		}
+		if (Game.MainPlayer == null) { return; }
+		this.evaluateRulesForSightOfTarget (this._targetEnemy);
 	}
 
     /// <summary>
@@ -165,6 +163,10 @@ public class EnemyAI : FeistyGameCharacter {
     /// </summary>
     protected virtual void thinkAsArcher()
     {
+		if (Game.MainPlayer == null) {
+			return;
+		}
+
         this.setTargetEnemy(Game.MainPlayer.gameObject);
 
         if (this.isNextToObject(this._targetEnemy))
@@ -190,6 +192,10 @@ public class EnemyAI : FeistyGameCharacter {
     /// </summary>
     protected virtual void thinkAsMelee()
     {
+		if (Game.MainPlayer == null) {
+			return;
+		}
+
         this.setTargetEnemy(Game.MainPlayer.gameObject);
 
 		if (this.canSeeObject (this._targetEnemy))
@@ -278,7 +284,8 @@ public class EnemyAI : FeistyGameCharacter {
     /// </para>
     /// </summary>
     /// <param name="target"></param>
-	protected void approachTarget()
+	/// <description></description>
+	protected void approachTargetWithKnotsIfPossible()
     {
         Vector3 target = this._targetEnemy.transform.position;
         /*
@@ -314,6 +321,17 @@ public class EnemyAI : FeistyGameCharacter {
             this.setDesireToApproach(this._knots[this._knotIndex + 1].position, true);
             this._knotIndex++;
         }
+	}
+
+	/// <summary>
+	/// Approaches the target. This will not use pathfinding. I am
+	/// saving pathfinding for when I find time for it and when I
+	/// can figure out how to make unity work with multiple threads.
+	/// This method will just walk straight towards the target.
+	/// </summary>
+	protected void approachTarget() {
+		Vector3 target = this._targetEnemy.transform.position;
+		this.setDesireToApproach(target, true);
 	}
 
 	/// <summary>
@@ -399,15 +417,11 @@ public class EnemyAI : FeistyGameCharacter {
     protected override void Start () {
         base.Start();
 		this.loadInventory ();
-
-		this._pathfinder = this.gameObject.GetComponent<Pathfinder> ();
-        this.startPathfindingRoutine();
 	}
 	
 	// Update is called once per frame
 	protected override void Update () {
 		this.think ();
-		this.evaluateRulesForSightOfTarget (this._targetEnemy);
 
 		base.Update ();
 	}

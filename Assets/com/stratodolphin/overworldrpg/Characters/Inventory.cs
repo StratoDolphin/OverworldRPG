@@ -173,7 +173,7 @@ namespace Assets.com.stratodolphin.overworldrpg.Characters
 		/// Returns a string representation of this inventory.
 		/// </summary>
 		/// <returns>The string.</returns>
-		public String ToString() {
+		public override String ToString() {
 			String val = "[";
 			for (int i = 0; i < (this.all ().Count); i++) {
 				val = val + (this.all () [i].ToString()) + ", ";

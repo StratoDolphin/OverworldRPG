@@ -47,7 +47,7 @@ namespace Assets.com.stratodolphin.overworldrpg.Characters
 		/// Returns a string representation of this storable item..
 		/// </summary>
 		/// <returns>The string.</returns>
-		public String ToString() {
+		public override String ToString() {
 			return this.Type.ToString () + " item";
 		}
 		#endregion
