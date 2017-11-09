@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using AssemblyCSharp;
+using com.stratodolphin.overworldrpg.Characters;
 using Assets.com.stratodolphin.overworldrpg.Characters;
 using AggregatGames.AI.Pathfinding;
 using System;

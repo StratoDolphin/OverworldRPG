@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using AssemblyCSharp;
+using com.stratodolphin.overworldrpg.Characters;
 
 public class GamePlayer : FeistyGameCharacter
 {
