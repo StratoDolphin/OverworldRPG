@@ -33,7 +33,7 @@ namespace Assets.com.stratodolphin.overworldrpg.Characters.Spawning
 		/// this bonfire has already been added to the list.
 		/// </summary>
 		protected void setSpawnKey() {
-			int keyNum = Game.Bonfires.Count - 1;
+			int keyNum = GameInfo.Bonfires.Count - 1;
 			String keyCodeString = "Alpha" + keyNum.ToString ();
 
 			Type keyCodeType = typeof(KeyCode);
@@ -43,19 +43,20 @@ namespace Assets.com.stratodolphin.overworldrpg.Characters.Spawning
 			this._spawnKey = code;
 		}
 
-		protected void spawn() {
+
+		public void spawn(GamePlayer player) {
 			Vector3 position = this.gameObject.transform.position;
 			position.x -= 5;
 			Quaternion rotation = Quaternion.LookRotation (this.gameObject.transform.position);
-			GameObject player = (GameObject) Resources.Load ("prefabs/MainPlayer");
-			Debug.Log (player);
-			Instantiate (Resources.Load ("prefabs/MainPlayer"), position, rotation);
+
+			Instantiate (player.gameObject, position, rotation);
+			player.IsAlive = true;
 		}
 		#endregion
 
 		// Use this for initialization
 		void Start () {
-			Game.Bonfires.Add (this);
+			GameInfo.Bonfires.Add (this);
 			this.setSpawnKey ();
 		}
 		

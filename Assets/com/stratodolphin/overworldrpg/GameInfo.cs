@@ -5,7 +5,14 @@ using System.Collections.Generic;
 
 namespace com.stratodolphin.overworldrpg.Characters
 {
-	public abstract class Game
+	/// <summary>
+	/// Keeps track of various global variables for the game. This
+	/// includes players, characters, bonfires and other stuff like
+	/// that. This is not a <see cref="MonoBehavior"/> script and
+	/// does not have an update function. It simply stores information
+	/// that should be global.
+	/// </summary>
+	public abstract class GameInfo
 	{
 		/// <summary>
 		/// Actual value for the main player global variable. This should
@@ -51,17 +58,6 @@ namespace com.stratodolphin.overworldrpg.Characters
 		public static void initialize() {
 
 		}
-
-		#region Spawning
-		public KeyCode[] checkSpawning() {
-			foreach (Bonfire fire in Bonfires) {
-				if (Input.GetKeyDown (fire.SpawnKey)) {
-
-				}
-			}
-			return null;
-		}
-		#endregion
 	}
 }
 

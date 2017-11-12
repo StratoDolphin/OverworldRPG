@@ -150,7 +150,7 @@ public class EnemyAI : FeistyGameCharacter {
         {
             this.thinkAsMelee();
 		}
-		if (Game.MainPlayer == null) { return; }
+		if (GameInfo.MainPlayer == null) { return; }
 		this.evaluateRulesForSightOfTarget (this._targetEnemy);
 	}
 
@@ -163,11 +163,11 @@ public class EnemyAI : FeistyGameCharacter {
     /// </summary>
     protected virtual void thinkAsArcher()
     {
-		if (Game.MainPlayer == null) {
+		if (GameInfo.MainPlayer == null) {
 			return;
 		}
 
-        this.setTargetEnemy(Game.MainPlayer.gameObject);
+        this.setTargetEnemy(GameInfo.MainPlayer.gameObject);
 
         if (this.isNextToObject(this._targetEnemy))
         {
@@ -192,11 +192,11 @@ public class EnemyAI : FeistyGameCharacter {
     /// </summary>
     protected virtual void thinkAsMelee()
     {
-		if (Game.MainPlayer == null) {
+		if (GameInfo.MainPlayer == null) {
 			return;
 		}
 
-        this.setTargetEnemy(Game.MainPlayer.gameObject);
+        this.setTargetEnemy(GameInfo.MainPlayer.gameObject);
 
 		if (this.canSeeObject (this._targetEnemy))
 			this.approachTarget ();
