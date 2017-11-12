@@ -31,7 +31,9 @@ namespace com.stratodolphin.overworldrpg.Characters
 			foreach (Bonfire fire in GameInfo.Bonfires) {
 				if (Input.GetKeyDown (fire.SpawnKey)) {
 					if (toRespawn) {
-						fire.respawn (GameInfo.MainPlayer);
+						if (GameInfo.MainPlayer.BonfireLocation != null) {
+							fire.respawn (GameInfo.MainPlayer);
+						}
 					} else {
 						fire.spawn (createMainPlayerMeta ());
 					}
