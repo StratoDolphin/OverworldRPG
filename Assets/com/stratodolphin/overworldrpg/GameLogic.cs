@@ -10,24 +10,31 @@ namespace com.stratodolphin.overworldrpg.Characters
 		#region Spawning
 		/// <summary>
 		/// Creates the main player without actually placing it on the
-		/// game map. This will return the <see cref="GamePlayer"/>
-		/// script that is on the players gameobject.
+		/// game map. This will return the GameObject of the player.
 		/// </summary>
-		protected static GamePlayer createMainPlayerMeta() {
+		protected static GameObject createMainPlayerMeta() {
 			GameObject player = (GameObject) Resources.Load ("prefabs/MainPlayer");
-			Debug.Log (player);
-			GamePlayer playerScript = player.GetComponent<GamePlayer> ();
-			return playerScript;
+			return player;
 		}
 
+		/// <summary>
+		/// If a key on this frame was pressed that corresponds to a certain campfire,
+		/// The game will spawn the main player at that campfire. This will only do
+		/// that if the main player has not already been spawned.
+		/// </summary>
 		public static void checkSpawning() {
+			bool toRespawn = false;
 			if (GameInfo.MainPlayer != null && GameInfo.MainPlayer.IsAlive) {
-				return;
+				toRespawn = true;
 			}
 
 			foreach (Bonfire fire in GameInfo.Bonfires) {
 				if (Input.GetKeyDown (fire.SpawnKey)) {
-					fire.spawn (createMainPlayerMeta ());
+					if (toRespawn) {
+						fire.respawn (GameInfo.MainPlayer);
+					} else {
+						fire.spawn (createMainPlayerMeta ());
+					}
 					return;
 				}
 			}

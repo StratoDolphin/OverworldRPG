@@ -12,13 +12,13 @@ public class GamePlayer : FeistyGameCharacter
 	/// Determines whether or not this player is on the map,
 	/// working and alive.
 	/// </summary>
-	public bool IsAlive;
+	public bool IsAlive = false;
 	#endregion
 
 	// Use this for initialization
 	void Start ()
 	{
-		GameInfo.setMainPlayer (this);
+		
 	}
 	
 	// Update is called once per frame

@@ -143,11 +143,13 @@ public class EnemyAI : FeistyGameCharacter {
     /// </summary>
     protected virtual void think() {
 		this.resetDesires ();
-		if (this._leftHandInventory.hasItemType(Storable.TYPE_RANGE))
+		if (this._leftHandInventory.hasItemType(Storable.TYPE_MELEE))
         {
+			//Debug.Log ("archer");
             this.thinkAsArcher();
         } else
-        {
+		{
+			//Debug.Log ("melee");
             this.thinkAsMelee();
 		}
 		if (GameInfo.MainPlayer == null) { return; }
@@ -167,7 +169,7 @@ public class EnemyAI : FeistyGameCharacter {
 			return;
 		}
 
-        this.setTargetEnemy(GameInfo.MainPlayer.gameObject);
+		this.setTargetEnemy(GameInfo.MainPlayer.gameObject);
 
         if (this.isNextToObject(this._targetEnemy))
         {
@@ -196,8 +198,10 @@ public class EnemyAI : FeistyGameCharacter {
 			return;
 		}
 
-        this.setTargetEnemy(GameInfo.MainPlayer.gameObject);
+		this.setTargetEnemy(GameInfo.MainPlayer.gameObject);
 
+		//Debug.Log(this.canSeeObject(this._targetEnemy));
+		//Debug.Log(this.isNextToObject(this._targetEnemy));
 		if (this.canSeeObject (this._targetEnemy))
 			this.approachTarget ();
 
@@ -212,118 +216,6 @@ public class EnemyAI : FeistyGameCharacter {
 
 	#region Pathfinding
     /// <summary>
-    /// Starts the background thread that runs the pathfinding. If the thread
-    /// is not null, it is assumed that a thread is already running. So a
-    /// warning is printed to Debug and nothing is done. The existing thread
-    /// is left alone.
-    /// </summary>
-    protected void startPathfindingRoutine()
-    {
-        if (this._pathfindingThread != null)
-        {
-            Debug.LogWarning("A pathfinder is already running. Cannot start another.");
-            return;
-        }
-
-        this._pathfindingThreadControl = true;
-        this._pathfindingThread = new Thread(pathfindingWorker);
-        this._pathfindingThread.Start();
-    }
-
-    /// <summary>
-    /// The process that is run by the pathfinding thread. This runs the
-    /// method that finds the path to the target until the control variable
-    /// for the thread is false. This will be run in the background and
-    /// will look for the path continuously.
-    /// </summary>
-    protected void pathfindingWorker()
-    {
-        Debug.Log("control: " + this._pathfindingThreadControl.ToString());
-        while (this._pathfindingThreadControl)
-        {
-            Debug.Log("control in loop: " + this._pathfindingThreadControl.ToString());
-            Debug.Log("worker is calculating.");
-            this.findPathToTarget(this._targetEnemy.transform.position);
-            Debug.Log("control in loop 2: " + this._pathfindingThreadControl.ToString());
-        }
-        Debug.Log("control 3: " + this._pathfindingThreadControl.ToString());
-    }
-
-    /// <summary>
-    /// <para>
-    /// Determines whether or not there is a clear path in front leading
-    /// straight to the target. It is determined that there is a clear
-    /// path only if there is a straight line that can be drawn from this
-    /// character to the vector at target that is not interupted by any
-    /// collider.
-    /// </para>
-    /// <para>
-    /// Returns true if a clear, straight path can be seen. false otherwise.
-    /// </para>
-    /// </summary>
-    /// <param name="target"></param>
-    /// <returns></returns>
-    protected bool hasClearPathToTarget(Vector3 target)
-    {
-        bool seesObsticle = Physics.Raycast(this.gameObject.transform.position, target, this._viewRange);
-        return !seesObsticle;
-    }
-
-    /// <summary>
-    /// Aproaches the target.
-    /// <para>
-    /// If a straight path is available to the target that does not contain
-    /// obsticles (<see cref="hasClearPathToTarget(Vector3)"/> returns true),
-    /// then this method does not use the knots or A* algorithm via
-    /// <see cref="_pathfinder"/>. Instead, it just moves straight towards
-    /// the target blindly without pathfinding.
-    /// </para>
-    /// <para>
-    /// Otherwise, if an obsticle blocks his way, this character will use the
-    /// <see cref="_pathfinder"/> to approach the target.
-    /// </para>
-    /// </summary>
-    /// <param name="target"></param>
-	/// <description></description>
-	protected void approachTargetWithKnotsIfPossible()
-    {
-        Vector3 target = this._targetEnemy.transform.position;
-        /*
-        bool approachWithoutKnots = false;
-        if (this.hasClearPathToTarget(target))
-        {
-			approachWithoutKnots = true;
-        }
-        else
-        {
-            // Find path at first to the target. This is only called when
-            // the target is first set or no pathfinding has been done.
-            Debug.Log("Recalculating.");
-			try {
-				if (this._knotIndex >= 0 && this._knotIndex < this._knots.Length - 1) {
-					this.setDesireToApproach (this._knots [this._knotIndex + 1].position, true);
-					this._knotIndex++;
-				} else {
-					approachWithoutKnots = true;
-				}
-			} catch (IndexOutOfRangeException e) {
-				approachWithoutKnots = true;
-			}
-        }
-
-        if (approachWithoutKnots) this.setDesireToApproach(target, true);
-        */
-
-        //Debug.Log("going to path.");
-        if (this._knotIndex >= 0 && this._knotIndex < this._knots.Length - 1)
-        {
-            //Debug.Log("Path: " + this._knots);
-            this.setDesireToApproach(this._knots[this._knotIndex + 1].position, true);
-            this._knotIndex++;
-        }
-	}
-
-	/// <summary>
 	/// Approaches the target. This will not use pathfinding. I am
 	/// saving pathfinding for when I find time for it and when I
 	/// can figure out how to make unity work with multiple threads.
@@ -332,39 +224,6 @@ public class EnemyAI : FeistyGameCharacter {
 	protected void approachTarget() {
 		Vector3 target = this._targetEnemy.transform.position;
 		this.setDesireToApproach(target, true);
-	}
-
-	/// <summary>
-	/// Sets the path to target that this AI wants to approach. After
-	/// calling this method, the next spot to go can be found in the
-	/// list <see cref="_knots"/> at index <see cref="_knotIndex"/>.
-	/// </summary>
-	/// <param name="target">Target.</param>
-	protected void findPathToTarget(Vector3 target) {
-		Debug.Log ("finding path from: " + this.gameObject.transform.position.ToString () + " to: " + target.ToString ());
-        this._pathfinder.findPath (this.gameObject.transform.position, target, this.foundPath);
-	}
-
-	/// <summary>
-	/// <para>
-	/// Method that is used to set the path to the finish for this AI.
-	/// This will take the path found by the pathfinder and set the path
-	/// to the finish (<see cref="_knots"/>) to the path in the pathfinder.
-	/// The first index in that path is the index that this AI is at
-	/// currently.
-	/// </para>
-	/// </summary>
-	/// <param name="pathinfo">Pathinfo.</param>
-	public void foundPath(Pathinfo pathinfo) {
-		if (pathinfo.foundPath) {
-            Debug.Log("Path found");
-			this._knots = this._pathfinder.getPath ();
-			this._knotIndex = 0;
-		} else {
-            Debug.Log("No path found.");
-			// No path found.
-			this._knotIndex = -2;
-		}
 	}
 	#endregion
 

@@ -253,7 +253,7 @@ public abstract class GameCharacter : MonoBehaviour
 	/// </summary>
 	/// <returns><c>true</c>, if next to object was ised, <c>false</c> otherwise.</returns>
 	/// <param name="vectorToThing">Vector to thing.</param>
-	protected bool isNextToObject(GameObject thing) {
+	public bool isNextToObject(GameObject thing) {
 		Vector3 vectorToThing = this.getDistanceFromObject (thing);
 		return this.isNextToObject (vectorToThing);
 	}
@@ -306,6 +306,11 @@ public abstract class GameCharacter : MonoBehaviour
 	#region Backend Actions
 
 	#region Movement
+	public void setPosition(Vector3 position, Quaternion rotation) {
+		transform.position = position;
+		transform.rotation = rotation;
+	}
+
 	/// <summary>
 	/// <para>
 	/// Sets the desired movement destination. This is the same as
