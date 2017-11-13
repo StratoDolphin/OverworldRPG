@@ -378,21 +378,64 @@ public abstract class GameCharacter : MonoBehaviour
 		}
 		this.setDesireToMove (true);
 	}
-	#endregion
+    #endregion
 
-	#endregion
+    #endregion
 
-	#region Animated Actions
-	/// <summary>
-	/// animates the movement of this character to a given point.
-	/// This method does not contain the logic that looks at the
-	/// variables that determine whether or not this character
-	/// even wants to move. This method always does the animation.
-	/// If you want to factor in those variables, put this method
-	/// call inside the if statements.
-	/// </summary>
-	/// <param name="destination">Destination.</param>
-	protected void animateMove(Vector3 destination) {
+    #region Life Methods
+    /// <summary>
+    /// <para>
+    /// Animates the state of this character being dead. This simply
+    /// removes this main players game object and replaces it with
+    /// the dead main player prefab laying on the ground.
+    /// </para>
+    /// <para>
+    /// This method returns the Game object that represents the dead
+    /// Main Player prefab.
+    /// </para>
+    /// </summary>
+    protected GameObject animateDie()
+    {
+        Vector3 deadPosition = this.gameObject.transform.position;
+
+        Destroy(this.gameObject);
+        GameObject deadMainPlayer = (GameObject)Resources.Load("prefabs/Dead_MainPlayer");
+
+        return Instantiate(deadMainPlayer, deadPosition, deadMainPlayer.transform.rotation);
+    }
+
+    /// <summary>
+    /// Checks to see if this character has no more hitpoints left.
+    /// If so, this will animate the death and set the
+    /// <see cref="GameInfo.MainPlayer"/> to null.
+    /// </summary>
+    protected void checkForDeath()
+    {
+        if (this.IsDead)
+        {
+            this.animateDie();
+            GameInfo.setMainPlayer(null);
+        }
+    }
+
+    /// <summary>
+    /// Determines whether or not this game character is dead based
+    /// on the hitpoints it has left.
+    /// </summary>
+    protected bool IsDead { get { return this._hitPoints <= 0; } }
+    #endregion
+
+    #region Animated Actions
+    /// <summary>
+    /// animates the movement of this character to a given point.
+    /// This method does not contain the logic that looks at the
+    /// variables that determine whether or not this character
+    /// even wants to move. This method always does the animation.
+    /// If you want to factor in those variables, put this method
+    /// call inside the if statements.
+    /// </summary>
+    /// <param name="destination">Destination.</param>
+    protected void animateMove(Vector3 destination) {
 		// Consider using either Vector3.Lerp or Vector3.MoveTowards
 		// to do the animations.
 		// 
@@ -469,12 +512,19 @@ public abstract class GameCharacter : MonoBehaviour
 	}
 
 	/// <summary>
-	/// Executes the desires of this character. If the character
+	/// <para>
+    /// Executes the desires of this character. If the character
 	/// wants to approach an object, it will call the method that
 	/// executes the approach desire. Otherwise, it will simply
 	/// face the vector stored in <see cref="_desiredTargetToFace"/>.
+    /// </para>
+    /// <para>
+    /// If this character is dead, nothing is done.
+    /// </para>
 	/// </summary>
 	protected virtual void executeDesires() {
+        if (this.IsDead) { return; }
+
 		if (!this._isDesiredToMove)
 			this.executeFaceingDesire ();
 		else
@@ -491,8 +541,10 @@ public abstract class GameCharacter : MonoBehaviour
         this._rightHandInventory = new Inventory(1);
     }
 
-	protected virtual void Update() {
-		this.executeDesires ();
+	protected virtual void Update()
+    {
+        this.checkForDeath ();
+        this.executeDesires ();
 	}
 	#endregion
 }

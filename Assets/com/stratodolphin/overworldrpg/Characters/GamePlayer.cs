@@ -25,13 +25,17 @@ public class GamePlayer : FeistyGameCharacter
 
 	void Start ()
 	{
-		
+        base.Start();
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
-	
-	}
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            this._hitPoints = 0;
+        }
+        base.Update();
+    }
 }
 
