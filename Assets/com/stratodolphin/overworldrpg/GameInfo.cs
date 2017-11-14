@@ -43,12 +43,12 @@ namespace com.stratodolphin.overworldrpg.Characters
 		/// </summary>
 		/// <param name="player">Player.</param>
 		public static void setMainPlayer(GamePlayer player) {
-			if (_mainPlayer != null) {
+			if (_mainPlayer != null && player != null) {
 				Debug.LogError ("MainPlayer already set!");
 				return;
 			}
 
-			Debug.Log ("Setting Game Player to: " + player.GetInstanceID().ToString());
+			Debug.Log ("Setting Game Player.");
 			_mainPlayer = player;
 		}
 
