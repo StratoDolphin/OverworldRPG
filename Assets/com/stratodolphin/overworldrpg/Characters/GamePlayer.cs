@@ -58,9 +58,10 @@ public class GamePlayer : FeistyGameCharacter
 					Destroy (item);
 					//Supposed to destroy the item's collider
 					Destroy (item.GetComponent<Collider>());
-					//takes off the GUI
-					temp = null;
+
 				}
+				//takes off the GUI
+				temp = null;
 			}
 		} 
 
