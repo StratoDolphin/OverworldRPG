@@ -536,7 +536,7 @@ public abstract class GameCharacter : MonoBehaviour
     protected virtual void Start()
     {
 		this.initializeHealth ();
-        this._inventory = new Inventory();
+        this._inventory = new Inventory(1);
         this._leftHandInventory = new Inventory(1);
         this._rightHandInventory = new Inventory(1);
     }
