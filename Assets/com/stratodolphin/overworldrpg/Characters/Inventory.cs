@@ -9,7 +9,18 @@ namespace Assets.com.stratodolphin.overworldrpg.Characters
     public class Inventory
     {
         #region Private Variables
+		/// <summary>
+		/// The actual storage for this inventory.
+		/// </summary>
         private List<Storable> _items = new List<Storable>();
+
+		/// <summary>
+		/// Determines whether or not this inventory is a covered inventory
+		/// such as a box or bag (false if so), or if it is an open
+		/// inventory that people can see inside of such as hands or the
+		/// body clothes (true if so).
+		/// </summary>
+		private bool _isVisibleInventory = false;
         #endregion
 
         #region Public Attributes
@@ -25,16 +36,25 @@ namespace Assets.com.stratodolphin.overworldrpg.Characters
         /// Default constructor for inventory. This will set the limit
         /// for this inventory to null.
         /// </summary>
-        public Inventory() { }
+		public Inventory() { }
+
+		/// <summary>
+		/// Constructor that sets whether or not this inventory is a
+		/// visible inventory where people can see the contents of it
+		/// or not. This will set the limit for this inventory to null.
+		/// </summary>
+		public Inventory(bool isVisible) { this._isVisibleInventory = isVisible; }
 
         /// <summary>
         /// Instantiates an Inventory that has a limit of the given
-        /// amount in <paramref name="limit"/>.
+        /// amount in <paramref name="limit"/>. isVisible will be used
+		/// to set the value of <see cref="_isVisibleInventory"/>.
         /// </summary>
         /// <param name="limit"></param>
-        public Inventory(int limit)
+		public Inventory(int limit, bool isVisible=false)
         {
             this.Limit = limit;
+			this._isVisibleInventory = isVisible;
         }
         #endregion
 
@@ -81,6 +101,7 @@ namespace Assets.com.stratodolphin.overworldrpg.Characters
 
             this._items.Add(item);
 			item.Owner = this;
+			this.updateStorablesVisibility (item);
         }
 
         /// <summary>
@@ -153,6 +174,8 @@ namespace Assets.com.stratodolphin.overworldrpg.Characters
         /// <returns></returns>
         public List<Storable> getItemsByType(int type)
         {
+			List<Storable> itemsOfType = new List<Storable>(from item in this._items where item.Type == type select item);
+			//Debug.Log ("My items: " + this.ToString () + " but filtered list: " + itemsOfType.Count.ToString ());
             return new List<Storable>(from item in this._items where item.Type == type select item);
         }
 
@@ -164,7 +187,22 @@ namespace Assets.com.stratodolphin.overworldrpg.Characters
 		/// <c>false</c> otherwise.</returns>
 		/// <param name="type">Type.</param>
 		public bool hasItemType(int type) {
-			return this.getItemsByType (type).Count > 1;
+			return this.getItemsByType (type).Count >= 1;
+		}
+		#endregion
+
+		#region Other
+		/// <summary>
+		/// Removes the item from the screen if this inventory is not an open, visible inventory.
+		/// Otherwise, this adds the item back on screen.
+		/// </summary>
+		/// <param name="item">Item.</param>
+		protected void updateStorablesVisibility(Storable item) {
+			if (this._isVisibleInventory) {
+				item.gameObject.SetActive (true);
+			} else {
+				item.gameObject.SetActive (false);
+			}
 		}
 		#endregion
 

@@ -45,7 +45,7 @@ public abstract class GameCharacter : MonoBehaviour
 	/// assumed to be at a 360 degree angle.
 	/// </para>
 	/// </summary>
-	protected float _nextToThreshold = 1.8f;
+	protected float _nextToThreshold = 1.0f;
 
 	/// <summary>
 	/// The movement speed of this character. Higher numbers
@@ -537,8 +537,8 @@ public abstract class GameCharacter : MonoBehaviour
     {
 		this.initializeHealth ();
         this._inventory = new Inventory(1);
-        this._leftHandInventory = new Inventory(1);
-        this._rightHandInventory = new Inventory(1);
+        this._leftHandInventory = new Inventory(1, true);
+        this._rightHandInventory = new Inventory(1, true);
     }
 
 	protected virtual void Update()

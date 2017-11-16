@@ -82,6 +82,11 @@ namespace Assets.com.stratodolphin.overworldrpg.Characters.Spawning
 			GameInfo.MainPlayer.IsAlive = true;
 		}
 
+		/// <summary>
+		/// Spawns the specified player at this campfire. This method will set the
+		/// position and rotation of the player on the game map.
+		/// </summary>
+		/// <param name="player">Player.</param>
 		public void respawn(GamePlayer player) {
 			Debug.Log ("Respawning. " + player.IsAlive.ToString());
 			if (player.IsAlive == false) {

@@ -55,10 +55,6 @@ public class GamePlayer : FeistyGameCharacter
 			foreach (Transform thing in this.gameObject.GetComponentsInChildren<Transform>()) {
 				if (thing.name.StartsWith ("storable_")) {
 					this.addToInventory (thing);
-					Destroy (item);
-					//Supposed to destroy the item's collider
-					Destroy (item.GetComponent<Collider>());
-
 				}
 				//takes off the GUI
 				temp = null;
@@ -96,17 +92,15 @@ public class GamePlayer : FeistyGameCharacter
 	/// <param name="storableTransform">Storable transform.</param>
 	protected void addToInventory(Transform storableTransform) {
 		Storable storableScript = storableTransform.GetComponent<Storable> ();
+		//Debug.Log ("type: " + storableScript.Type);
 		if (storableScript.Type == Storable.TYPE_RANGE) {
+			//Debug.Log ("hand: left.");
 			this._leftHandInventory.add (storableScript);
 		} else if (storableScript.Type == Storable.TYPE_MELEE) {
-			if (this._leftHandInventory.hasItemType(Storable.TYPE_RANGE)) {
-				// If the player has a bow, just put the melee weapon
-				// in the regular inventory for now.
-				this._inventory.add (storableScript);
-			} else {
-				this._rightHandInventory.add (storableScript);
-			}
+			//Debug.Log ("hand: right.");
+			this._rightHandInventory.add (storableScript);
 		} else {
+			//Debug.Log ("regular inventory.");
 			this._inventory.add (storableScript);
 		}
 	}

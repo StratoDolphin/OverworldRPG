@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using com.stratodolphin.overworldrpg.Characters;
 using Assets.com.stratodolphin.overworldrpg.Characters;
-using AggregatGames.AI.Pathfinding;
 using System;
-using System.Threading;
 
 /// <summary>
 /// Extension of FeistyGameCharacter that adds actual AI to the
@@ -39,6 +37,11 @@ public class EnemyAI : FeistyGameCharacter {
     #endregion
 
     #region Private Variables
+	/// <summary>
+	/// The spawner that this enemy is attached to and spawned from.
+	/// </summary>
+	protected EnemySpawner _attachedSpawner;
+
     /// <summary>
     /// The character that this AI will attempt to attack. This
     /// will dictate the AI's actions such as who it approaches
@@ -52,38 +55,19 @@ public class EnemyAI : FeistyGameCharacter {
     /// this is the range of its bow.
     /// </summary>
     protected float _archeryRange = 10f;
-
-    #region Pathfinding
-    /// <summary>
-    /// The thread that the pathfinding process is run on. This
-    /// thread is a background process that is meant to run
-    /// continuously whether there is a target or not.
-    /// </summary>
-    protected Thread _pathfindingThread;
-
-    /// <summary>
-    /// Determines weather or not the AI wants to run the
-    /// pathfinding routine. This is only to be set to false
-    /// if the thread is to be killed altogether. There is no
-    /// way to restart the pathfinding thread.
-    /// </summary>
-    protected volatile bool _pathfindingThreadControl;
-
-	/// <summary>
-	/// The pathfinder. Provides methods that enable pathfinding
-	/// for this ai.
-	/// </summary>
-	protected volatile Pathfinder _pathfinder;
-
-	protected volatile PathKnot[] _knots;
-
-	/// <summary>
-	/// The index in the list of PathKnots for the current knot.
-	/// </summary>
-	protected volatile int _knotIndex = -1;
-	#endregion
-
     #endregion
+
+	#region Spawning
+	/// <summary>
+	/// Sets the spawner that this enemy is attached to and add
+	/// this enemy to that spawners list of attached enemies.
+	/// </summary>
+	/// <param name="spawner">Spawner.</param>
+	public void setSpawner(EnemySpawner spawner) {
+		this._attachedSpawner = spawner;
+		this._attachedSpawner.addEnemyToAttachedEnemies (this);
+	}
+	#endregion
 
     #region Rules
     /// <summary>
@@ -143,7 +127,8 @@ public class EnemyAI : FeistyGameCharacter {
     /// </summary>
     protected virtual void think() {
 		this.resetDesires ();
-		if (this._leftHandInventory.hasItemType(Storable.TYPE_MELEE))
+		//Debug.Log ("left: " + this._leftHandInventory.ToString () + " but has range: " + this._leftHandInventory.hasItemType (Storable.TYPE_RANGE).ToString());
+		if (this._leftHandInventory.hasItemType(Storable.TYPE_RANGE))
         {
 			//Debug.Log ("archer");
             this.thinkAsArcher();
@@ -255,17 +240,15 @@ public class EnemyAI : FeistyGameCharacter {
 	/// <param name="storableTransform">Storable transform.</param>
 	protected void addToInventory(Transform storableTransform) {
 		Storable storableScript = storableTransform.GetComponent<Storable> ();
+		//Debug.Log ("type: " + storableScript.Type);
 		if (storableScript.Type == Storable.TYPE_RANGE) {
+			//Debug.Log ("hand: left.");
 			this._leftHandInventory.add (storableScript);
 		} else if (storableScript.Type == Storable.TYPE_MELEE) {
-			if (this._leftHandInventory.hasItemType(Storable.TYPE_RANGE)) {
-				// If the player has a bow, just put the melee weapon
-				// in the regular inventory for now.
-				this._inventory.add (storableScript);
-			} else {
-				this._rightHandInventory.add (storableScript);
-			}
+			//Debug.Log ("hand: right.");
+			this._rightHandInventory.add (storableScript);
 		} else {
+			//Debug.Log ("regular inventory.");
 			this._inventory.add (storableScript);
 		}
 	}
