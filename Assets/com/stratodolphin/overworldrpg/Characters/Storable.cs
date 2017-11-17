@@ -36,6 +36,11 @@ namespace Assets.com.stratodolphin.overworldrpg.Characters
         /// </summary>
         public int Type;
 
+		/// <summary>
+		/// Name of item that this <see cref="Storable"/> is. 
+		/// </summary>
+		public string Name;
+
 		public Inventory Owner {
 			get { return this._owner; }
 			set { this._owner = value; }
@@ -48,7 +53,7 @@ namespace Assets.com.stratodolphin.overworldrpg.Characters
 		/// </summary>
 		/// <returns>The string.</returns>
 		public override String ToString() {
-			return this.Type.ToString () + " item";
+			return this.Name;
 		}
 		#endregion
     }

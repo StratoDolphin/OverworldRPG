@@ -114,7 +114,7 @@ namespace Assets.com.stratodolphin.overworldrpg.Characters
         /// </para>
         /// </summary>
         /// <param name="items"></param>
-        public void add(Inventory inventory)
+		public void add(Inventory inventory)
         {
             int i = inventory.count() - 1;
             while (!this.isFull() && i >= 0)
@@ -134,6 +134,29 @@ namespace Assets.com.stratodolphin.overworldrpg.Characters
         {
             this._items.RemoveAt(i);
         }
+
+		/// <summary>
+		/// Sorts the list by name.
+		/// </summary>
+		/// <param name="i"></param>
+		public int numOfItem (string invName) {
+			return new List<Storable> (from item in this._items
+			                          where item.Name == invName
+				select item).Count ();
+		}
+
+		public List<Storable> uniqueItems() {
+			List<Storable> unique = _items;
+			for (int i = 0; i < this.all ().Count (); i++) {
+				string curName = this.all () [i].Name;
+				for (int j = i + 1; j < this.all ().Count (); j++) {
+					if (curName == this.all () [j].Name) {
+						unique.Remove(this.all()[j]);
+					}
+				}
+			}
+			return unique;
+		}
 
         /// <summary>
         /// Returns all items in this inventory.
@@ -174,9 +197,11 @@ namespace Assets.com.stratodolphin.overworldrpg.Characters
 		/// </summary>
 		/// <returns>The string.</returns>
 		public override String ToString() {
+			List<Storable> temp = this.uniqueItems ();
 			String val = "[";
-			for (int i = 0; i < (this.all ().Count); i++) {
-				val = val + (this.all () [i].ToString()) + ", ";
+			for (int i = 0; i < (temp.Count()); i++) {
+				int amount = this.numOfItem (temp[i].Name);
+				val = val + (temp[i].Name) + " " + amount + "\n";
 			}
 			val = val + "]";
 			return val;

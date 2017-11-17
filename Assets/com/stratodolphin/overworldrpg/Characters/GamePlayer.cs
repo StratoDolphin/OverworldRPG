@@ -134,7 +134,7 @@ public class GamePlayer : FeistyGameCharacter
 	void OnGUI()
 	{
 		if (temp != null) {
-			GUI.Box (new Rect (0, 400, 1000, 200), temp);
+			GUI.Box (new Rect (0, 400, 1200, 200), temp);
 		} 
 	}
 }
