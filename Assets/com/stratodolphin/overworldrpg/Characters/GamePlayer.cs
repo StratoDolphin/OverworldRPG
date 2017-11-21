@@ -17,6 +17,12 @@ public class GamePlayer : FeistyGameCharacter
 	/// working and alive.
 	/// </summary>
 	public bool IsAlive = false;
+
+	/// <summary>
+	/// The main camera that renders the game from the main players
+	/// first person point of view.
+	/// </summary>
+	public Camera MainCamera;
 	#endregion
 
 	/// <summary>

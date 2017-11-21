@@ -2,6 +2,7 @@
 using System.Collections;
 using com.stratodolphin.overworldrpg.Characters;
 using Assets.com.stratodolphin.overworldrpg.Characters;
+using System;
 
 /// <summary>
 /// Represents the contoller for basic operations on a character
@@ -107,12 +108,17 @@ public abstract class GameCharacter : MonoBehaviour
 	/// Amount of hit points that this character has left before he
 	/// is dead.
 	/// </summary>
-	protected int _hitPoints;
+	protected float _hitPoints;
 
 	/// <summary>
 	/// The initial amount of hitpoints that this character has.
 	/// </summary>
-	protected int _maxHitPoints = 100;
+	protected float _maxHitPoints = 100;
+
+	/// <summary>
+	/// The health bar that is displayed for this character.
+	/// </summary>
+	public HealthBar _healthBar;
 
     /// <summary>
     /// The inventory of this game character. This contains all
@@ -141,7 +147,7 @@ public abstract class GameCharacter : MonoBehaviour
 	/// Public accessor for the initial amount of hitpoints that
 	/// this character has.
 	/// </summary>
-	public int MaxHitPoints {
+	public float MaxHitPoints {
 		get { return this._maxHitPoints; }
 		set { this._maxHitPoints = value; }
 	}
@@ -293,13 +299,24 @@ public abstract class GameCharacter : MonoBehaviour
 	}
 
 	/// <summary>
+	/// <para>
 	/// Initializes the hitpoints of this character by setting <see cref="_hitpoints"/>
 	/// to the value of the default <see cref="_maxHitPoints"/>. This should only be
 	/// used when initializing the character.
+	/// </para>
+	/// <para>
+	/// This also initializes the health bar.
+	/// </para>
 	/// </summary>
 	/// <param name="startingHealth">Starting health.</param>
 	protected void initializeHealth() {
 		this._hitPoints = this._maxHitPoints;
+		try {
+			this._healthBar = this.transform.Find("Camera").Find ("playerHealth").GetComponent<HealthBar> ();
+		}
+		catch (NullReferenceException e) {
+			this._healthBar = this.transform.Find("body").Find ("playerHealth").GetComponent<HealthBar> ();
+		}
 	}
 	#endregion
 
@@ -423,6 +440,44 @@ public abstract class GameCharacter : MonoBehaviour
     /// on the hitpoints it has left.
     /// </summary>
     protected bool IsDead { get { return this._hitPoints <= 0; } }
+
+	/// <summary>
+	/// Decreases the health and refreshes the health bar.
+	/// </summary>
+	/// <param name="healthValue">Health value.</param>
+	public void decreaseHealth (float healthValue) {
+		this._hitPoints -= healthValue;
+		if (this._hitPoints < 0) {
+			this._hitPoints = 0;
+		} else {
+			refreshHealthBarDisplay ();
+		}
+
+	}
+
+	/// <summary>
+	/// Increases the health and refreshes the health bar.
+	/// </summary>
+	/// <param name="healthValue">Health value.</param>
+	public void increaseHealth(float healthValue) {
+		this._hitPoints += healthValue;
+		if (this._hitPoints > 100) {
+			this._hitPoints = 100;
+		} else {
+			refreshHealthBarDisplay ();
+		}
+	}
+
+	/// <summary>
+	///  Refreshes the health bar on the screen to match the current health.
+	/// </summary>
+	/// <param name="npcHealth">Npc health.</param>
+	protected void refreshHealthBarDisplay() {
+		//calculates health gained; if cur = 80 / 100 then 0.8f
+		float healthPercent = this._hitPoints / this._maxHitPoints;
+		//npcHealth has to be a value between 0 and 1; max health has scale of 1
+		_healthBar.setHealthPercent(healthPercent);
+	}
     #endregion
 
     #region Animated Actions
@@ -544,7 +599,11 @@ public abstract class GameCharacter : MonoBehaviour
 	protected virtual void Update()
     {
         this.checkForDeath ();
-        this.executeDesires ();
+		this.executeDesires ();
+
+		if (Input.GetKeyDown (KeyCode.G)) {
+			this.decreaseHealth (10);
+		}
 	}
 	#endregion
 }
