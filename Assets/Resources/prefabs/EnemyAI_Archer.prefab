@@ -99,6 +99,7 @@ GameObject:
   - component: {fileID: 33432924089077312}
   - component: {fileID: 23777024270330198}
   - component: {fileID: 114195870895875526}
+  - component: {fileID: 114547476639057024}
   m_Layer: 0
   m_Name: storable_sword
   m_TagString: Untagged
@@ -994,6 +995,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4877467228966402}
   - component: {fileID: 114106787527259402}
+  - component: {fileID: 114571126205992852}
   m_Layer: 0
   m_Name: storable_bow
   m_TagString: Untagged
@@ -1698,7 +1700,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1529532841263182}
-  m_LocalRotation: {x: 0.53267515, y: 0.07034045, z: 0.83613265, w: -0.11041513}
+  m_LocalRotation: {x: 0.5326752, y: 0.070340455, z: 0.83613276, w: -0.110415146}
   m_LocalPosition: {x: 0.000022271464, y: -0.00006150465, z: 0.026027026}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -2061,7 +2063,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1337382402901810}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 432.8401, y: 0, z: 469.7002}
+  m_LocalPosition: {x: 451.90332, y: 0, z: 446.2222}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4032998980979040}
@@ -2791,6 +2793,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 1
+--- !u!114 &114547476639057024
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1067743180877062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f399be4263a416449a5c2b081f0b5c1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Strength: 5
+--- !u!114 &114571126205992852
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1702452050435754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f399be4263a416449a5c2b081f0b5c1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Strength: 5
 --- !u!114 &114586745644175070
 MonoBehaviour:
   m_ObjectHideFlags: 1

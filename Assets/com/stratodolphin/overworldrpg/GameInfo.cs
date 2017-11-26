@@ -1,6 +1,6 @@
 ﻿using System;
 using UnityEngine;
-using Assets.com.stratodolphin.overworldrpg.Characters.Spawning;
+using com.stratodolphin.overworldrpg.Characters.Spawning;
 using System.Collections.Generic;
 
 namespace com.stratodolphin.overworldrpg.Characters
@@ -56,7 +56,11 @@ namespace com.stratodolphin.overworldrpg.Characters
 		/// Initialize the global variables in this class for the game.
 		/// </summary>
 		public static void initialize() {
-
+            foreach (GameObject bonfire in GameObject.FindGameObjectsWithTag("Bonfire"))
+            {
+                Bonfire fireObject = bonfire.GetComponent<Bonfire>();
+                Bonfires.Add(fireObject);
+            }
 		}
 	}
 }

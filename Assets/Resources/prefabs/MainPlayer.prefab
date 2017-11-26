@@ -100,6 +100,7 @@ GameObject:
   - component: {fileID: 114111433367339290}
   - component: {fileID: 114849649868917792}
   - component: {fileID: 114304246822525678}
+  - component: {fileID: 114383760370029352}
   m_Layer: 0
   m_Name: MainPlayer
   m_TagString: Untagged
@@ -2476,7 +2477,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1902644882852196}
-  m_LocalRotation: {x: 0.53267515, y: 0.07034045, z: 0.83613265, w: -0.11041513}
+  m_LocalRotation: {x: 0.5326752, y: 0.070340455, z: 0.83613276, w: -0.110415146}
   m_LocalPosition: {x: 0.000022271464, y: -0.00006150465, z: 0.026027026}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -2822,6 +2823,18 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114383760370029352
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1083308741613642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f5621e7da0b54e4aabf17c24bc13132, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpawnUIToggle: 109
 --- !u!114 &114394198614858140
 MonoBehaviour:
   m_ObjectHideFlags: 1

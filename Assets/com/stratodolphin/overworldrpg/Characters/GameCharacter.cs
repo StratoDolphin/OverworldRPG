@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
 using com.stratodolphin.overworldrpg.Characters;
-using Assets.com.stratodolphin.overworldrpg.Characters;
+using com.stratodolphin.overworldrpg.Characters.Inventory;
 using System;
 
 /// <summary>
@@ -151,6 +150,16 @@ public abstract class GameCharacter : MonoBehaviour
 		get { return this._maxHitPoints; }
 		set { this._maxHitPoints = value; }
 	}
+
+    /// <summary>
+    /// Public Accessor for <see cref="_hitPoints"/>. The setter
+    /// calls <see cref="increaseHealth(float)"/>.
+    /// </summary>
+    public float Health
+    {
+        get { return this._maxHitPoints; }
+        set { this.increaseHealth(value); }
+    }
 	#endregion
 
     #region Relationship To Objects
@@ -449,9 +458,8 @@ public abstract class GameCharacter : MonoBehaviour
 		this._hitPoints -= healthValue;
 		if (this._hitPoints < 0) {
 			this._hitPoints = 0;
-		} else {
-			refreshHealthBarDisplay ();
 		}
+        refreshHealthBarDisplay ();
 
 	}
 
@@ -463,9 +471,8 @@ public abstract class GameCharacter : MonoBehaviour
 		this._hitPoints += healthValue;
 		if (this._hitPoints > 100) {
 			this._hitPoints = 100;
-		} else {
-			refreshHealthBarDisplay ();
 		}
+        refreshHealthBarDisplay ();
 	}
 
 	/// <summary>
@@ -600,10 +607,6 @@ public abstract class GameCharacter : MonoBehaviour
     {
         this.checkForDeath ();
 		this.executeDesires ();
-
-		if (Input.GetKeyDown (KeyCode.G)) {
-			this.decreaseHealth (10);
-		}
 	}
 	#endregion
 }

@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 33245383242130514}
   - component: {fileID: 23481364046832790}
   - component: {fileID: 114771500295736206}
+  - component: {fileID: 114081911472589718}
   m_Layer: 0
   m_Name: storable_sword
   m_TagString: Untagged
@@ -36,7 +37,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1392578549841626}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0.482, y: 0.632, z: 0.068}
+  m_LocalPosition: {x: 453.54126, y: 0.3516442, z: 447.0806}
   m_LocalScale: {x: 1.0634294, y: 1.0634298, z: 1.0634298}
   m_Children: []
   m_Father: {fileID: 0}
@@ -81,6 +82,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1392578549841626}
   m_Mesh: {fileID: 4300000, guid: 03a0a1cfefec7a244b7722a322fde50b, type: 3}
+--- !u!114 &114081911472589718
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1392578549841626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f399be4263a416449a5c2b081f0b5c1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Strength: 10
 --- !u!114 &114771500295736206
 MonoBehaviour:
   m_ObjectHideFlags: 1

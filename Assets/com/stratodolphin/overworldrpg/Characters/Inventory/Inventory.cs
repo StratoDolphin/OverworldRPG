@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace Assets.com.stratodolphin.overworldrpg.Characters
+namespace com.stratodolphin.overworldrpg.Characters.Inventory
 {
     public class Inventory
     {
@@ -21,6 +21,13 @@ namespace Assets.com.stratodolphin.overworldrpg.Characters
 		/// body clothes (true if so).
 		/// </summary>
 		private bool _isVisibleInventory = false;
+
+        /// <summary>
+        /// The game character that owns this inventory. If this is null,
+        /// then that means this is just a storage spot, not an inventory
+        /// of a person.
+        /// </summary>
+        protected GameCharacter _owner;
         #endregion
 
         #region Public Attributes
@@ -29,6 +36,12 @@ namespace Assets.com.stratodolphin.overworldrpg.Characters
         /// this inventory may hold.
         /// </summary>
         public int Limit;
+
+        /// <summary>
+        /// Designates whether or not a game character owns this inventory
+        /// or if the inventory is simply a storage spot in the world.
+        /// </summary>
+        public bool IsCharacterInventoy { get { return this._owner != null; } }
         #endregion
 
         #region Constructors

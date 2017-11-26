@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using com.stratodolphin.overworldrpg.Characters;
-using Assets.com.stratodolphin.overworldrpg.Characters;
+using com.stratodolphin.overworldrpg.Characters.Inventory;
 using System;
 
 /// <summary>

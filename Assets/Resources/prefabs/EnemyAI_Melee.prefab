@@ -846,6 +846,7 @@ GameObject:
   - component: {fileID: 33873440830350116}
   - component: {fileID: 23699664796752636}
   - component: {fileID: 114521116453301004}
+  - component: {fileID: 114708433980131474}
   m_Layer: 0
   m_Name: storable_sword
   m_TagString: Untagged
@@ -2519,7 +2520,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1182022413444022}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 424.9792, y: 0, z: 470.8177}
+  m_LocalPosition: {x: 444.6933, y: 0, z: 445.69293}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4623336037362548}
@@ -2727,6 +2728,18 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+--- !u!114 &114708433980131474
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1562020780549962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f399be4263a416449a5c2b081f0b5c1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Strength: 10
 --- !u!114 &114870423201604600
 MonoBehaviour:
   m_ObjectHideFlags: 1

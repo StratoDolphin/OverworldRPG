@@ -2,9 +2,8 @@
 
 using UnityEngine;
 using System.Collections;
-using com.stratodolphin.overworldrpg.Characters;
-using Assets.com.stratodolphin.overworldrpg.Characters;
-using Assets.com.stratodolphin.overworldrpg.Characters.Spawning;
+using com.stratodolphin.overworldrpg.Characters.Inventory;
+using com.stratodolphin.overworldrpg.Characters.Spawning;
 
 public class GamePlayer : FeistyGameCharacter
 {
@@ -33,7 +32,7 @@ public class GamePlayer : FeistyGameCharacter
 	public Bonfire BonfireLocation;
 
 	private string pressR;
-	private string temp;
+	private string uiMessageString;
 	private string communicator;
 	//need to pass the item into the Inventory
 	protected GameObject item;
@@ -48,7 +47,12 @@ public class GamePlayer : FeistyGameCharacter
 
 	// Update is called once per frame
 	void Update () {
-		if (communicator == "pressR" && Input.GetKeyDown (KeyCode.R)) {
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            this.decreaseHealth(10);
+        }
+
+        if (communicator == "pressR" && Input.GetKeyDown (KeyCode.R)) {
 			//Get the tag of the GameObject and send it to the Player's inventory
 			/*
 			 * The Inventory GUI (not made yet) will have all of the items that the player has collected.
@@ -60,10 +64,10 @@ public class GamePlayer : FeistyGameCharacter
 			item.transform.parent = transform;
 			foreach (Transform thing in this.gameObject.GetComponentsInChildren<Transform>()) {
 				if (thing.name.StartsWith ("storable_")) {
-					this.addToInventory (thing);
+					this.addItemToInventory (thing);
 				}
 				//takes off the GUI
-				temp = null;
+				uiMessageString = null;
 			}
 		} 
 
@@ -72,7 +76,7 @@ public class GamePlayer : FeistyGameCharacter
 		} 
 
 		if (Input.GetKey (KeyCode.P)) {
-			temp = null;
+			uiMessageString = null;
 		}
 
 		if (Input.GetKeyDown(KeyCode.K))
@@ -84,35 +88,42 @@ public class GamePlayer : FeistyGameCharacter
 		base.Update ();
 	}
 
-	/// <summary>
-	/// <para>
-	/// Adds the storableTransform to this ai's inventory.
-	/// </para>
-	/// <para>
-	/// If storableTransform is a ranged weapon, it is put into this
-	/// characters left hand. If it is a melee weapon, it's put into
-	/// the right hand. Otherwise, it's just put in this characters
-	/// regular inventory.
-	/// </para>
-	/// </summary>
-	/// <param name="storableTransform">Storable transform.</param>
-	protected void addToInventory(Transform storableTransform) {
-		Storable storableScript = storableTransform.GetComponent<Storable> ();
-		//Debug.Log ("type: " + storableScript.Type);
-		if (storableScript.Type == Storable.TYPE_RANGE) {
-			//Debug.Log ("hand: left.");
-			this._leftHandInventory.add (storableScript);
-		} else if (storableScript.Type == Storable.TYPE_MELEE) {
-			//Debug.Log ("hand: right.");
-			this._rightHandInventory.add (storableScript);
-		} else {
-			//Debug.Log ("regular inventory.");
-			this._inventory.add (storableScript);
-		}
-	}
+    /// <summary>
+    /// <para>
+    /// Adds the storableTransform to this ai's inventory.
+    /// </para>
+    /// <para>
+    /// If storableTransform is a ranged weapon, it is put into this
+    /// characters left hand. If it is a melee weapon, it's put into
+    /// the right hand. Otherwise, it's just put in this characters
+    /// regular inventory.
+    /// </para>
+    /// </summary>
+    /// <param name="storableTransform">Storable transform.</param>
+    protected void addItemToInventory(Transform storableTransform)
+    {
+        Storable storableScript = storableTransform.GetComponent<Storable>();
+        //Debug.Log ("type: " + storableScript.Type);
+        if (storableScript.Type == Storable.TYPE_RANGE)
+        {
+            //Debug.Log ("hand: left.");
+            this._leftHandInventory.add(storableScript);
+        }
+        else if (storableScript.Type == Storable.TYPE_MELEE)
+        {
+            //Debug.Log ("hand: right.");
+            this._rightHandInventory.add(storableScript);
+        }
+        else
+        {
+            //Debug.Log ("regular inventory.");
+            this._inventory.add(storableScript);
+            storableScript.ApplyActionsOnPickup(this);
+        }
+    }
 
-	public void showInventory() {
-		temp = "<color=white>" + this._inventory.ToString () + "</color>";
+    public void showInventory() {
+		uiMessageString = "<color=white>" + this._inventory.ToString () + "</color>";
 	}
 
 	void OnTriggerEnter(Collider otherObjective)
@@ -120,7 +131,7 @@ public class GamePlayer : FeistyGameCharacter
 		pressR = "Press R to collect";
 		if (otherObjective.tag == "Item" && !(Input.GetKeyDown (KeyCode.R))) {
 			communicator = "pressR";
-			temp = "<color=white>" + pressR + "</color>";
+			uiMessageString = "<color=white>" + pressR + "</color>";
 			//collects the gameObject and name to pass it to inventory
 			item = otherObjective.gameObject;
 			inventoryName = otherObjective.gameObject.name;
@@ -128,13 +139,13 @@ public class GamePlayer : FeistyGameCharacter
 	}
 	void OnTriggerExit(Collider other)
 	{
-		temp = null;
+		uiMessageString = null;
 		communicator = "";
 	}
 	void OnGUI()
 	{
-		if (temp != null) {
-			GUI.Box (new Rect (0, 400, 1000, 200), temp);
+		if (uiMessageString != null) {
+			GUI.Box (new Rect (0, 400, 1000, 200), uiMessageString);
 		} 
 	}
 }

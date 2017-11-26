@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using com.stratodolphin.overworldrpg.Characters;
 
-namespace Assets.com.stratodolphin.overworldrpg.Characters.Spawning
+namespace com.stratodolphin.overworldrpg.Characters.Spawning
 {
 	public class Respawner : MonoBehaviour {
 
@@ -28,6 +28,7 @@ namespace Assets.com.stratodolphin.overworldrpg.Characters.Spawning
 
 			if (otherObject.gameObject.GetInstanceID () == GameInfo.MainPlayer.gameObject.GetInstanceID ()) {
 				((GamePlayer)otherObject.GetComponent<GamePlayer> ()).BonfireLocation = null;
+                GameLogic.SpawnUI.hide();
 			}
 		}
 	}
