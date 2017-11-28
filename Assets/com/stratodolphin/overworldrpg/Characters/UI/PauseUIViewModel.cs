@@ -22,6 +22,8 @@ namespace com.stratodolphin.overworldrpg.Characters.UI
 			inventory.GetComponent<Button>().onClick.AddListener(() => { onClickPauseGUI("Inventory"); });
 			GameObject stats = createButtonSelection (this.PauseSelectionButtonPrefab, "Stats");
 			stats.GetComponent<Button>().onClick.AddListener(() => { onClickPauseGUI("Stats"); });
+			GameObject cancel = createButtonSelection (this.PauseSelectionButtonPrefab, "Cancel");
+			cancel.GetComponent<Button>().onClick.AddListener(() => { onClickPauseGUI("Cancel"); });
 		}
 
 		/// <summary>
@@ -65,11 +67,13 @@ namespace com.stratodolphin.overworldrpg.Characters.UI
 		public void onClickPauseGUI(string name)
 		{
 			//Depending on the button name, open up its corresponding GUI
-			if(name.Equals("Inventory")) {
+			if (name.Equals ("Inventory")) {
 				//get showInventory() from GamePlayer
-				GameInfo.MainPlayer.showInventory();
-			} else if(name.Equals("Stats")) {
+				GameInfo.MainPlayer.showInventory ();
+			} else if (name.Equals ("Stats")) {
 				//have to make a stats GUI and show it
+			} else if (name.Equals ("Cancel")) {
+				GameLogic.PauseUI.hide ();
 			}
 			GameLogic.PauseUI.hide();
 			return;

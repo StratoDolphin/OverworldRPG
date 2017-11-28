@@ -74,10 +74,6 @@ public class GamePlayer : FeistyGameCharacter
 			}
 		} 
 
-		if (Input.GetKey (KeyCode.I)) {
-			showInventory ();
-		} 
-
 		if (Input.GetKey (KeyCode.P)) {
 			uiMessageString = null;
 		}
