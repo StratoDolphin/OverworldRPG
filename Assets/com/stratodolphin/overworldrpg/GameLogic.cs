@@ -53,10 +53,45 @@ namespace com.stratodolphin.overworldrpg.Characters
         }
 		#endregion
 
+		#region Pausing
+		/// <summary>
+		/// Getter for the UI canvas that allows user to pause at any
+		/// time.
+		/// </summary>
+		/// <remarks>
+		/// I cache it so that, if it is disactive when it's hidden, it
+		/// can still be retreived.
+		/// </remarks>
+		private static PauseUIViewModel _pauseUI;
+		public static PauseUIViewModel PauseUI
+		{
+			get {
+				if (_pauseUI != null) { return _pauseUI; }
+				PauseUIViewModel ui = GameObject.Find("PauseUICanvas").GetComponent<PauseUIViewModel>();
+				_pauseUI = ui;
+				return _pauseUI;
+			}
+		}
+
+		/// <summary>
+		/// Shows or hides the Pause UI Canvas.
+		/// </summary>
+		/// <param name="visibility"></param>
+		public static void togglePauseUIVisibility() {
+			if (PauseUI.gameObject.activeSelf)
+			{
+				PauseUI.hide();
+			} else
+			{
+				PauseUI.show();
+			}
+		}
+		#endregion
 		// Use this for initialization
 		void Start () {
 			GameInfo.initialize ();
             SpawnUI.initialize();
+			PauseUI.initialize ();
 		}
 		
 		// Update is called once per frame

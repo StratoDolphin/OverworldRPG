@@ -66,8 +66,8 @@ namespace com.stratodolphin.overworldrpg.Characters.UI
         protected Vector2[] getButtonStartPosition(int buttonIndex)
         {
             // Initial variables
-            int buttonXStart = -355;
-            int buttonYStart = -60;
+            int buttonXStart = -105;
+            int buttonYStart = -50;
             int xPadding = 10;
             int yPadding = 15;
             int buttonsPerColumn = 4;
@@ -90,11 +90,13 @@ namespace com.stratodolphin.overworldrpg.Characters.UI
         }
 
         /// <summary>
-        /// Creates all buttons that represent bonfires that the main
+        /// Creates the background, title, and buttons that represent bonfires that the main
         /// character can spawn at.
         /// </summary>
         protected void createButtons()
         {
+			GameObject background = createBonfireSelection (this.SpawnSelectionButtonPrefab, true);
+			GameObject titleButton = createBonfireSelection (this.SpawnSelectionButtonPrefab, false);
             for (int i = 0; i < GameInfo.Bonfires.Count; i ++)
             {
                 if (!GameInfo.Bonfires[i].IsActivated) { continue; }
@@ -102,6 +104,30 @@ namespace com.stratodolphin.overworldrpg.Characters.UI
                 createdButton.GetComponent<Button>().onClick.AddListener(() => { Click_SpawnOrRespawn(createdButton.GetComponent<SpawnSelectionButton>()); });
             }
         }
+
+		/// <summary>
+		/// Creates a title button with directions the user can follow...
+		/// Also creates a background that makes it look cool.
+		/// </summary>
+		/// <param name="buttonPrefab"></param>
+		/// <param name="background"></param>
+		/// <returns></returns>
+		protected GameObject createBonfireSelection(GameObject buttonPrefab, bool background) {
+			Vector2 buttonSize;
+			Vector2 positioning = new Vector2(550, 400);
+			if (background == true) {
+				buttonSize = new Vector2 (400, 50);
+			} else {
+				buttonSize = new Vector2 (2, 2);
+			}
+			GameObject button = Object.Instantiate(buttonPrefab);
+			button.GetComponentInChildren<Text>().text = "Choose a Bonfire";
+			RectTransform rectTransform = button.GetComponent<RectTransform>();
+			rectTransform.SetParent(this.gameObject.transform);
+			button.transform.position = positioning;
+			button.transform.localScale = buttonSize;
+			return button;
+		}
 
         /// <summary>
         /// Creates a single bonfire selection button that the main

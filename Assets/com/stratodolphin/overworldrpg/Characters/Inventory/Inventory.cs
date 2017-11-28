@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace com.stratodolphin.overworldrpg.Characters.Inventory
 {
-    public class Inventory
+	public class Inventory
     {
         #region Private Variables
 		/// <summary>
