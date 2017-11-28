@@ -1,0 +1,857 @@
+fileFormatVersion: 2
+guid: 7d8cea29e6c87524392dc68dd98a5ca9
+timeCreated: 1511881748
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 21
+  fileIDToRecycleName:
+    100000: Bip001
+    100002: Bip001 Footsteps
+    100004: Bip001 Head
+    100006: Bip001 HeadNub
+    100008: Bip001 L Calf
+    100010: Bip001 L Clavicle
+    100012: Bip001 L Finger0
+    100014: Bip001 L Finger0Nub
+    100016: Bip001 L Foot
+    100018: Bip001 L Forearm
+    100020: Bip001 L Hand
+    100022: Bip001 L Thigh
+    100024: Bip001 L Toe0
+    100026: Bip001 L Toe01
+    100028: Bip001 L Toe02
+    100030: Bip001 L Toe0Nub
+    100032: Bip001 L UpperArm
+    100034: Bip001 Neck
+    100036: Bip001 Pelvis
+    100038: Bip001 R Calf
+    100040: Bip001 R Clavicle
+    100042: Bip001 R Finger0
+    100044: Bip001 R Finger0Nub
+    100046: Bip001 R Foot
+    100048: Bip001 R Forearm
+    100050: Bip001 R Hand
+    100052: Bip001 R Thigh
+    100054: Bip001 R Toe0
+    100056: Bip001 R Toe01
+    100058: Bip001 R Toe02
+    100060: Bip001 R Toe0Nub
+    100062: Bip001 R UpperArm
+    100064: Bip001 Spine
+    100066: Bip001 Spine1
+    100068: Bip001 Spine2
+    100070: Bip001 Spine3
+    100072: group
+    100074: Guy_12:group
+    100076: Guy_12:imagePlane2
+    100078: Guy_12:pasted__pCube1
+    100080: Guy_12:pasted__pCube1 1
+    100082: Guy_12:pCube029
+    100084: Guy_12:pCube1
+    100086: Guy_12:pCube10
+    100088: Guy_12:pCube11
+    100090: Guy_12:pCube12
+    100092: Guy_12:pCube13
+    100094: Guy_12:pCube14
+    100096: Guy_12:pCube15
+    100098: Guy_12:pCube16
+    100100: Guy_12:pCube17
+    100102: Guy_12:pCube17SmoothProxyGroup
+    100104: Guy_12:pCube2
+    100106: Guy_12:pCube28
+    100108: Guy_12:pCube3
+    100110: Guy_12:pCube4
+    100112: Guy_12:pCube5
+    100114: Guy_12:pCube6
+    100116: Guy_12:pCube8
+    100118: Guy_12:pCube9
+    100120: Guy_12:pCylinder1
+    100122: Guy_12:pCylinder2
+    100124: Guy_12:pCylinder3
+    100126: Guy_12:pCylinder4
+    100128: Guy_12:pCylinder5
+    100130: Guy_12:pCylinder6
+    100132: Guy_12:pCylinder7
+    100134: Guy_12:pCylinder8
+    100136: Guy_12:polySurface1
+    100138: Guy_12:polySurface2
+    100140: Guy_12:polySurface3
+    100142: Guy_12:polySurface4
+    100144: Guy_12:polySurface5
+    100146: Guy_12:transform1
+    100148: Guy_12:transform10
+    100150: Guy_12:transform11
+    100152: Guy_12:transform12
+    100154: Guy_12:transform13
+    100156: Guy_12:transform14
+    100158: Guy_12:transform15
+    100160: Guy_12:transform16
+    100162: Guy_12:transform17
+    100164: Guy_12:transform18
+    100166: Guy_12:transform19
+    100168: Guy_12:transform2
+    100170: Guy_12:transform20
+    100172: Guy_12:transform21
+    100174: Guy_12:transform22
+    100176: Guy_12:transform23
+    100178: Guy_12:transform24
+    100180: Guy_12:transform25
+    100182: Guy_12:transform26
+    100184: Guy_12:transform27
+    100186: Guy_12:transform28
+    100188: Guy_12:transform29
+    100190: Guy_12:transform3
+    100192: Guy_12:transform30
+    100194: Guy_12:transform31
+    100196: Guy_12:transform4
+    100198: Guy_12:transform5
+    100200: Guy_12:transform6
+    100202: Guy_12:transform7
+    100204: Guy_12:transform8
+    100206: Guy_12:transform9
+    100208: guy_13:group
+    100210: guy_13:imagePlane2
+    100212: guy_13:pasted__pCube1
+    100214: guy_13:pasted__pCube1 1
+    100216: guy_13:pCube1
+    100218: guy_13:pCube10
+    100220: guy_13:pCube11
+    100222: guy_13:pCube12
+    100224: guy_13:pCube13
+    100226: guy_13:pCube14
+    100228: guy_13:pCube15
+    100230: guy_13:pCube16
+    100232: guy_13:pCube17
+    100234: guy_13:pCube17 1
+    100236: guy_13:pCube17SmoothProxyGroup
+    100238: guy_13:pCube2
+    100240: guy_13:pCube28
+    100242: guy_13:pCube3
+    100244: guy_13:pCube4
+    100246: guy_13:pCube5
+    100248: guy_13:pCube6
+    100250: guy_13:pCube8
+    100252: guy_13:pCube9
+    100254: guy_13:pCylinder1
+    100256: guy_13:pCylinder2
+    100258: guy_13:pCylinder3
+    100260: guy_13:pCylinder4
+    100262: guy_13:pCylinder5
+    100264: guy_13:pCylinder6
+    100266: guy_13:pCylinder7
+    100268: guy_13:pCylinder8
+    100270: guy_13:polySurface1
+    100272: guy_13:polySurface2
+    100274: guy_13:polySurface3
+    100276: guy_13:polySurface4
+    100278: guy_13:polySurface5
+    100280: guy_13:transform1
+    100282: guy_13:transform10
+    100284: guy_13:transform11
+    100286: guy_13:transform12
+    100288: guy_13:transform13
+    100290: guy_13:transform14
+    100292: guy_13:transform15
+    100294: guy_13:transform16
+    100296: guy_13:transform17
+    100298: guy_13:transform18
+    100300: guy_13:transform19
+    100302: guy_13:transform2
+    100304: guy_13:transform20
+    100306: guy_13:transform21
+    100308: guy_13:transform22
+    100310: guy_13:transform23
+    100312: guy_13:transform24
+    100314: guy_13:transform25
+    100316: guy_13:transform26
+    100318: guy_13:transform27
+    100320: guy_13:transform28
+    100322: guy_13:transform29
+    100324: guy_13:transform3
+    100326: guy_13:transform30
+    100328: guy_13:transform31
+    100330: guy_13:transform4
+    100332: guy_13:transform5
+    100334: guy_13:transform6
+    100336: guy_13:transform7
+    100338: guy_13:transform8
+    100340: guy_13:transform9
+    100342: Helmet:pCylinder1
+    100344: Helmet:polySurface1
+    100346: Helmet:polySurface10
+    100348: Helmet:polySurface11
+    100350: Helmet:polySurface12
+    100352: Helmet:polySurface13
+    100354: Helmet:polySurface14
+    100356: Helmet:polySurface2
+    100358: Helmet:polySurface2 1
+    100360: Helmet:polySurface3
+    100362: Helmet:polySurface4
+    100364: Helmet:polySurface5
+    100366: Helmet:polySurface8
+    100368: Helmet:polySurface9
+    100370: Helmet:transform1
+    100372: Helmet:transform10
+    100374: Helmet:transform11
+    100376: Helmet:transform12
+    100378: Helmet:transform13
+    100380: Helmet:transform2
+    100382: Helmet:transform3
+    100384: Helmet:transform4
+    100386: Helmet:transform5
+    100388: Helmet:transform6
+    100390: Helmet:transform7
+    100392: Helmet:transform8
+    100394: Helmet:transform9
+    100396: imagePlane2
+    100398: pasted__pCube1
+    100400: pasted__pCube1 1
+    100402: pCube093
+    100404: pCube095
+    100406: pCube097
+    100408: pCube1
+    100410: pCube10
+    100412: pCube11
+    100414: pCube12
+    100416: pCube13
+    100418: pCube14
+    100420: pCube15
+    100422: pCube16
+    100424: pCube17
+    100426: pCube17 1
+    100428: pCube17SmoothProxyGroup
+    100430: pCube2
+    100432: pCube28
+    100434: pCube3
+    100436: pCube4
+    100438: pCube40
+    100440: pCube41
+    100442: pCube42
+    100444: pCube43
+    100446: pCube44
+    100448: pCube45
+    100450: pCube46
+    100452: pCube47
+    100454: pCube49
+    100456: pCube5
+    100458: pCube57
+    100460: pCube58
+    100462: pCube59
+    100464: pCube6
+    100466: pCube60
+    100468: pCube65
+    100470: pCube66
+    100472: pCube67
+    100474: pCube68
+    100476: pCube69
+    100478: pCube70
+    100480: pCube71
+    100482: pCube72
+    100484: pCube73
+    100486: pCube8
+    100488: pCube81
+    100490: pCube82
+    100492: pCube83
+    100494: pCube84
+    100496: pCube85
+    100498: pCube86
+    100500: pCube9
+    100502: pCube91
+    100504: pCylinder010
+    100506: pCylinder1
+    100508: pCylinder2
+    100510: pCylinder3
+    100512: pCylinder4
+    100514: pCylinder5
+    100516: pCylinder6
+    100518: pCylinder7
+    100520: pCylinder8
+    100522: place3dTexture1
+    100524: place3dTexture2
+    100526: polySurface1
+    100528: polySurface10
+    100530: polySurface11
+    100532: polySurface12
+    100534: polySurface2
+    100536: polySurface2 1
+    100538: polySurface3
+    100540: polySurface4
+    100542: polySurface5
+    100544: polySurface6
+    100546: polySurface8
+    100548: polySurface9
+    100550: pPlane1
+    100552: pPlane2
+    100554: pSphere2
+    100556: pTorus1
+    100558: Sheild:pCube1
+    100560: Sheild:pCube2
+    100562: Sheild:transform1
+    100564: Sheild:transform2
+    100566: //RootNode
+    100568: Sword_2:pCube1
+    100570: Sword_2:pCylinder1
+    100572: Sword_2:pCylinder2
+    100574: Sword_2:pCylinder3
+    100576: Sword_2:pSphere2
+    100578: Sword_2:pSphere3
+    100580: Sword_2:pTorus1
+    100582: Sword_2:transform1
+    100584: Sword_2:transform2
+    100586: Sword_2:transform3
+    100588: Sword_2:transform4
+    100590: Sword_2:transform5
+    100592: Sword_2:transform6
+    100594: transform1
+    100596: transform10
+    100598: transform11
+    100600: transform12
+    100602: transform13
+    100604: transform14
+    100606: transform15
+    100608: transform16
+    100610: transform17
+    100612: transform18
+    100614: transform19
+    100616: transform2
+    100618: transform20
+    100620: transform21
+    100622: transform22
+    100624: transform23
+    100626: transform24
+    100628: transform25
+    100630: transform26
+    100632: transform27
+    100634: transform28
+    100636: transform29
+    100638: transform3
+    100640: transform30
+    100642: transform31
+    100644: transform32
+    100646: transform33
+    100648: transform34
+    100650: transform35
+    100652: transform36
+    100654: transform37
+    100656: transform38
+    100658: transform39
+    100660: transform4
+    100662: transform40
+    100664: transform41
+    100666: transform42
+    100668: transform43
+    100670: transform44
+    100672: transform45
+    100674: transform46
+    100676: transform47
+    100678: transform48
+    100680: transform49
+    100682: transform5
+    100684: transform50
+    100686: transform51
+    100688: transform52
+    100690: transform53
+    100692: transform54
+    100694: transform55
+    100696: transform56
+    100698: transform57
+    100700: transform58
+    100702: transform59
+    100704: transform6
+    100706: transform60
+    100708: transform61
+    100710: transform62
+    100712: transform63
+    100714: transform64
+    100716: transform65
+    100718: transform7
+    100720: transform8
+    100722: transform9
+    400000: Bip001
+    400002: Bip001 Footsteps
+    400004: Bip001 Head
+    400006: Bip001 HeadNub
+    400008: Bip001 L Calf
+    400010: Bip001 L Clavicle
+    400012: Bip001 L Finger0
+    400014: Bip001 L Finger0Nub
+    400016: Bip001 L Foot
+    400018: Bip001 L Forearm
+    400020: Bip001 L Hand
+    400022: Bip001 L Thigh
+    400024: Bip001 L Toe0
+    400026: Bip001 L Toe01
+    400028: Bip001 L Toe02
+    400030: Bip001 L Toe0Nub
+    400032: Bip001 L UpperArm
+    400034: Bip001 Neck
+    400036: Bip001 Pelvis
+    400038: Bip001 R Calf
+    400040: Bip001 R Clavicle
+    400042: Bip001 R Finger0
+    400044: Bip001 R Finger0Nub
+    400046: Bip001 R Foot
+    400048: Bip001 R Forearm
+    400050: Bip001 R Hand
+    400052: Bip001 R Thigh
+    400054: Bip001 R Toe0
+    400056: Bip001 R Toe01
+    400058: Bip001 R Toe02
+    400060: Bip001 R Toe0Nub
+    400062: Bip001 R UpperArm
+    400064: Bip001 Spine
+    400066: Bip001 Spine1
+    400068: Bip001 Spine2
+    400070: Bip001 Spine3
+    400072: group
+    400074: Guy_12:group
+    400076: Guy_12:imagePlane2
+    400078: Guy_12:pasted__pCube1
+    400080: Guy_12:pasted__pCube1 1
+    400082: Guy_12:pCube029
+    400084: Guy_12:pCube1
+    400086: Guy_12:pCube10
+    400088: Guy_12:pCube11
+    400090: Guy_12:pCube12
+    400092: Guy_12:pCube13
+    400094: Guy_12:pCube14
+    400096: Guy_12:pCube15
+    400098: Guy_12:pCube16
+    400100: Guy_12:pCube17
+    400102: Guy_12:pCube17SmoothProxyGroup
+    400104: Guy_12:pCube2
+    400106: Guy_12:pCube28
+    400108: Guy_12:pCube3
+    400110: Guy_12:pCube4
+    400112: Guy_12:pCube5
+    400114: Guy_12:pCube6
+    400116: Guy_12:pCube8
+    400118: Guy_12:pCube9
+    400120: Guy_12:pCylinder1
+    400122: Guy_12:pCylinder2
+    400124: Guy_12:pCylinder3
+    400126: Guy_12:pCylinder4
+    400128: Guy_12:pCylinder5
+    400130: Guy_12:pCylinder6
+    400132: Guy_12:pCylinder7
+    400134: Guy_12:pCylinder8
+    400136: Guy_12:polySurface1
+    400138: Guy_12:polySurface2
+    400140: Guy_12:polySurface3
+    400142: Guy_12:polySurface4
+    400144: Guy_12:polySurface5
+    400146: Guy_12:transform1
+    400148: Guy_12:transform10
+    400150: Guy_12:transform11
+    400152: Guy_12:transform12
+    400154: Guy_12:transform13
+    400156: Guy_12:transform14
+    400158: Guy_12:transform15
+    400160: Guy_12:transform16
+    400162: Guy_12:transform17
+    400164: Guy_12:transform18
+    400166: Guy_12:transform19
+    400168: Guy_12:transform2
+    400170: Guy_12:transform20
+    400172: Guy_12:transform21
+    400174: Guy_12:transform22
+    400176: Guy_12:transform23
+    400178: Guy_12:transform24
+    400180: Guy_12:transform25
+    400182: Guy_12:transform26
+    400184: Guy_12:transform27
+    400186: Guy_12:transform28
+    400188: Guy_12:transform29
+    400190: Guy_12:transform3
+    400192: Guy_12:transform30
+    400194: Guy_12:transform31
+    400196: Guy_12:transform4
+    400198: Guy_12:transform5
+    400200: Guy_12:transform6
+    400202: Guy_12:transform7
+    400204: Guy_12:transform8
+    400206: Guy_12:transform9
+    400208: guy_13:group
+    400210: guy_13:imagePlane2
+    400212: guy_13:pasted__pCube1
+    400214: guy_13:pasted__pCube1 1
+    400216: guy_13:pCube1
+    400218: guy_13:pCube10
+    400220: guy_13:pCube11
+    400222: guy_13:pCube12
+    400224: guy_13:pCube13
+    400226: guy_13:pCube14
+    400228: guy_13:pCube15
+    400230: guy_13:pCube16
+    400232: guy_13:pCube17
+    400234: guy_13:pCube17 1
+    400236: guy_13:pCube17SmoothProxyGroup
+    400238: guy_13:pCube2
+    400240: guy_13:pCube28
+    400242: guy_13:pCube3
+    400244: guy_13:pCube4
+    400246: guy_13:pCube5
+    400248: guy_13:pCube6
+    400250: guy_13:pCube8
+    400252: guy_13:pCube9
+    400254: guy_13:pCylinder1
+    400256: guy_13:pCylinder2
+    400258: guy_13:pCylinder3
+    400260: guy_13:pCylinder4
+    400262: guy_13:pCylinder5
+    400264: guy_13:pCylinder6
+    400266: guy_13:pCylinder7
+    400268: guy_13:pCylinder8
+    400270: guy_13:polySurface1
+    400272: guy_13:polySurface2
+    400274: guy_13:polySurface3
+    400276: guy_13:polySurface4
+    400278: guy_13:polySurface5
+    400280: guy_13:transform1
+    400282: guy_13:transform10
+    400284: guy_13:transform11
+    400286: guy_13:transform12
+    400288: guy_13:transform13
+    400290: guy_13:transform14
+    400292: guy_13:transform15
+    400294: guy_13:transform16
+    400296: guy_13:transform17
+    400298: guy_13:transform18
+    400300: guy_13:transform19
+    400302: guy_13:transform2
+    400304: guy_13:transform20
+    400306: guy_13:transform21
+    400308: guy_13:transform22
+    400310: guy_13:transform23
+    400312: guy_13:transform24
+    400314: guy_13:transform25
+    400316: guy_13:transform26
+    400318: guy_13:transform27
+    400320: guy_13:transform28
+    400322: guy_13:transform29
+    400324: guy_13:transform3
+    400326: guy_13:transform30
+    400328: guy_13:transform31
+    400330: guy_13:transform4
+    400332: guy_13:transform5
+    400334: guy_13:transform6
+    400336: guy_13:transform7
+    400338: guy_13:transform8
+    400340: guy_13:transform9
+    400342: Helmet:pCylinder1
+    400344: Helmet:polySurface1
+    400346: Helmet:polySurface10
+    400348: Helmet:polySurface11
+    400350: Helmet:polySurface12
+    400352: Helmet:polySurface13
+    400354: Helmet:polySurface14
+    400356: Helmet:polySurface2
+    400358: Helmet:polySurface2 1
+    400360: Helmet:polySurface3
+    400362: Helmet:polySurface4
+    400364: Helmet:polySurface5
+    400366: Helmet:polySurface8
+    400368: Helmet:polySurface9
+    400370: Helmet:transform1
+    400372: Helmet:transform10
+    400374: Helmet:transform11
+    400376: Helmet:transform12
+    400378: Helmet:transform13
+    400380: Helmet:transform2
+    400382: Helmet:transform3
+    400384: Helmet:transform4
+    400386: Helmet:transform5
+    400388: Helmet:transform6
+    400390: Helmet:transform7
+    400392: Helmet:transform8
+    400394: Helmet:transform9
+    400396: imagePlane2
+    400398: pasted__pCube1
+    400400: pasted__pCube1 1
+    400402: pCube093
+    400404: pCube095
+    400406: pCube097
+    400408: pCube1
+    400410: pCube10
+    400412: pCube11
+    400414: pCube12
+    400416: pCube13
+    400418: pCube14
+    400420: pCube15
+    400422: pCube16
+    400424: pCube17
+    400426: pCube17 1
+    400428: pCube17SmoothProxyGroup
+    400430: pCube2
+    400432: pCube28
+    400434: pCube3
+    400436: pCube4
+    400438: pCube40
+    400440: pCube41
+    400442: pCube42
+    400444: pCube43
+    400446: pCube44
+    400448: pCube45
+    400450: pCube46
+    400452: pCube47
+    400454: pCube49
+    400456: pCube5
+    400458: pCube57
+    400460: pCube58
+    400462: pCube59
+    400464: pCube6
+    400466: pCube60
+    400468: pCube65
+    400470: pCube66
+    400472: pCube67
+    400474: pCube68
+    400476: pCube69
+    400478: pCube70
+    400480: pCube71
+    400482: pCube72
+    400484: pCube73
+    400486: pCube8
+    400488: pCube81
+    400490: pCube82
+    400492: pCube83
+    400494: pCube84
+    400496: pCube85
+    400498: pCube86
+    400500: pCube9
+    400502: pCube91
+    400504: pCylinder010
+    400506: pCylinder1
+    400508: pCylinder2
+    400510: pCylinder3
+    400512: pCylinder4
+    400514: pCylinder5
+    400516: pCylinder6
+    400518: pCylinder7
+    400520: pCylinder8
+    400522: place3dTexture1
+    400524: place3dTexture2
+    400526: polySurface1
+    400528: polySurface10
+    400530: polySurface11
+    400532: polySurface12
+    400534: polySurface2
+    400536: polySurface2 1
+    400538: polySurface3
+    400540: polySurface4
+    400542: polySurface5
+    400544: polySurface6
+    400546: polySurface8
+    400548: polySurface9
+    400550: pPlane1
+    400552: pPlane2
+    400554: pSphere2
+    400556: pTorus1
+    400558: Sheild:pCube1
+    400560: Sheild:pCube2
+    400562: Sheild:transform1
+    400564: Sheild:transform2
+    400566: //RootNode
+    400568: Sword_2:pCube1
+    400570: Sword_2:pCylinder1
+    400572: Sword_2:pCylinder2
+    400574: Sword_2:pCylinder3
+    400576: Sword_2:pSphere2
+    400578: Sword_2:pSphere3
+    400580: Sword_2:pTorus1
+    400582: Sword_2:transform1
+    400584: Sword_2:transform2
+    400586: Sword_2:transform3
+    400588: Sword_2:transform4
+    400590: Sword_2:transform5
+    400592: Sword_2:transform6
+    400594: transform1
+    400596: transform10
+    400598: transform11
+    400600: transform12
+    400602: transform13
+    400604: transform14
+    400606: transform15
+    400608: transform16
+    400610: transform17
+    400612: transform18
+    400614: transform19
+    400616: transform2
+    400618: transform20
+    400620: transform21
+    400622: transform22
+    400624: transform23
+    400626: transform24
+    400628: transform25
+    400630: transform26
+    400632: transform27
+    400634: transform28
+    400636: transform29
+    400638: transform3
+    400640: transform30
+    400642: transform31
+    400644: transform32
+    400646: transform33
+    400648: transform34
+    400650: transform35
+    400652: transform36
+    400654: transform37
+    400656: transform38
+    400658: transform39
+    400660: transform4
+    400662: transform40
+    400664: transform41
+    400666: transform42
+    400668: transform43
+    400670: transform44
+    400672: transform45
+    400674: transform46
+    400676: transform47
+    400678: transform48
+    400680: transform49
+    400682: transform5
+    400684: transform50
+    400686: transform51
+    400688: transform52
+    400690: transform53
+    400692: transform54
+    400694: transform55
+    400696: transform56
+    400698: transform57
+    400700: transform58
+    400702: transform59
+    400704: transform6
+    400706: transform60
+    400708: transform61
+    400710: transform62
+    400712: transform63
+    400714: transform64
+    400716: transform65
+    400718: transform7
+    400720: transform8
+    400722: transform9
+    2300000: Helmet:polySurface3
+    2300002: polySurface6
+    2300004: Sword_2:pCylinder3
+    3300000: Helmet:polySurface3
+    3300002: polySurface6
+    3300004: Sword_2:pCylinder3
+    4300000: Sword_2:pCylinder3
+    4300002: polySurface6
+    4300004: Helmet:polySurface3
+    4300006: guy_13:pCube17
+    4300008: pCube093
+    4300010: Guy_12:pCube029
+    4300012: pCylinder010
+    4300014: pCube095
+    4300016: pCube097
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: Guy_12:pCube029
+    13700002: guy_13:pCube17
+    13700004: pCube093
+    13700006: pCube095
+    13700008: pCube097
+    13700010: pCylinder010
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Take 001
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 30
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
