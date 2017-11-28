@@ -160,6 +160,11 @@ public abstract class GameCharacter : MonoBehaviour
         get { return this._maxHitPoints; }
         set { this.increaseHealth(value); }
     }
+
+    /// <summary>
+    /// Determines whether or not this character is the main player.
+    /// </summary>
+    public bool IsMainPlayer = false;
 	#endregion
 
     #region Relationship To Objects
@@ -441,6 +446,7 @@ public abstract class GameCharacter : MonoBehaviour
         {
             this.animateDie();
             GameInfo.setMainPlayer(null);
+            if (this.IsMainPlayer) { GameLogic.SpawnUI.show(); }
         }
     }
 
@@ -460,7 +466,6 @@ public abstract class GameCharacter : MonoBehaviour
 			this._hitPoints = 0;
 		}
         refreshHealthBarDisplay ();
-
 	}
 
 	/// <summary>

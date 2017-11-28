@@ -50,6 +50,7 @@ namespace com.stratodolphin.overworldrpg.Characters
 
 			Debug.Log ("Setting Game Player.");
 			_mainPlayer = player;
+            if (player != null) { player.IsMainPlayer = true; }
 		}
 
 		/// <summary>
@@ -61,6 +62,8 @@ namespace com.stratodolphin.overworldrpg.Characters
                 Bonfire fireObject = bonfire.GetComponent<Bonfire>();
                 Bonfires.Add(fireObject);
             }
+            // Allow user to spawn at the very first bonfire at least.
+            Bonfires[0].IsActivated = true;
 		}
 	}
 }

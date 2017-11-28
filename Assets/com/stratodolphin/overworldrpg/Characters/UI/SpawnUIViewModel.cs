@@ -97,6 +97,7 @@ namespace com.stratodolphin.overworldrpg.Characters.UI
         {
             for (int i = 0; i < GameInfo.Bonfires.Count; i ++)
             {
+                if (!GameInfo.Bonfires[i].IsActivated) { continue; }
                 GameObject createdButton = CreateButton(this.SpawnSelectionButtonPrefab, i);
                 createdButton.GetComponent<Button>().onClick.AddListener(() => { Click_SpawnOrRespawn(createdButton.GetComponent<SpawnSelectionButton>()); });
             }
@@ -160,6 +161,16 @@ namespace com.stratodolphin.overworldrpg.Characters.UI
         {
             this.createButtons();
         }
+        
+        /// <summary>
+        /// Refresh this Canvas by creating the bonfire selection buttons.
+        /// This will make it so that newly activated bonfires are added
+        /// to the ui selection panel.
+        /// </summary>
+        public void refresh()
+        {
+            this.createButtons();
+        }
 
         public void show()
         {
@@ -170,10 +181,6 @@ namespace com.stratodolphin.overworldrpg.Characters.UI
         {
             this.gameObject.SetActive(false);
         }
-        #endregion
-
-        #region Frames
-        public void Start() { }
         #endregion
     }
 }

@@ -7,6 +7,17 @@ namespace com.stratodolphin.overworldrpg.Characters.Spawning
 {
 	public class Respawner : MonoBehaviour {
 
+        /// <summary>
+        /// Marks this bonfire as activated so that the main
+        /// player can spawn or respawn at it.
+        /// </summary>
+        protected void activateBonfireIfNew()
+        {
+            Bonfire bonfire = this.GetComponentInParent<Bonfire>();
+            bonfire.IsActivated = true;
+            GameLogic.SpawnUI.refresh();
+        }
+
 		// Use this for initialization
 		void OnTriggerEnter(Collider otherObject) {
 			//Debug.Log ("Enter!");
@@ -15,8 +26,9 @@ namespace com.stratodolphin.overworldrpg.Characters.Spawning
 			}
 
 			if (otherObject.gameObject.GetInstanceID () == GameInfo.MainPlayer.gameObject.GetInstanceID ()) {
-				//Debug.Log ("Setting bonfire");
-				((GamePlayer)otherObject.GetComponent<GamePlayer> ()).BonfireLocation = this.GetComponentInParent<Bonfire> ();
+                //Debug.Log ("Setting bonfire");
+                ((GamePlayer)otherObject.GetComponent<GamePlayer>()).BonfireLocation = this.GetComponentInParent<Bonfire>();
+                activateBonfireIfNew();
 			}
 		}
 

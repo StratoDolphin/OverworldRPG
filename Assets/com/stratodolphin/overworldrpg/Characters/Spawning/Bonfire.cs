@@ -9,7 +9,12 @@ namespace com.stratodolphin.overworldrpg.Characters.Spawning
 {
 	public class Bonfire : MonoBehaviour {
 
-		#region Spawning
+        #region Spawning
+        /// <summary>
+        /// Determines whether or not the main player can spawn or respawn at this bonire.
+        /// </summary>
+        public bool IsActivated = false;
+
 		/// <summary>
 		/// Returns the <see cref="Quaternion"/> rotation that the player to be spawned
 		/// should have upon spawning.

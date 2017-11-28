@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Collections;
 using com.stratodolphin.overworldrpg.Characters.Inventory;
 using com.stratodolphin.overworldrpg.Characters.Spawning;
+using System.Collections.Generic;
 
 public class GamePlayer : FeistyGameCharacter
 {
@@ -22,14 +23,16 @@ public class GamePlayer : FeistyGameCharacter
 	/// first person point of view.
 	/// </summary>
 	public Camera MainCamera;
-	#endregion
+    #endregion
 
-	/// <summary>
-	/// The bon fire that this character is currently close to. This
-	/// will be null unless this character is within the respawn
-	/// collider attached to a bonfire.
-	/// </summary>
-	public Bonfire BonfireLocation;
+    /// <summary>
+    /// The bon fire that this character is currently close to. This
+    /// will be null unless this character is within the respawn
+    /// collider attached to a bonfire. This list simply stores
+    /// the indexes in <see cref="GameInfo.Bonfires"/> that this
+    /// bonfire exists.
+    /// </summary>
+    public Bonfire BonfireLocation;
 
 	private string pressR;
 	private string uiMessageString;
