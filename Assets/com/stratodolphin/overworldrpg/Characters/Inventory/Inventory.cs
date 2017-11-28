@@ -202,6 +202,18 @@ namespace com.stratodolphin.overworldrpg.Characters.Inventory
 		public bool hasItemType(int type) {
 			return this.getItemsByType (type).Count >= 1;
 		}
+
+		/// <summary>
+		/// Returns a list of items that are in this inventory that have
+		/// the same name. This uses the Name field on
+		/// each item to compare to Names.
+		/// </summary>
+		/// <param name="type"></param>
+		/// <returns></returns>
+		public List<Storable> getItemsByName(string name)
+		{
+			return new List<Storable>(from item in this._items where item.Name == name select item);
+		}
 		#endregion
 
 		#region Other
@@ -225,12 +237,19 @@ namespace com.stratodolphin.overworldrpg.Characters.Inventory
 		/// </summary>
 		/// <returns>The string.</returns>
 		public override String ToString() {
-			String val = "[";
-			for (int i = 0; i < (this.all ().Count); i++) {
-				val = val + (this.all () [i].ToString()) + ", ";
+			String val = "";
+			int amount = 0;
+			string Name = "";
+			int count = this.all().Count();
+			//Need to store names in an array, loop through it, and if the name is the same, delete from the array.
+			for (int i = 0; i < count; i++) {
+				amount = this.getItemsByName (this.all () [i].ToString ()).Count();
+				Name = this.getItemsByName (this.all () [i].ToString ())[i].ToString();
+
+				val = val + Name + " x " + amount + " \n ";
 			}
-			val = val + "]";
 			return val;
+
 		}
 		#endregion
     }
