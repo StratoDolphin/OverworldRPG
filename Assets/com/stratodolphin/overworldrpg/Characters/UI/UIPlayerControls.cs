@@ -27,6 +27,30 @@ namespace com.stratodolphin.overworldrpg.Characters.UI
                 }
             }
         }
+		#endregion
+
+		#region Pause UI
+		/// <summary>
+		/// The key that can be pressed to toggle the visibility of
+		/// the spawn ui.
+		/// </summary>
+		public KeyCode PauseUIToggle = KeyCode.P;
+
+		/// <summary>
+		/// Checks to see if the pause ui has been toggled by
+		/// the user. If so, toggle it via
+		/// <see cref="GameLogic.togglePauseUIVisibility()"/>.
+		/// </summary>
+		protected void checkPauseUIToggle()
+		{
+			if (Input.GetKeyDown(KeyCode.P))
+			{
+				if (GameInfo.MainPlayer != null)
+				{
+					GameLogic.togglePauseUIVisibility();
+				}
+			}
+		}
         #endregion
 
         // Use this for initialization
@@ -39,6 +63,7 @@ namespace com.stratodolphin.overworldrpg.Characters.UI
         void Update()
         {
             checkSpawnUIToggle();
+			checkPauseUIToggle ();
         }
     }
 }
