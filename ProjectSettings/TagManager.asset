@@ -8,6 +8,8 @@ TagManager:
   - Item
   - UI_Button
   - Bonfire
+  - EnemyBody
+  - MainPlayerBody
   layers:
   - Default
   - TransparentFX
