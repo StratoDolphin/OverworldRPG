@@ -36,13 +36,27 @@ public class MainPlayerControls : MonoBehaviour
 	protected void checkInput() {
 		if (Input.GetKeyDown (Forward)) {
 			move (Forward);
-		} else if (Input.GetKeyDown (Backward)) {
+		}
+		if (Input.GetKeyDown (Backward)) {
 			move (Backward);
-		} else if (Input.GetKeyDown (Left)) {
+		}
+		if (Input.GetKeyDown (Left)) {
 			move (Left);
-		} else if (Input.GetKeyDown (Right)) {
+		}
+		if (Input.GetKeyDown (Right)) {
 			move (Right);
-		} else {
+		}
+
+		if (Input.GetKeyUp (Forward)) {
+			stopMoving ();
+		}
+		if (Input.GetKeyUp (Backward)) {
+			stopMoving ();
+		}
+		if (Input.GetKeyUp (Left)) {
+			stopMoving ();
+		}
+		if (Input.GetKeyUp (Right)) {
 			stopMoving ();
 		}
 	}
@@ -58,16 +72,17 @@ public class MainPlayerControls : MonoBehaviour
 	#endregion
 
 	protected Vector3 getPointInDirection(KeyCode direction) {
-		Vector3 endPoint = transform.forward;
+		Transform cameraTransform = this.transform.Find ("Camera");
+		Vector3 endPoint = cameraTransform.forward;
 
 		if (direction == Forward) {
-			endPoint = transform.forward;
+			endPoint = cameraTransform.forward;
 		} else if (direction == Backward) {
-			endPoint = -1 * (transform.forward);
+			endPoint = -1 * (cameraTransform.forward);
 		} else if (direction == Left) {
-			endPoint = -1 * (transform.right);
+			endPoint = -1 * (cameraTransform.right);
 		} else if (direction == Right) {
-			endPoint = transform.right;
+			endPoint = cameraTransform.right;
 		}
 
 		endPoint.y = transform.position.y;
