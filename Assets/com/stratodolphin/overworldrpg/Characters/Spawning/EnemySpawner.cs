@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using com.stratodolphin.overworldrpg.Characters;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -97,25 +98,6 @@ public class EnemySpawner : MonoBehaviour
 	}
 
 	/// <summary>
-	/// Gets the enemy prefab to use when spawning an enemy. This GameObject
-	/// will not be placed on the game map, but will be used as a template to
-	/// clone onto the game.
-	/// </summary>
-	/// <returns>The enemy prefab.</returns>
-	protected GameObject getEnemyPrefab() {
-		string prefabPath = "";
-
-		if (this._attachedEnemies.Count % 2 == 0) {
-			prefabPath = "prefabs/EnemyAI_Melee";
-		} else {
-			prefabPath = "prefabs/EnemyAI_Archer";
-		}
-
-		GameObject enemy = (GameObject) Resources.Load (prefabPath);
-		return enemy;
-	}
-
-	/// <summary>
 	/// Returns the <see cref="Quaternion"/> rotation that the enemy to be spawned
 	/// should have upon spawning.
 	/// </summary>
@@ -163,8 +145,7 @@ public class EnemySpawner : MonoBehaviour
 		// Instantiate is a clone funtion, not a creation function. We want to
 		// control the cloned object, not player because player is not actually
 		// on the map.
-		GameObject enemyTemplate = this.getEnemyPrefab();
-		GameObject instantiatedEnemy = Instantiate (enemyTemplate, position, rotation);
+		GameObject instantiatedEnemy = Instantiate (GameInfo.PrefabEnemyUnit, position, rotation);
 
 		EnemyAI aiScript = instantiatedEnemy.GetComponent<EnemyAI> ();
 		aiScript.setSpawner (this);

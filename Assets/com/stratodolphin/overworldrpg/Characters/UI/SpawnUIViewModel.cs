@@ -180,7 +180,7 @@ namespace com.stratodolphin.overworldrpg.Characters.UI
             }
             else
             {
-                fire.spawn(GameLogic.createMainPlayerMeta());
+				fire.spawn(GameInfo.PrefabMainPlayerUnit);
             }
             GameLogic.SpawnUI.hide();
             return;

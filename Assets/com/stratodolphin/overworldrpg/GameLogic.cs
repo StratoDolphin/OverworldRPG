@@ -8,7 +8,7 @@ namespace com.stratodolphin.overworldrpg.Characters
 {
 	public class GameLogic : MonoBehaviour {
 
-        #region Spawning
+		#region Spawning
         /// <summary>
         /// Getter for the UI canvas that allows user to spawn at a
         /// chosen campfire.
@@ -27,15 +27,6 @@ namespace com.stratodolphin.overworldrpg.Characters
                 return _spawnUI;
             }
         }
-
-		/// <summary>
-		/// Creates the main player without actually placing it on the
-		/// game map. This will return the GameObject of the player.
-		/// </summary>
-		public static GameObject createMainPlayerMeta() {
-			GameObject player = (GameObject) Resources.Load ("prefabs/MainPlayer");
-			return player;
-		}
 
         /// <summary>
         /// Shows or hides the Spawn UI Canvas.
