@@ -128,15 +128,7 @@ public class EnemyAI : FeistyGameCharacter {
     protected virtual void think() {
 		this.resetDesires ();
 		//Debug.Log ("left: " + this._leftHandInventory.ToString () + " but has range: " + this._leftHandInventory.hasItemType (Storable.TYPE_RANGE).ToString());
-		if (this._leftHandInventory.hasItemType(Storable.TYPE_RANGE))
-        {
-			//Debug.Log ("archer");
-            this.thinkAsArcher();
-        } else
-		{
-			//Debug.Log ("melee");
-            this.thinkAsMelee();
-		}
+		this.thinkAsMelee();
 		if (GameInfo.MainPlayer == null) { return; }
 		this.evaluateRulesForSightOfTarget (this._targetEnemy);
 	}

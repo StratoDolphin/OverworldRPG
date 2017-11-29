@@ -48,12 +48,6 @@ public abstract class GameCharacter : MonoBehaviour
 	protected float _nextToThreshold = 1.0f;
 
 	/// <summary>
-	/// The movement speed of this character. Higher numbers
-	/// will result in higher speeds.
-	/// </summary>
-	protected float _movementSpeed = 3.5f;
-
-	/// <summary>
 	/// <para>
 	/// A point on the map that this character desires to move.
 	/// The flow of movement for the ai should be as follows:
@@ -109,16 +103,6 @@ public abstract class GameCharacter : MonoBehaviour
 	/// </summary>
 	protected float _hitPoints;
 
-	/// <summary>
-	/// The initial amount of hitpoints that this character has.
-	/// </summary>
-	protected float _maxHitPoints = 100;
-
-	/// <summary>
-	/// The health bar that is displayed for this character.
-	/// </summary>
-	public HealthBar _healthBar;
-
     /// <summary>
     /// The inventory of this game character. This contains all
     /// of the <see cref="Storable"/>s taht this character can
@@ -142,14 +126,16 @@ public abstract class GameCharacter : MonoBehaviour
     #endregion
 
 	#region Public Attributes
+
 	/// <summary>
-	/// Public accessor for the initial amount of hitpoints that
-	/// this character has.
+	/// The initial amount of hitpoints that this character has.
 	/// </summary>
-	public float MaxHitPoints {
-		get { return this._maxHitPoints; }
-		set { this._maxHitPoints = value; }
-	}
+	public float MaxHitPoints = 100;
+
+	/// <summary>
+	/// The health bar that is displayed for this character.
+	/// </summary>
+	public HealthBar HealthBar;
 
     /// <summary>
     /// Public Accessor for <see cref="_hitPoints"/>. The setter
@@ -157,14 +143,20 @@ public abstract class GameCharacter : MonoBehaviour
     /// </summary>
     public float Health
     {
-        get { return this._maxHitPoints; }
+        get { return this.MaxHitPoints; }
         set { this.increaseHealth(value); }
     }
 
     /// <summary>
     /// Determines whether or not this character is the main player.
     /// </summary>
-    public bool IsMainPlayer = false;
+	public bool IsMainPlayer = false;
+
+	/// <summary>
+	/// The movement speed of this character. Higher numbers
+	/// will result in higher speeds.
+	/// </summary>
+	public float MovementSpeed = 3.5f;
 	#endregion
 
     #region Relationship To Objects
@@ -324,12 +316,12 @@ public abstract class GameCharacter : MonoBehaviour
 	/// </summary>
 	/// <param name="startingHealth">Starting health.</param>
 	protected void initializeHealth() {
-		this._hitPoints = this._maxHitPoints;
+		this._hitPoints = this.MaxHitPoints;
 		try {
-			this._healthBar = this.transform.Find("Camera").Find ("playerHealth").GetComponent<HealthBar> ();
+			this.HealthBar = this.transform.Find("Camera").Find ("playerHealth").GetComponent<HealthBar> ();
 		}
 		catch (NullReferenceException e) {
-			this._healthBar = this.transform.Find("body").Find ("playerHealth").GetComponent<HealthBar> ();
+			this.HealthBar = this.transform.Find("Body").Find ("playerHealth").GetComponent<HealthBar> ();
 		}
 	}
 	#endregion
@@ -353,7 +345,7 @@ public abstract class GameCharacter : MonoBehaviour
 	/// </para> 
 	/// </summary>
 	/// <param name="destination">Destination.</param>
-	protected void setDesiredMovementDestination(Vector3 destination) {
+	public void setDesiredMovementDestination(Vector3 destination) {
 		this._desiredMovementDestination = destination;
 	}
 
@@ -363,7 +355,7 @@ public abstract class GameCharacter : MonoBehaviour
 	/// for this character to the value of desireToMove.
 	/// </summary>
 	/// <param name="desireToMove">If set to <c>true</c> desire to move.</param>
-	protected void setDesireToMove(bool desireToMove) {
+	public void setDesireToMove(bool desireToMove) {
 		this._isDesiredToMove = desireToMove;
 	}
 
@@ -373,7 +365,7 @@ public abstract class GameCharacter : MonoBehaviour
 	/// </para>
 	/// </summary>
 	/// <param name="target">Target.</param>
-	protected void setDesiredTargetToFace(Vector3 target) {
+	public void setDesiredTargetToFace(Vector3 target) {
 		this._desiredTargetToFace = target;
 	}
 
@@ -383,7 +375,7 @@ public abstract class GameCharacter : MonoBehaviour
 	/// for this character to the value of desireToFace.
 	/// </summary>
 	/// <param name="desireToFace">If set to <c>true</c> desire to face.</param>
-	protected void setDesireToFace(bool desireToFace) {
+	public void setDesireToFace(bool desireToFace) {
 		this._isDesiredToFace = desireToFace;
 	}
 
@@ -401,7 +393,7 @@ public abstract class GameCharacter : MonoBehaviour
 	/// </summary>
 	/// <param name="destination">Destination.</param>
 	/// <param name="isDesiredToFace">If set to <c>true</c> is desired to face.</param>
-	protected void setDesireToApproach(Vector3 destination, bool isDesiredToFace) {
+	public void setDesireToApproach(Vector3 destination, bool isDesiredToFace) {
 		this.setDesiredMovementDestination (destination);
 		if (isDesiredToFace) {
 		this.setDesiredTargetToFace (destination);
@@ -486,9 +478,9 @@ public abstract class GameCharacter : MonoBehaviour
 	/// <param name="npcHealth">Npc health.</param>
 	protected void refreshHealthBarDisplay() {
 		//calculates health gained; if cur = 80 / 100 then 0.8f
-		float healthPercent = this._hitPoints / this._maxHitPoints;
+		float healthPercent = this._hitPoints / this.MaxHitPoints;
 		//npcHealth has to be a value between 0 and 1; max health has scale of 1
-		_healthBar.setHealthPercent(healthPercent);
+		HealthBar.setHealthPercent(healthPercent);
 	}
     #endregion
 
@@ -517,7 +509,7 @@ public abstract class GameCharacter : MonoBehaviour
 		// Also use Vector3.LookTowards to make the enemy face
 		// the player.
 		Vector3 flatVector = new Vector3 (destination.x, this.gameObject.transform.position.y, destination.z);
-		transform.position = Vector3.MoveTowards (transform.position, flatVector, _movementSpeed * Time.deltaTime);
+		transform.position = Vector3.MoveTowards (transform.position, flatVector, MovementSpeed * Time.deltaTime);
 		//Debug.Log("Moving to " + destination.ToString());
 	}
 

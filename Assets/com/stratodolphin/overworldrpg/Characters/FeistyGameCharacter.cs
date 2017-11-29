@@ -43,7 +43,7 @@ public abstract class FeistyGameCharacter : GameCharacter
     /// wants to swing at.
     /// </summary>
     /// <param name="target">Target.</param>
-    protected void setDesireToSwing(GameObject target) {
+	public void setDesireToSwing(GameObject target) {
 		this._swingAttackTarget = target;
 	}
 
@@ -52,7 +52,7 @@ public abstract class FeistyGameCharacter : GameCharacter
 	/// sets the target object that this character was
 	/// swinging at to null.
 	/// </summary>
-	protected void setDesireStopSwinging() {
+	public void setDesireStopSwinging() {
 		this._swingAttackTarget = null;
 	}
 
@@ -62,7 +62,7 @@ public abstract class FeistyGameCharacter : GameCharacter
     /// target that this character wants to fire at.
     /// </summary>
     /// <param name="target">Target.</param>
-    protected void setDesireToFireWeapon(GameObject target)
+	public void setDesireToFireWeapon(GameObject target)
     {
         this._rangeAttackTarget = target;
     }
@@ -72,7 +72,7 @@ public abstract class FeistyGameCharacter : GameCharacter
     /// This method simply sets the target object that
     /// this character was firing at to null.
     /// </summary>
-    protected void setDesireStopFiringWeapon()
+    public void setDesireStopFiringWeapon()
     {
         this._rangeAttackTarget = null;
     }

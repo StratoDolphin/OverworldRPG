@@ -113,10 +113,8 @@ namespace com.stratodolphin.overworldrpg.Characters
 		/// </summary>
 		protected static void loadPrefabs() {
 			PrefabEnemyUnit = (GameObject) Resources.Load ("prefabs/Characters/Enemies/Unit");
-			Debug.Log ("Loading: " + PrefabEnemyUnit.name);
 			UnityEngine.Object[] enemyPrefabs = Resources.LoadAll ("prefabs/Characters/Enemies/AnimatedModels/");
 			foreach (GameObject prefab in enemyPrefabs) {
-				Debug.Log ("Loading: " + prefab.name);
 				String prefabName = prefab.name;
 				switch (prefabName) {
 				case "Dead":
@@ -137,11 +135,10 @@ namespace com.stratodolphin.overworldrpg.Characters
 				}
 			}
 
-			PrefabMainPlayerUnit = (GameObject) Resources.Load ("prefabs/MainPlayer");
-			Debug.Log ("Loading: " + PrefabMainPlayerUnit.name);
+			//PrefabMainPlayerUnit = (GameObject) Resources.Load ("prefabs/MainPlayer");
+			PrefabMainPlayerUnit = (GameObject) Resources.Load ("prefabs/Characters/MainPlayer/Unit");
 			UnityEngine.Object[] mainPlayerPrefabs = Resources.LoadAll ("prefabs/Characters/MainPlayer/AnimatedModels/");
 			foreach (GameObject prefab in mainPlayerPrefabs) {
-				Debug.Log ("Loading: " + prefab.name);
 				String prefabName = prefab.name;
 				switch (prefabName) {
 				case "Dead":

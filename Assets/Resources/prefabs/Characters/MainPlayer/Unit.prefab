@@ -5854,7 +5854,7 @@ GameObject:
   - component: {fileID: 4891739329033488}
   - component: {fileID: 95473115557243110}
   m_Layer: 0
-  m_Name: Still
+  m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7757,13 +7757,11 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4950570327086692}
-  - component: {fileID: 95916442389093042}
   - component: {fileID: 54289266562646320}
   - component: {fileID: 136534064800177496}
-  - component: {fileID: 114177287931628928}
-  - component: {fileID: 114446712305348258}
   - component: {fileID: 114582562505206022}
   - component: {fileID: 114486254648962338}
+  - component: {fileID: 114100773682969888}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Player
@@ -18795,7 +18793,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1713332893800136}
-  m_LocalRotation: {x: 0.6637103, y: 0.31887564, z: -0.62443113, w: -0.26056233}
+  m_LocalRotation: {x: 0.66371036, y: 0.31887567, z: -0.6244312, w: -0.26056236}
   m_LocalPosition: {x: -0.06710942, y: 0.00954043, z: 0.012557737}
   m_LocalScale: {x: 1.7259554, y: 1.7259554, z: 1.7259554}
   m_Children: []
@@ -31651,7 +31649,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1457062327871796}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 463.85617, y: 0, z: 442.1623}
+  m_LocalPosition: {x: 465.25223, y: 0, z: 446.7164}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4606321065008616}
@@ -33591,23 +33589,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!95 &95916442389093042
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1457062327871796}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: b235179bd2a63d1468dd430670338c55, type: 3}
-  m_Controller: {fileID: 9100000, guid: e2cf68ff4b1ffda45a77f7307dd789b9, type: 2}
-  m_CullingMode: 1
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 1
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114079416115130440
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -33619,6 +33600,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5506d2720a5e7de42917230673e1b65e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114100773682969888
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1457062327871796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d00690ee31dc449caa14e45ae0d9311, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Forward: 119
+  Backward: 115
+  Left: 97
+  Right: 100
+  PlayerScript: {fileID: 114582562505206022}
 --- !u!114 &114108998202003506
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -33640,17 +33637,6 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
---- !u!114 &114177287931628928
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1457062327871796}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 521b611700410be45810047f0a74e899, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114224699175009400
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -33705,25 +33691,6 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114446712305348258
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1457062327871796}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce7a80d520cacc042b5fe14f373d8173, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_MovingTurnSpeed: 360
-  m_StationaryTurnSpeed: 180
-  m_JumpPower: 12
-  m_GravityMultiplier: 2
-  m_RunCycleLegOffset: 0.2
-  m_MoveSpeedMultiplier: 1
-  m_AnimSpeedMultiplier: 1
-  m_GroundCheckDistance: 0.1
 --- !u!114 &114486254648962338
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -33771,8 +33738,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39c11d1fe6bc7234bbe4503f44ac4a96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _healthBar: {fileID: 0}
+  MaxHitPoints: 100
+  HealthBar: {fileID: 0}
   IsMainPlayer: 0
+  MovementSpeed: 3.5
   IsAlive: 1
   MainCamera: {fileID: 20409300004916928}
   BonfireLocation: {fileID: 0}
