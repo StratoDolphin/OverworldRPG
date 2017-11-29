@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 namespace com.stratodolphin.overworldrpg.Characters.UI
 {
@@ -22,8 +23,8 @@ namespace com.stratodolphin.overworldrpg.Characters.UI
 			inventory.GetComponent<Button>().onClick.AddListener(() => { onClickPauseGUI("Inventory"); });
 			GameObject stats = createButtonSelection (this.PauseSelectionButtonPrefab, "Stats");
 			stats.GetComponent<Button>().onClick.AddListener(() => { onClickPauseGUI("Stats"); });
-			GameObject cancel = createButtonSelection (this.PauseSelectionButtonPrefab, "Cancel");
-			cancel.GetComponent<Button>().onClick.AddListener(() => { onClickPauseGUI("Cancel"); });
+			GameObject quit = createButtonSelection (this.PauseSelectionButtonPrefab, "Quit");
+			quit.GetComponent<Button>().onClick.AddListener(() => { onClickPauseGUI("Quit"); });
 		}
 
 		/// <summary>
@@ -72,8 +73,9 @@ namespace com.stratodolphin.overworldrpg.Characters.UI
 				GameInfo.MainPlayer.showInventory ();
 			} else if (name.Equals ("Stats")) {
 				//have to make a stats GUI and show it
-			} else if (name.Equals ("Cancel")) {
-				GameLogic.PauseUI.hide ();
+			} else if (name.Equals ("Quit")) {
+				//NOT Working
+				SceneManager.LoadScene("TitleScreen");
 			}
 			GameLogic.PauseUI.hide();
 			return;

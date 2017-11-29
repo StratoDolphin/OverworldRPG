@@ -47,6 +47,12 @@ namespace com.stratodolphin.overworldrpg.Characters.Inventory
         /// </summary>
         public int Type;
 
+		/// <summary>
+		/// Name of the item. This name will show up when 
+		/// the user looks at his/her inventory
+		/// </summary>
+		public string Name;
+
 		public Inventory Owner {
 			get { return this._owner; }
 			set { this._owner = value; }
@@ -83,7 +89,7 @@ namespace com.stratodolphin.overworldrpg.Characters.Inventory
         /// </summary>
         /// <returns>The string.</returns>
         public override String ToString() {
-			return this.Type.ToString () + " item";
+			return this.Name;
 		}
         #endregion
 
