@@ -76,7 +76,8 @@ namespace com.stratodolphin.overworldrpg.Characters.UI
             int posY = buttonYStart;
             int rowIndex = buttonIndex % buttonsPerColumn;
             int rowSpacing = yPadding + _buttonHeight;
-            posY += rowIndex * rowSpacing;
+			//this should be "-=" so that the list goes down -anthony
+            posY -= rowIndex * rowSpacing;
 
             // Calculate the X position
             int posX = buttonXStart;
@@ -95,7 +96,8 @@ namespace com.stratodolphin.overworldrpg.Characters.UI
         /// </summary>
         protected void createButtons()
         {
-			GameObject background = createBonfireSelection (this.SpawnSelectionButtonPrefab, true);
+			//anthony's note: let's not draw the background of this menu using a button, lol. black looks better imo
+			//GameObject background = createBonfireSelection (this.SpawnSelectionButtonPrefab, true);
 			GameObject titleButton = createBonfireSelection (this.SpawnSelectionButtonPrefab, false);
             for (int i = 0; i < GameInfo.Bonfires.Count; i ++)
             {
@@ -112,6 +114,10 @@ namespace com.stratodolphin.overworldrpg.Characters.UI
 		/// <param name="buttonPrefab"></param>
 		/// <param name="background"></param>
 		/// <returns></returns>
+		/// <anthony's summary that is actually helpful >:( >
+		/// Method that accepts a button prefab and draws a single button using that prefab.
+		/// It draws it in one of 2 different sizes depending on if background is true or false.
+		/// </anthony's summary that is actually helpful >:( >
 		protected GameObject createBonfireSelection(GameObject buttonPrefab, bool background) {
 			Vector2 buttonSize;
 			Vector2 positioning = new Vector2(550, 400);
