@@ -137,7 +137,7 @@ namespace com.stratodolphin.overworldrpg.Characters
 				}
 			}
 
-			PrefabMainPlayerUnit = (GameObject) Resources.Load ("prefabs/Characters/MainPlayer/Unit");
+			PrefabMainPlayerUnit = (GameObject) Resources.Load ("prefabs/MainPlayer");
 			Debug.Log ("Loading: " + PrefabMainPlayerUnit.name);
 			UnityEngine.Object[] mainPlayerPrefabs = Resources.LoadAll ("prefabs/Characters/MainPlayer/AnimatedModels/");
 			foreach (GameObject prefab in mainPlayerPrefabs) {
