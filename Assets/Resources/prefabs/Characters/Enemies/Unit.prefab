@@ -2882,7 +2882,7 @@ GameObject:
   - component: {fileID: 54759551490763190}
   - component: {fileID: 136628808113138954}
   m_Layer: 0
-  m_Name: Unit 1
+  m_Name: Unit
   m_TagString: AI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10843,6 +10843,8 @@ MonoBehaviour:
   HealthBar: {fileID: 0}
   IsMainPlayer: 0
   MovementSpeed: 3.5
+  _wantsToSwing: 0
+  swingFrames: 0
 --- !u!114 &114403649621316838
 MonoBehaviour:
   m_ObjectHideFlags: 1

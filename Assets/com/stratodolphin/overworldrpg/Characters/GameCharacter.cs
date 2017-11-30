@@ -45,7 +45,7 @@ public abstract class GameCharacter : MonoBehaviour
 	/// assumed to be at a 360 degree angle.
 	/// </para>
 	/// </summary>
-	protected float _nextToThreshold = 1.0f;
+	protected float _nextToThreshold = 1.2f;
 
 	/// <summary>
 	/// <para>
