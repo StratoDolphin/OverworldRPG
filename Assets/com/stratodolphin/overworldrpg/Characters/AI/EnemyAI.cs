@@ -16,7 +16,7 @@ public class EnemyAI : FeistyGameCharacter {
 
 	//anthony's variables
 	public int swingFrames = 0; //number of frames since begun swing
-	public const int swingFinish = 50;
+	public const int swingFinish = 90;
 
     #region Constant Variables
     /// <summary>
@@ -176,11 +176,20 @@ public class EnemyAI : FeistyGameCharacter {
     /// </summary>
     protected virtual void thinkAsMelee()
     {
-		if (this.swingFrames > 0) {//if we are currently in a swinging motion
+		//phase of swinging
+		if (this.swingFrames > 0 && this.swingFrames < 50) {//if we are currently in a swinging motion
 			swingFrames += 1;
 			if (swingFrames >= swingFinish) {
 				swingFrames = 0;
 			}
+			//phase of just standing still
+		} else if (this.swingFrames >= 50 && this.swingFrames < swingFinish) {
+			this.setDesireStopSwinging ();
+			swingFrames += 1;
+			if (swingFrames >= swingFinish) {
+				swingFrames = 0;
+			}
+			//phase of back to normal
 		} else {
 			if (GameInfo.MainPlayer == null) {
 				return;
