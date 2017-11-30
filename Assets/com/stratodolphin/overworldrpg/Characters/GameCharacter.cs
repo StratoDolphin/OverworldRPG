@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using com.stratodolphin.overworldrpg.Characters;
 using com.stratodolphin.overworldrpg.Characters.Inventory;
 using System;
