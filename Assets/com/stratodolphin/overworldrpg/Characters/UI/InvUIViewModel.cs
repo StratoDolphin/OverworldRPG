@@ -12,6 +12,7 @@ namespace com.stratodolphin.overworldrpg.Characters.UI
 		public GameObject InvSelectionButtonPrefab;
 		private int count = 1;
 
+		public bool invPressed = false;
 		#region Protected Attributes
 		/// <summary>
 		/// Height of the buttons that can be pressed to select the
@@ -24,6 +25,8 @@ namespace com.stratodolphin.overworldrpg.Characters.UI
 		/// bonfire that the player wants to spawn at.
 		/// </summary>
 		protected int _buttonWidth = 100;
+
+
 		#endregion
 
 		#region Protected Methods
@@ -34,16 +37,25 @@ namespace com.stratodolphin.overworldrpg.Characters.UI
 		protected void createButtons()
 		{
 			GameObject inventory = createButtonSelection (this.InvSelectionButtonPrefab, "Inventory");
-			inventory.GetComponent<Button>().onClick.AddListener(() => { onClickInvGUI("Inventory"); });
+			inventory.GetComponent<Button> ().onClick.AddListener (() => {
+				onClickInvGUI ("Inventory");
+			});
 			GameObject back = createButtonSelection (this.InvSelectionButtonPrefab, "Back");
-			back.GetComponent<Button>().onClick.AddListener(() => { onClickInvGUI("Back"); });
+			back.GetComponent<Button> ().onClick.AddListener (() => {
+				onClickInvGUI ("Back");
+			});
 
-			//get the toString of the GamePlayer, loop through it, and create buttons for them
-			string data = GameInfo.MainPlayer.showInventory();
-			string[] inv = data.Split (' ');
-			for (int i = 1; i < inv.Length - 1; i++) {
-				GameObject item = createButtonSelection (this.InvSelectionButtonPrefab, inv[i]);
-				item.GetComponent<Button>().onClick.AddListener(() => { onClickInvGUI(inv[i - 1]); });
+			if (GameInfo.MainPlayer != null) {
+				//get the toString of the GamePlayer, loop through it, and create buttons for them
+				string data = GameInfo.MainPlayer.showInventory ();
+				string[] inv = data.Split (' ');
+				for (int i = 1; i < inv.Length - 1; i++) {
+					GameObject item = createButtonSelection (this.InvSelectionButtonPrefab, inv [i]);
+					item.GetComponent<Button> ().onClick.AddListener (() => {
+						onClickInvGUI (inv [i - 1]);
+					});
+
+				}
 			}
 		}
 
@@ -160,6 +172,7 @@ namespace com.stratodolphin.overworldrpg.Characters.UI
 		public void initialize()
 		{
 			this.createButtons();
+			this.hide ();
 		}
 
 		public void show()

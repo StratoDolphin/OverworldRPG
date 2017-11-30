@@ -155,6 +155,7 @@ namespace com.stratodolphin.overworldrpg.Characters
 			_invUI = null;
 			SpawnUI.initialize();
 			PauseUI.initialize ();
+			InvUI.initialize ();
 		}
 		#endregion
 		// Use this for initialization
@@ -162,6 +163,7 @@ namespace com.stratodolphin.overworldrpg.Characters
 			GameInfo.initialize ();
             SpawnUI.initialize();
 			PauseUI.initialize ();
+			InvUI.initialize ();
 		}
 		
 		// Update is called once per frame
