@@ -271,6 +271,7 @@ public class EnemyAI : FeistyGameCharacter {
     #region Frame Updates
     // Use this for initialization
     protected override void Start () {
+		Debug.Log ("Starting");
         base.Start();
 		this.loadInventory ();
 		this.MovementSpeed = 2;

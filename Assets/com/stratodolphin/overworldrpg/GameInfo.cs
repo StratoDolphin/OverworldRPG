@@ -14,6 +14,8 @@ namespace com.stratodolphin.overworldrpg.Characters
 	/// </summary>
 	public abstract class GameInfo
 	{
+		public static bool initialized = false;
+
 		#region Prefabs
 		/// <summary>
 		/// The animated enemy that is swinging.
@@ -192,6 +194,7 @@ namespace com.stratodolphin.overworldrpg.Characters
 			loadPrefabs ();
 
 			GameObject.Find ("GameLogic").GetComponent<GameLogic> ().refresh ();
+			initialized = true;
 		}
 
 		/// <summary>
@@ -200,6 +203,7 @@ namespace com.stratodolphin.overworldrpg.Characters
 		public static void refresh() {
 			setMainPlayer (null);
 
+			Debug.Log(GameObject.FindGameObjectsWithTag("Bonfire"));
 			_bonfires = new List<Bonfire> ();
 			foreach (GameObject bonfire in GameObject.FindGameObjectsWithTag("Bonfire"))
 			{

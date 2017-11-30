@@ -460,7 +460,8 @@ public abstract class GameCharacter : MonoBehaviour
         if (this.IsDead)
         {
             this.animateDie();
-            GameInfo.setMainPlayer(null);
+			if (this is GamePlayer && ((GamePlayer) this).IsMainPlayer)
+				GameInfo.setMainPlayer(null);
             if (this.IsMainPlayer) { GameLogic.SpawnUI.show(); }
         }
     }

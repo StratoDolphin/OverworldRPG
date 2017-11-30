@@ -17,7 +17,7 @@ public class EnemySpawner : MonoBehaviour
 	/// If difficulty is ever implemented, this can be incremented on higher levels.
 	/// </para>
 	/// </summary>
-	public int _maxNumEnemies = 4;
+	public int MaxNumEnemies = 1;
 
 	/// <summary>
 	/// The last time that an enemy was spawned by this spawner. This will be used
@@ -29,7 +29,7 @@ public class EnemySpawner : MonoBehaviour
 	/// The spawning frequency. This designates how often the spawner will respawn its
 	/// units.
 	/// </summary>
-	protected float _spawningFrequency = 120.0f;
+	protected float _spawningFrequency = 60.0f;
 
 	/// <summary>
 	/// The enemies that are spawned and therefor attached to this spawner. This list
@@ -68,7 +68,7 @@ public class EnemySpawner : MonoBehaviour
 	/// </summary>
 	/// <returns><c>true</c>, if full was ised, <c>false</c> otherwise.</returns>
 	public bool isFull() {
-		return this._attachedEnemies.Count >= this._maxNumEnemies;
+		return this._attachedEnemies.Count >= this.MaxNumEnemies;
 	}
 
 	/// <summary>
@@ -134,7 +134,7 @@ public class EnemySpawner : MonoBehaviour
 	/// </para>
 	/// </summary>
 	protected EnemyAI spawnEnemy() {
-		if (this._attachedEnemies.Count >= this._maxNumEnemies) {
+		if (this._attachedEnemies.Count >= this.MaxNumEnemies) {
 			Debug.LogError ("There are already too many enemies spawned by this spawner!");
 			return null;
 		}
@@ -174,7 +174,8 @@ public class EnemySpawner : MonoBehaviour
 	}
 
 	protected void spawnInitial() {
-		for (int i = 0; i < this._maxNumEnemies; i++) {
+		Debug.Log ("hi");
+		for (int i = 0; i < this.MaxNumEnemies; i++) {
 			Debug.Log ("Spawn");
 			if (!this.isFull()) this.spawnEnemy ();
 		}

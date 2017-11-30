@@ -17,7 +17,7 @@ public class titleToGame : MonoBehaviour {
 	}
 
 	public void change() {
-		SceneManager.LoadScene("TestScene");
-		GameInfo.refresh ();
+		SceneManager.LoadScene("MainScene");
+		if (GameInfo.initialized) GameInfo.refresh (); // Only works if you're restarting.
 	}
 }
