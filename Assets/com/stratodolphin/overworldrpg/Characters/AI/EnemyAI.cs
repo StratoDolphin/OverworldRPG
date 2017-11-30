@@ -115,7 +115,6 @@ public class EnemyAI : FeistyGameCharacter {
 		this.setDesireToFace (false);
 		this.setDesireToMove (false);
 		this.setDesireStopSwinging ();
-		this.setDesireStopFiringWeapon ();
 	}
 
     /// <summary>
@@ -133,6 +132,7 @@ public class EnemyAI : FeistyGameCharacter {
 		this.evaluateRulesForSightOfTarget (this._targetEnemy);
 	}
 
+	/*
     /// <summary>
     /// <para>
     /// This AI will determine what to do assuming it wants to take
@@ -160,7 +160,7 @@ public class EnemyAI : FeistyGameCharacter {
         {
 			this.approachTarget ();
         }
-    }
+    }*/
 
     /// <summary>
     /// <para>
@@ -184,7 +184,7 @@ public class EnemyAI : FeistyGameCharacter {
 
         if (this.isNextToObject(this._targetEnemy))
         {
-            this.setDesireToSwing(this._targetEnemy);
+            this.setDesireToSwing();
             this.setDesireToMove(false);
         }
         else

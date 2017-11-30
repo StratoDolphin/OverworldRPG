@@ -21,9 +21,10 @@ public abstract class FeistyGameCharacter : GameCharacter
 	/// swing at anything.
 	/// </para>
 	/// </summary>
-	protected GameObject _swingAttackTarget;
+	protected bool _wantsToSwing = false;
 
-    /// <summary>
+    /*
+	/// <summary>
 	/// <para>
 	/// Denotes which game object this character wants
 	/// to start firing it's weapon at.
@@ -34,29 +35,26 @@ public abstract class FeistyGameCharacter : GameCharacter
 	/// fire at anything.
 	/// </para>
 	/// </summary>
-	protected GameObject _rangeAttackTarget;
+	protected GameObject _rangeAttackTarget;*/
     #endregion
 
     #region Backend Actions
     /// <summary>
-    /// Determines to swing at the given game object. This
-    /// will simply set the target that this character
-    /// wants to swing at.
+    /// Determines to start swinging the sword
     /// </summary>
     /// <param name="target">Target.</param>
-	public void setDesireToSwing(GameObject target) {
-		this._swingAttackTarget = target;
+	public void setDesireToSwing() {
+		this._wantsToSwing = true;
 	}
 
 	/// <summary>
-	/// Determines the stop swinging. This method simply
-	/// sets the target object that this character was
-	/// swinging at to null.
+	/// Determines to stop swinging the sword
 	/// </summary>
 	public void setDesireStopSwinging() {
-		this._swingAttackTarget = null;
+		this._wantsToSwing = false;
 	}
 
+	/*
     /// <summary>
     /// Determines to fire this characers weapon at the
     /// given game object. This will simply set the
@@ -76,7 +74,7 @@ public abstract class FeistyGameCharacter : GameCharacter
     public void setDesireStopFiringWeapon()
     {
         this._rangeAttackTarget = null;
-    }
+    }*/
     #endregion
 
     #region Animated Actions
@@ -92,21 +90,19 @@ public abstract class FeistyGameCharacter : GameCharacter
     /// </para>
     /// </summary>
     /// <param name="target">Target.</param>
-    protected void animateSwing(GameObject target) {
-		Debug.Log ("Swinging at: " + target.ToString ());
-		if (this.getBody ().tag == "Swing")
-			// Just let him keep swinging.
-			return;
-		else {
-			if (this is EnemyAI) {
-				Debug.Log ("Switching: " + GameInfo.PrefabEnemySwing.ToString ());
-				this.switchAnimationModel (GameInfo.PrefabEnemySwing);
-			}
-			else if (this is GamePlayer)
-				this.switchAnimationModel (GameInfo.PrefabMainPlayerSwing);
+    protected void animateSwing() {
+		Debug.Log ("Swinging");
+
+		if (this is EnemyAI) {
+			//Debug.Log ("Switching: " + GameInfo.PrefabEnemySwing.ToString ());
+			this.switchAnimationModel (GameInfo.PrefabEnemySwing);
 		}
+		else if (this is GamePlayer)
+			Debug.Log ("Switching: " + GameInfo.PrefabMainPlayerSwing.ToString ());
+			this.switchAnimationModel (GameInfo.PrefabMainPlayerSwing);
 	}
 
+	/*
     /// <summary>
     /// <para>
     /// Animates the firing of this characters ranged weapon. This will
@@ -122,7 +118,7 @@ public abstract class FeistyGameCharacter : GameCharacter
     protected void animateFireRangedWeapon(GameObject target)
     {
         Debug.Log("Firing at: " + target.ToString());
-    }
+    }*/
     #endregion
 
     #region Actions Execution
@@ -133,10 +129,13 @@ public abstract class FeistyGameCharacter : GameCharacter
     /// </para>
     /// </summary>
     protected void executeSwingDesire() {
-		if (this._swingAttackTarget != null)
-			this.animateSwing (this._swingAttackTarget);
+		if (this._wantsToSwing)
+			this.animateSwing ();
+		else
+			this.animateStand ();
 	}
 
+	/*
     /// <summary>
     /// <para>
     /// Executes the ranged weapon firing desire. If this character
@@ -147,7 +146,7 @@ public abstract class FeistyGameCharacter : GameCharacter
     {
         if (this._rangeAttackTarget != null)
             this.animateFireRangedWeapon(this._rangeAttackTarget);
-    }
+    }*/
 
     /// <summary>
     /// Executes the desires of this character. This overrides the
@@ -158,7 +157,6 @@ public abstract class FeistyGameCharacter : GameCharacter
     protected override void executeDesires() {
 		base.executeDesires ();
 		this.executeSwingDesire ();
-        this.executeRangedAttackDesire ();
 	}
 	#endregion
 }

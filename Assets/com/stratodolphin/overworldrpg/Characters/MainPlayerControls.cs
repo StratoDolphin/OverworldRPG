@@ -23,6 +23,11 @@ public class MainPlayerControls : MonoBehaviour
 	/// The right control key.
 	/// </summary>
 	public static KeyCode MyRight = KeyCode.D;
+
+	/// <summary>
+	/// The swing sword control.
+	/// </summary>
+	public static KeyCode SwingSword = KeyCode.Mouse0;
 	#endregion
 
 	bool [] buttonsDown = new bool[] {false, false, false, false}; //top, right, bottom, left (clockwise from top)
@@ -40,8 +45,12 @@ public class MainPlayerControls : MonoBehaviour
 	public GamePlayer PlayerScript;
 	#endregion
 
+	#region Protected Attributes
+
+	#endregion
+
 	#region Control Actions
-	protected void checkInput() {
+	protected void checkInputForMovement() {
 		if (Input.GetKeyDown (MyForward)) {
 			buttonsDown[0] = true;
 			//move (Forward);
@@ -104,9 +113,22 @@ public class MainPlayerControls : MonoBehaviour
 		this.PlayerScript.setDesireToApproach(moveTarget, true);
 	}
 
-	//unused method
-	protected void stopMoving() {
-		this.PlayerScript.setDesireToMove (false);
+	protected void checkInputActions() {
+		if (Input.GetKeyDown (SwingSword)) {
+			this.startSwinging ();
+		}
+
+		if (Input.GetKeyUp (SwingSword)) {
+			this.stopSwinging ();
+		}
+	}
+
+	protected void startSwinging() {
+		this.PlayerScript.setDesireToSwing ();
+	}
+
+	protected void stopSwinging() {
+		this.PlayerScript.setDesireStopSwinging ();
 	}
 	#endregion
 
@@ -140,7 +162,8 @@ public class MainPlayerControls : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		checkInput ();
+		checkInputForMovement ();
+		checkInputActions ();
 	}
 }
 
