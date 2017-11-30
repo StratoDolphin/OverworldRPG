@@ -115,7 +115,7 @@ namespace com.stratodolphin.overworldrpg.Characters
 			PrefabEnemyUnit = (GameObject) Resources.Load ("prefabs/Characters/Enemies/Unit");
 			UnityEngine.Object[] enemyPrefabs = Resources.LoadAll ("prefabs/Characters/Enemies/AnimatedModels/");
 			foreach (GameObject prefab in enemyPrefabs) {
-				String prefabName = prefab.name;
+				String prefabName = prefab.tag;
 				switch (prefabName) {
 				case "Dead":
 					PrefabEnemyDead = prefab;
@@ -123,14 +123,14 @@ namespace com.stratodolphin.overworldrpg.Characters
 				case "Still":
 					PrefabEnemyBase = prefab;
 					break;
-				case "PrepareWalk":
+				case "PrepWalk":
 					PrefabEnemyPrepWalk = prefab;
 					break;
 				case "Swing":
 					PrefabEnemySwing = prefab;
 					break;
 				case "Walk":
-					PrefabEnemySwing = prefab;
+					PrefabEnemyWalk = prefab;
 					break;
 				}
 			}
@@ -139,7 +139,7 @@ namespace com.stratodolphin.overworldrpg.Characters
 			PrefabMainPlayerUnit = (GameObject) Resources.Load ("prefabs/Characters/MainPlayer/Unit");
 			UnityEngine.Object[] mainPlayerPrefabs = Resources.LoadAll ("prefabs/Characters/MainPlayer/AnimatedModels/");
 			foreach (GameObject prefab in mainPlayerPrefabs) {
-				String prefabName = prefab.name;
+				String prefabName = prefab.tag;
 				switch (prefabName) {
 				case "Dead":
 					PrefabMainPlayerDead = prefab;
@@ -147,16 +147,16 @@ namespace com.stratodolphin.overworldrpg.Characters
 				case "Still":
 					PrefabMainPlayerBase = prefab;
 					break;
-				case "PrepareWalk":
+				case "PrepWalk":
 					PrefabMainPlayerPrepWalk = prefab;
 					break;
 				case "Swing":
 					PrefabMainPlayerSwing = prefab;
 					break;
 				case "Walk":
-					PrefabMainPlayerSwing = prefab;
+					PrefabMainPlayerWalk = prefab;
 					break;
-				case "PrepareMelee":
+				case "PrepMelee":
 					PrefabMainPlayerPrepMelee = prefab;
 					break;
 				}

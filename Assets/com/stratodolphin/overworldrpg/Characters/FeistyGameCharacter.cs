@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using com.stratodolphin.overworldrpg.Characters;
 
 /// <summary>
 /// Extension of GameCharacter. This class simply includes the
@@ -93,6 +94,17 @@ public abstract class FeistyGameCharacter : GameCharacter
     /// <param name="target">Target.</param>
     protected void animateSwing(GameObject target) {
 		Debug.Log ("Swinging at: " + target.ToString ());
+		if (this.getBody ().tag == "Swing")
+			// Just let him keep swinging.
+			return;
+		else {
+			if (this is EnemyAI) {
+				Debug.Log ("Switching: " + GameInfo.PrefabEnemySwing.ToString ());
+				this.switchAnimationModel (GameInfo.PrefabEnemySwing);
+			}
+			else if (this is GamePlayer)
+				this.switchAnimationModel (GameInfo.PrefabMainPlayerSwing);
+		}
 	}
 
     /// <summary>

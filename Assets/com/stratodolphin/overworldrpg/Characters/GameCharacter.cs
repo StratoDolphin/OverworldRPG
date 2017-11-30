@@ -126,7 +126,6 @@ public abstract class GameCharacter : MonoBehaviour
     #endregion
 
 	#region Public Attributes
-
 	/// <summary>
 	/// The initial amount of hitpoints that this character has.
 	/// </summary>
@@ -485,6 +484,51 @@ public abstract class GameCharacter : MonoBehaviour
     #endregion
 
     #region Animated Actions
+	protected GameObject getBody() {
+		return this.transform.Find ("Body").gameObject;
+	}
+
+	/// <summary>
+	/// Switchs the animation model in this character. There are a couple things that need
+	/// to be done to preserve the gameobject while doing this. The main one is that the
+	/// health bar needs to be preserved if it is a child of the animated model. This is
+	/// because deleting the animated model will delete its children and therefore, the
+	/// health bar.
+	/// </summary>
+	/// <param name="prefab">Prefab.</param>
+	protected void switchAnimationModel(GameObject prefab) {
+		// ==== Health Bar Preservation (Preserve the environment! We're liberals!
+		// Save health bar
+		GameObject healthBar = this.GetComponentInChildren<HealthBar>().gameObject;
+
+		// Determine if the health bar even needs to be preserved or if
+		// it will be safe as is.
+		bool needToPreserveHealthBar = healthBar.transform.parent.name == "Body";
+
+		// Temporarily move it out of the body.
+		if (needToPreserveHealthBar) {
+			healthBar.transform.SetParent (this.gameObject.transform);
+		}
+
+		// ==== Actually switching bodies. (Dang you can do that these days?)
+		GameObject body = this.getBody();
+		// We want the new body to have the same position and rotation as
+		// the original.
+		Vector3 bodyPosition = body.transform.position;
+		Quaternion bodyRotation = body.transform.rotation; // Rotate that body! hmm!
+
+		Debug.Log ("Destroying: " + this.getBody ().ToString ());
+		Destroy (body);
+		Debug.Log ("Destroyed: " + this.getBody ().ToString ());
+
+		GameObject newBody = Instantiate (prefab, bodyPosition, bodyRotation, this.transform);
+		newBody.name = "Body";
+
+		if (needToPreserveHealthBar) {
+			healthBar.transform.SetParent (newBody.transform);
+		}
+	}
+
     /// <summary>
     /// animates the movement of this character to a given point.
     /// This method does not contain the logic that looks at the
