@@ -42,6 +42,7 @@ public class MainPlayerControls : MonoBehaviour
 
 	#region Control Actions
 	protected void checkInput() {
+		Debug.Log ("We are in the checkinput method");
 		if (Input.GetKeyDown (MyForward)) {
 			buttonsDown[0] = true;
 			//move (Forward);
