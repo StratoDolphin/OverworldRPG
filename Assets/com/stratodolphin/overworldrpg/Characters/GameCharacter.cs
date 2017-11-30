@@ -122,8 +122,7 @@ public abstract class GameCharacter : MonoBehaviour
     /// contain all thing that the character is holding in it's
     /// right hand.
     /// </summary>
-<<<<<<< Updated upstream
-    protected Inventory _rightHandInventory;
+    public Inventory _rightHandInventory;
 
 	/// <summary>
 	/// Determines if this frame will allow the model to be switched.
@@ -132,9 +131,6 @@ public abstract class GameCharacter : MonoBehaviour
 	/// it will create multiple models.
 	/// </summary>
 	protected bool canSwitchModels = true;
-=======
-    public Inventory _rightHandInventory;
->>>>>>> Stashed changes
     #endregion
 
 	#region Public Attributes
