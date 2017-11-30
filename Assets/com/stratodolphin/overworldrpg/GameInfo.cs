@@ -182,7 +182,7 @@ namespace com.stratodolphin.overworldrpg.Characters
 		/// Initialize the global variables in this class for the game.
 		/// </summary>
 		public static void initialize() {
-            foreach (GameObject bonfire in GameObject.FindGameObjectsWithTag("Bonfire"))
+			foreach (GameObject bonfire in GameObject.FindGameObjectsWithTag("Bonfire"))
             {
                 Bonfire fireObject = bonfire.GetComponent<Bonfire>();
                 Bonfires.Add(fireObject);
@@ -190,6 +190,24 @@ namespace com.stratodolphin.overworldrpg.Characters
             // Allow user to spawn at the very first bonfire at least.
             Bonfires[0].IsActivated = true;
 			loadPrefabs ();
+
+			GameObject.Find ("GameLogic").GetComponent<GameLogic> ().refresh ();
+		}
+
+		/// <summary>
+		/// Refresh the Game Information for a new game.
+		/// </summary>
+		public static void refresh() {
+			setMainPlayer (null);
+
+			_bonfires = new List<Bonfire> ();
+			foreach (GameObject bonfire in GameObject.FindGameObjectsWithTag("Bonfire"))
+			{
+				Bonfire fireObject = bonfire.GetComponent<Bonfire>();
+				Bonfires.Add(fireObject);
+			}
+			// Allow user to spawn at the very first bonfire at least.
+			Bonfires[0].IsActivated = true;
 		}
 	}
 }
