@@ -108,20 +108,21 @@ public abstract class GameCharacter : MonoBehaviour
     /// of the <see cref="Storable"/>s taht this character can
     /// hold and carry.
     /// </summary>
-    protected Inventory _inventory;
+    public Inventory _inventory;
 
     /// <summary>
     /// The inventory for this characters left hand. This will
     /// contain all thing that the character is holding in it's
     /// left hand.
     /// </summary>
-    protected Inventory _leftHandInventory;
+    public Inventory _leftHandInventory;
 
     /// <summary>
     /// The inventory for this characters right hand. This will
     /// contain all thing that the character is holding in it's
     /// right hand.
     /// </summary>
+<<<<<<< Updated upstream
     protected Inventory _rightHandInventory;
 
 	/// <summary>
@@ -131,6 +132,9 @@ public abstract class GameCharacter : MonoBehaviour
 	/// it will create multiple models.
 	/// </summary>
 	protected bool canSwitchModels = true;
+=======
+    public Inventory _rightHandInventory;
+>>>>>>> Stashed changes
     #endregion
 
 	#region Public Attributes

@@ -70,7 +70,7 @@ namespace com.stratodolphin.overworldrpg.Characters.UI
 			//Depending on the button name, open up its corresponding GUI
 			if (name.Equals ("Inventory")) {
 				//get showInventory() from GamePlayer
-				GameInfo.MainPlayer.showInventory ();
+				GameLogic.InvUI.initialize();
 			} else if (name.Equals ("Stats")) {
 				//have to make a stats GUI and show it
 			} else if (name.Equals ("Quit")) {

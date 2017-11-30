@@ -193,6 +193,29 @@ namespace com.stratodolphin.overworldrpg.Characters.Inventory
         }
 
 		/// <summary>
+		/// Returns a list of items that are in this inventory that are
+		/// of the type designated in type. This uses the Type field on
+		/// each item to compare to type.
+		/// </summary>
+		/// <param name="type"></param>
+		/// <returns></returns>
+		public void getItemEffect(string name)
+		{
+			Debug.Log ("In getItemEffect");
+			Storable it;
+
+			for (int i = 0; i < this.all ().Count; i++) {
+				Debug.Log ("In getItemEffect2");
+				if (this.all () [i].Name.Equals (name)) {
+					Debug.Log ("In getItemEffect2");
+					this.all () [i].EffectApplierAccessor.Use (this._owner);
+					break;
+				}
+			}
+
+		}
+
+		/// <summary>
 		/// Determines whether or not this inventory contains an item
 		/// of the type in the parameter type.
 		/// </summary>
@@ -246,7 +269,7 @@ namespace com.stratodolphin.overworldrpg.Characters.Inventory
 				amount = this.getItemsByName (this.all () [i].ToString ()).Count();
 				Name = this.getItemsByName (this.all () [i].ToString ())[i].ToString();
 
-				val = val + Name + " x " + amount + " \n ";
+				val = val + Name + "x" + amount + "\n";
 			}
 			return val;
 
