@@ -86,7 +86,7 @@ public class MainPlayerControls : MonoBehaviour
 				movementWanted = true;
 			}
 		}
-		Debug.Log (finalMoveTarget);
+		//Debug.Log (finalMoveTarget);
 		if (movementWanted) {
 			//when no buttons are being pressed, a moveTarget of (0,0,0) is passed in and
 			//the player tries to walk to that coodinate. This cancels that.
