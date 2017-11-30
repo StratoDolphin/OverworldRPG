@@ -1,4 +1,5 @@
-﻿using com.stratodolphin.overworldrpg.Characters.Inventory;
+﻿using com.stratodolphin.overworldrpg.Characters;
+using com.stratodolphin.overworldrpg.Characters.Inventory;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,7 @@ public class StatsUIViewModel : MonoBehaviour {
 
 		public GameObject StatsSelectionButtonPrefab;
 		private int count = 1;
+		protected bool isMade = false;
 
 		#region Protected Attributes
 		/// <summary>
@@ -32,18 +34,33 @@ public class StatsUIViewModel : MonoBehaviour {
 		/// </summary>
 		protected void createButtons()
 		{
-			GameObject stats = createButtonSelection (this.StatsSelectionButtonPrefab, "Stats");
-			stats.GetComponent<Button>().onClick.AddListener(() => { onClickStatsGUI("Stats"); });
-			GameObject back = createButtonSelection (this.StatsSelectionButtonPrefab, "Back");
-			back.GetComponent<Button>().onClick.AddListener(() => { onClickStatsGUI("Back"); });
+			if (!isMade) {
+				GameObject stats = createButtonSelection (this.StatsSelectionButtonPrefab, "Stats");
+				stats.GetComponent<Button> ().onClick.AddListener (() => {
+					onClickStatsGUI ("Stats");
+				});
+				GameObject back = createButtonSelection (this.StatsSelectionButtonPrefab, "Back");
+				back.GetComponent<Button> ().onClick.AddListener (() => {
+					onClickStatsGUI ("Back");
+				});
 
-			//get the toString of the GamePlayer, loop through it, and create buttons for them
-			string data = GameInfo.MainPlayer.showInventory();
-			string[] inv = data.Split (' ');
-			for (int i = 1; i < inv.Length - 1; i++) {
-				GameObject item = createButtonSelection (this.StatsSelectionButtonPrefab, inv[i]);
-				item.GetComponent<Button>().onClick.AddListener(() => { onClickStatsGUI(inv[i - 1]); });
+				Debug.Log ("OOOOOOO");
+				if (GameInfo.MainPlayer != null) {
+					//get the toString of the GamePlayer, loop through it, and create buttons for them
+					string data = GameInfo.MainPlayer.showStats ();
+					Debug.Log ("HHHHHHH");
+					Debug.Log (data);
+					string[] inv = data.Split (' ');
+					for (int i = 1; i < inv.Length - 1; i++) {
+						GameObject item = createButtonSelection (this.StatsSelectionButtonPrefab, inv [i]);
+						item.GetComponent<Button> ().onClick.AddListener (() => {
+							onClickStatsGUI (inv [i - 1]);
+						});
+					}
+				}
+				isMade = true;
 			}
+
 		}
 
 		/// <summary>
@@ -158,6 +175,7 @@ public class StatsUIViewModel : MonoBehaviour {
 		public void initialize()
 		{
 			this.createButtons();
+			this.hide ();
 		}
 
 		public void show()

@@ -12,7 +12,7 @@ namespace com.stratodolphin.overworldrpg.Characters.UI
 		public GameObject InvSelectionButtonPrefab;
 		private int count = 1;
 
-		public bool invPressed = false;
+		private bool isMade = false;
 		#region Protected Attributes
 		/// <summary>
 		/// Height of the buttons that can be pressed to select the
@@ -36,26 +36,29 @@ namespace com.stratodolphin.overworldrpg.Characters.UI
 		/// </summary>
 		protected void createButtons()
 		{
-			GameObject inventory = createButtonSelection (this.InvSelectionButtonPrefab, "Inventory");
-			inventory.GetComponent<Button> ().onClick.AddListener (() => {
-				onClickInvGUI ("Inventory");
-			});
-			GameObject back = createButtonSelection (this.InvSelectionButtonPrefab, "Back");
-			back.GetComponent<Button> ().onClick.AddListener (() => {
-				onClickInvGUI ("Back");
-			});
+			if (!isMade) {
+				GameObject inventory = createButtonSelection (this.InvSelectionButtonPrefab, "Inventory");
+				inventory.GetComponent<Button> ().onClick.AddListener (() => {
+					onClickInvGUI ("Inventory");
+				});
+				GameObject back = createButtonSelection (this.InvSelectionButtonPrefab, "Back");
+				back.GetComponent<Button> ().onClick.AddListener (() => {
+					onClickInvGUI ("Back");
+				});
 
-			if (GameInfo.MainPlayer != null) {
-				//get the toString of the GamePlayer, loop through it, and create buttons for them
-				string data = GameInfo.MainPlayer.showInventory ();
-				string[] inv = data.Split (' ');
-				for (int i = 1; i < inv.Length - 1; i++) {
-					GameObject item = createButtonSelection (this.InvSelectionButtonPrefab, inv [i]);
-					item.GetComponent<Button> ().onClick.AddListener (() => {
-						onClickInvGUI (inv [i - 1]);
-					});
+				if (GameInfo.MainPlayer != null) {
+					//get the toString of the GamePlayer, loop through it, and create buttons for them
+					string data = GameInfo.MainPlayer.showInventory ();
+					string[] inv = data.Split (' ');
+					for (int i = 1; i < inv.Length - 1; i++) {
+						GameObject item = createButtonSelection (this.InvSelectionButtonPrefab, inv [i]);
+						item.GetComponent<Button> ().onClick.AddListener (() => {
+							onClickInvGUI (inv [i - 1]);
+						});
 
+					}
 				}
+				isMade = true;
 			}
 		}
 
