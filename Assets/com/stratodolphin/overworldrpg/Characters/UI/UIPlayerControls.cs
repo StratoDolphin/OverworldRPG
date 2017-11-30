@@ -53,6 +53,26 @@ namespace com.stratodolphin.overworldrpg.Characters.UI
 		}
         #endregion
 
+		#region Inv UI
+
+		/// <summary>
+		/// Checks to see if the pause ui has been toggled by
+		/// the user. If so, toggle it via
+		/// <see cref="GameLogic.togglePauseUIVisibility()"/>.
+		/// </summary>
+		protected void checkInvUIToggle()
+		{
+			if (Input.GetKeyDown(KeyCode.I))
+			{
+				if (GameInfo.MainPlayer != null)
+				{
+					GameLogic.toggleInvUIVisibility();
+				}
+			}
+		}
+		#endregion
+
+
         // Use this for initialization
         void Start()
         {
@@ -64,6 +84,7 @@ namespace com.stratodolphin.overworldrpg.Characters.UI
         {
             checkSpawnUIToggle();
 			checkPauseUIToggle ();
+			checkInvUIToggle ();
         }
     }
 }

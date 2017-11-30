@@ -12,19 +12,30 @@ namespace com.stratodolphin.overworldrpg.Characters.UI
 		public GameObject PauseSelectionButtonPrefab;
 		private int count = 1;
 
+		protected bool isMade = false;
+		protected bool invPressed = false;
 		/// <summary>
 		/// Creates the background, title, and buttons that represent bonfires that the main
 		/// character can spawn at.
 		/// </summary>
 		protected void createButtons()
 		{
-			GameObject uiTitle = createButtonSelection (this.PauseSelectionButtonPrefab, "Pause");
-			GameObject inventory = createButtonSelection (this.PauseSelectionButtonPrefab, "Inventory");
-			inventory.GetComponent<Button>().onClick.AddListener(() => { onClickPauseGUI("Inventory"); });
-			GameObject stats = createButtonSelection (this.PauseSelectionButtonPrefab, "Stats");
-			stats.GetComponent<Button>().onClick.AddListener(() => { onClickPauseGUI("Stats"); });
-			GameObject quit = createButtonSelection (this.PauseSelectionButtonPrefab, "Quit");
-			quit.GetComponent<Button>().onClick.AddListener(() => { onClickPauseGUI("Quit"); });
+			if (!isMade) {
+				GameObject uiTitle = createButtonSelection (this.PauseSelectionButtonPrefab, "Pause");
+				GameObject inventory = createButtonSelection (this.PauseSelectionButtonPrefab, "Inventory");
+				inventory.GetComponent<Button> ().onClick.AddListener (() => {
+					onClickPauseGUI ("Inventory");
+				});
+				GameObject stats = createButtonSelection (this.PauseSelectionButtonPrefab, "Stats");
+				stats.GetComponent<Button> ().onClick.AddListener (() => {
+					onClickPauseGUI ("Stats");
+				});
+				GameObject quit = createButtonSelection (this.PauseSelectionButtonPrefab, "Quit");
+				quit.GetComponent<Button> ().onClick.AddListener (() => {
+					onClickPauseGUI ("Quit");
+				});
+				isMade = true;
+			}
 		}
 
 		/// <summary>
@@ -70,10 +81,11 @@ namespace com.stratodolphin.overworldrpg.Characters.UI
 			//Depending on the button name, open up its corresponding GUI
 			if (name.Equals ("Inventory")) {
 				//get showInventory() from GamePlayer
-				GameLogic.InvUI.initialize();
+				GameLogic.InvUI.show();
+				//invPressed = true;
 			} else if (name.Equals ("Stats")) {
 				//have to make a stats GUI and show it
-				GameLogic.StatsUI.initialize();
+				GameLogic.StatsUI.show();// .show()
 			} else if (name.Equals ("Quit")) {
 				//NOT Working
 				SceneManager.LoadScene("TitleScreen");

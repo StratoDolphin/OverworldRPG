@@ -42,6 +42,10 @@ public class GamePlayer : FeistyGameCharacter
 	//make this a text, then list every item the player collects in the text
 	public string inventoryName;
 
+	//stats here. Basically an array of the stat along with a number.
+	protected int defense = 1;
+	protected string[] stats = {"Defense "};
+
 	// Use this for initialization
 	void Start () {
 		//have to call this so the instances of objects can be called first
@@ -126,6 +130,11 @@ public class GamePlayer : FeistyGameCharacter
 		//uiMessageString = "<color=white>" + this._inventory.ToString () + "</color>";
 		string mes = "<color=white> " + this._inventory.ToString () + " </color>";
 		return mes;
+	}
+
+	public string showStats() {
+		string mesd = stats[0] + defense;
+		return mesd;
 	}
 
 	void OnTriggerEnter(Collider otherObjective)
