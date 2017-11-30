@@ -85,20 +85,24 @@ public class MainPlayerControls : MonoBehaviour
 			}
 		}
 		Debug.Log (finalMoveTarget);
-		move (finalMoveTarget);
+		if (finalMoveTarget.x != 0 && finalMoveTarget.y != 0 && finalMoveTarget.z != 0) {
+			//when no buttons are being pressed, a moveTarget of (0,0,0) is passed in and
+			//the player tries to walk to that coodinate. This cancels that.
+			move (finalMoveTarget);
+		} else {
+			this.PlayerScript.setDesireToMove (false);
+		}
+
 	}
 
 	protected void move(Vector3 moveTarget) {
 	//protected void move(KeyCode directionDesire) {
 		//Vector3 directionToMove = this.getPointInDirection (directionDesire);
 		//this.PlayerScript.setDesireToApproach (directionToMove, true);
-		if(moveTarget.x != 0 && moveTarget.y != 0 && moveTarget.z != 0) {
-			//when no buttons are being pressed, a moveTarget of (0,0,0) is passed in and
-			//the player tries to walk to that coodinate. This cancels that.
-			this.PlayerScript.setDesireToApproach(moveTarget, true);
-		}
+		this.PlayerScript.setDesireToApproach(moveTarget, true);
 	}
 
+	//unused method
 	protected void stopMoving() {
 		this.PlayerScript.setDesireToMove (false);
 	}
