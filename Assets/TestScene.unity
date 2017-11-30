@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -525,6 +525,7 @@ GameObject:
   - component: {fileID: 660085165}
   - component: {fileID: 660085164}
   - component: {fileID: 660085163}
+  - component: {fileID: 660085168}
   m_Layer: 0
   m_Name: storable_Cube (1)
   m_TagString: Item
@@ -543,7 +544,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 422a062a2f4f9ea4fb5b0d905dd86f34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 0
+  Type: 3
   Name: Cube
 --- !u!23 &660085164
 MeshRenderer:
@@ -609,6 +610,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &660085168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 660085162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 633e8ab56f3ddc146acc78c85c503859, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DecAmount: 10
 --- !u!1 &673941455
 GameObject:
   m_ObjectHideFlags: 0
@@ -886,6 +899,7 @@ GameObject:
   - component: {fileID: 1423674392}
   - component: {fileID: 1423674391}
   - component: {fileID: 1423674390}
+  - component: {fileID: 1423674395}
   m_Layer: 0
   m_Name: storable_Cube (3)
   m_TagString: Item
@@ -904,7 +918,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 422a062a2f4f9ea4fb5b0d905dd86f34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 0
+  Type: 3
   Name: Cube
 --- !u!23 &1423674391
 MeshRenderer:
@@ -968,8 +982,20 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 22
+  m_RootOrder: 23
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1423674395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1423674389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 633e8ab56f3ddc146acc78c85c503859, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DecAmount: 10
 --- !u!1001 &1432398950
 Prefab:
   m_ObjectHideFlags: 0
@@ -1275,6 +1301,7 @@ GameObject:
   - component: {fileID: 1652309943}
   - component: {fileID: 1652309942}
   - component: {fileID: 1652309946}
+  - component: {fileID: 1652309947}
   m_Layer: 0
   m_Name: storable_Cube
   m_TagString: Item
@@ -1357,8 +1384,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 422a062a2f4f9ea4fb5b0d905dd86f34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 0
+  Type: 3
   Name: Cube
+--- !u!114 &1652309947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1652309941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 633e8ab56f3ddc146acc78c85c503859, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DecAmount: 10
 --- !u!1 &1734022657
 GameObject:
   m_ObjectHideFlags: 0
@@ -1563,6 +1602,7 @@ GameObject:
   - component: {fileID: 2109231200}
   - component: {fileID: 2109231199}
   - component: {fileID: 2109231198}
+  - component: {fileID: 2109231203}
   m_Layer: 0
   m_Name: storable_Cube (2)
   m_TagString: Item
@@ -1581,7 +1621,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 422a062a2f4f9ea4fb5b0d905dd86f34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 0
+  Type: 3
   Name: Cube
 --- !u!23 &2109231199
 MeshRenderer:
@@ -1647,6 +1687,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2109231203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2109231197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 633e8ab56f3ddc146acc78c85c503859, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DecAmount: 10
 --- !u!1001 &2114640781
 Prefab:
   m_ObjectHideFlags: 0

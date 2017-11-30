@@ -131,6 +131,11 @@ public abstract class GameCharacter : MonoBehaviour
 	/// it will create multiple models.
 	/// </summary>
 	protected bool canSwitchModels = true;
+
+	/// <summary>
+	/// Determines whether or not the player can walk.
+	/// </summary>
+	protected bool _canWalk = true;
     #endregion
 
 	#region Public Attributes
@@ -302,6 +307,14 @@ public abstract class GameCharacter : MonoBehaviour
 
 	#region Backend
 	/// <summary>
+	/// Determines whether or not the character is swinging currently.
+	/// </summary>
+	/// <returns><c>true</c>, if swinging was ised, <c>false</c> otherwise.</returns>
+	public bool isSwinging() {
+		return (this is FeistyGameCharacter && ((FeistyGameCharacter)this)._wantsToSwing);
+	}
+
+	/// <summary>
 	/// Initializes the hitpoints of this character by setting <see cref="_hitpoints"/>
 	/// to the value of startingHealth. This should only be used when initializing
 	/// the character.
@@ -429,9 +442,12 @@ public abstract class GameCharacter : MonoBehaviour
         Vector3 deadPosition = this.gameObject.transform.position;
 
         Destroy(this.gameObject);
-        GameObject deadMainPlayer = (GameObject)Resources.Load("prefabs/Dead_MainPlayer");
-
-        return Instantiate(deadMainPlayer, deadPosition, deadMainPlayer.transform.rotation);
+		if (this is EnemyAI)
+			return Instantiate(GameInfo.PrefabEnemyDead, deadPosition, GameInfo.PrefabEnemyDead.transform.rotation);
+		else if (this is GamePlayer)
+			return Instantiate(GameInfo.PrefabMainPlayerDead, deadPosition, GameInfo.PrefabMainPlayerDead.transform.rotation);
+		else
+			return Instantiate(GameInfo.PrefabMainPlayerDead, deadPosition, GameInfo.PrefabMainPlayerDead.transform.rotation);
     }
 
     /// <summary>
@@ -510,9 +526,18 @@ public abstract class GameCharacter : MonoBehaviour
 	/// </summary>
 	/// <param name="prefab">Prefab.</param>
 	protected void switchAnimationModel(GameObject prefab) {
-		if (this.getBody ().tag == prefab.tag || !this.canSwitchModels)
+		if (this.getBody ().tag == prefab.tag) {
+//			if (this is GamePlayer)
+//				Debug.Log ("TAG: " + prefab.tag);
 			return;
+		}
+		if (!this.canSwitchModels) {
+//			if (this is GamePlayer)
+//				Debug.Log ("no move TAG: " + prefab.tag);
+			return;
+		}
 
+		if (this is GamePlayer) Debug.Log ("Switching to: " + prefab.tag);
 		// ==== Health Bar Preservation (Preserve the environment! We're liberals!
 		// Save health bar
 		GameObject healthBar = this.GetComponentInChildren<HealthBar>().gameObject;
@@ -533,9 +558,9 @@ public abstract class GameCharacter : MonoBehaviour
 		Vector3 bodyPosition = body.transform.position;
 		Quaternion bodyRotation = body.transform.rotation; // Rotate that body! hmm!
 
-		Debug.Log ("Destroying: " + this.getBody ().ToString ());
+		//Debug.Log ("Destroying: " + this.getBody ().ToString ());
 		Destroy (body);
-		Debug.Log ("Destroyed: " + this.getBody ().ToString ());
+		//Debug.Log ("Destroyed: " + this.getBody ().ToString ());
 
 		GameObject newBody = Instantiate (prefab, bodyPosition, bodyRotation, this.transform);
 		newBody.name = "Body";
@@ -562,6 +587,9 @@ public abstract class GameCharacter : MonoBehaviour
     /// </summary>
     /// <param name="destination">Destination.</param>
     protected void animateMove(Vector3 destination) {
+		if (!this._canWalk)
+			return;
+
 		// Consider using either Vector3.Lerp or Vector3.MoveTowards
 		// to do the animations.
 		// 
@@ -578,6 +606,10 @@ public abstract class GameCharacter : MonoBehaviour
 		Vector3 flatVector = new Vector3 (destination.x, this.gameObject.transform.position.y, destination.z);
 		transform.position = Vector3.MoveTowards (transform.position, flatVector, MovementSpeed * Time.deltaTime);
 		//Debug.Log("Moving to " + destination.ToString());
+		if (this is EnemyAI)
+			this.switchAnimationModel (GameInfo.PrefabEnemyWalk);
+		else if (this is GamePlayer)
+			this.switchAnimationModel (GameInfo.PrefabMainPlayerWalk);
 	}
 
 	/// <summary>
@@ -599,6 +631,12 @@ public abstract class GameCharacter : MonoBehaviour
         rotation.z = this.gameObject.transform.rotation.z;
         transform.rotation = Quaternion.Slerp(this.gameObject.transform.rotation, rotation, Time.deltaTime * this._ratationDamping);
 		//Debug.Log("Turning to " + direction.ToString());
+		if (this._canWalk) {
+			if (this is EnemyAI)
+				this.switchAnimationModel (GameInfo.PrefabEnemyWalk);
+			else if (this is GamePlayer)
+				this.switchAnimationModel (GameInfo.PrefabMainPlayerWalk);
+		}
 	}
 
 	/// <summary>
@@ -606,7 +644,8 @@ public abstract class GameCharacter : MonoBehaviour
 	/// switch the animated body out for the one that is doing nothing.
 	/// </summary>
 	protected void animateStand() {
-		if (this.getBody ().tag != "Swing")
+		bool isSwinging = false;
+		if (this.isSwinging())
 			return;
 		if (this is EnemyAI)
 			this.switchAnimationModel (GameInfo.PrefabEnemyBase);
@@ -636,7 +675,11 @@ public abstract class GameCharacter : MonoBehaviour
 	/// </para>
 	/// </summary>
 	protected void executeApproachDesire() {
-		if (this._isDesiredToMove) this.animateApproach (this._desiredMovementDestination);
+		//Debug.Log("desire to move: " + this._isDesiredToMove.ToString());
+		if (this._isDesiredToMove)
+			this.animateApproach (this._desiredMovementDestination);
+		else if (!this.isSwinging())
+			this.animateStand ();
 	}
 
 	/// <summary>
@@ -664,8 +707,9 @@ public abstract class GameCharacter : MonoBehaviour
 	protected virtual void executeDesires() {
         if (this.IsDead) { return; }
 
+		//if (this is GamePlayer) Debug.Log ("Desire to move: " + this._isDesiredToMove.ToString());
 		if (!this._isDesiredToMove)
-			this.executeFaceingDesire ();
+			this.animateStand ();
 		else
 			this.executeApproachDesire ();
 	}
@@ -682,6 +726,7 @@ public abstract class GameCharacter : MonoBehaviour
 
 	protected virtual void Update()
     {
+		//Debug.Log ("New Frame");
 		// Refresh this every frame.
 		this.canSwitchModels = true;
         this.checkForDeath ();
