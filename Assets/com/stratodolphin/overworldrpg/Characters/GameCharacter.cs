@@ -123,6 +123,14 @@ public abstract class GameCharacter : MonoBehaviour
     /// right hand.
     /// </summary>
     protected Inventory _rightHandInventory;
+
+	/// <summary>
+	/// Determines if this frame will allow the model to be switched.
+	/// This is because, when you delete an object, it is not deleted
+	/// until the next frame, so if you replace an object multiple times,
+	/// it will create multiple models.
+	/// </summary>
+	protected bool canSwitchModels = true;
     #endregion
 
 	#region Public Attributes
@@ -489,14 +497,22 @@ public abstract class GameCharacter : MonoBehaviour
 	}
 
 	/// <summary>
+	/// <para>
 	/// Switchs the animation model in this character. There are a couple things that need
 	/// to be done to preserve the gameobject while doing this. The main one is that the
 	/// health bar needs to be preserved if it is a child of the animated model. This is
 	/// because deleting the animated model will delete its children and therefore, the
 	/// health bar.
+	/// </para>
+	/// <para>
+	/// This method will not switch the body if it is already the current body.
+	/// </para>
 	/// </summary>
 	/// <param name="prefab">Prefab.</param>
 	protected void switchAnimationModel(GameObject prefab) {
+		if (this.getBody ().tag == prefab.tag || !this.canSwitchModels)
+			return;
+
 		// ==== Health Bar Preservation (Preserve the environment! We're liberals!
 		// Save health bar
 		GameObject healthBar = this.GetComponentInChildren<HealthBar>().gameObject;
@@ -527,15 +543,22 @@ public abstract class GameCharacter : MonoBehaviour
 		if (needToPreserveHealthBar) {
 			healthBar.transform.SetParent (newBody.transform);
 		}
+
+		this.canSwitchModels = false;
 	}
 
     /// <summary>
+	/// <para>
     /// animates the movement of this character to a given point.
     /// This method does not contain the logic that looks at the
     /// variables that determine whether or not this character
     /// even wants to move. This method always does the animation.
     /// If you want to factor in those variables, put this method
     /// call inside the if statements.
+	/// </para>
+	/// <para>
+	/// If this characters _canMove attribute is false, it won't move.
+	/// </para>
     /// </summary>
     /// <param name="destination">Destination.</param>
     protected void animateMove(Vector3 destination) {
@@ -576,6 +599,19 @@ public abstract class GameCharacter : MonoBehaviour
         rotation.z = this.gameObject.transform.rotation.z;
         transform.rotation = Quaternion.Slerp(this.gameObject.transform.rotation, rotation, Time.deltaTime * this._ratationDamping);
 		//Debug.Log("Turning to " + direction.ToString());
+	}
+
+	/// <summary>
+	/// Animates the character to just stand there. This will simply
+	/// switch the animated body out for the one that is doing nothing.
+	/// </summary>
+	protected void animateStand() {
+		if (this.getBody ().tag != "Swing")
+			return;
+		if (this is EnemyAI)
+			this.switchAnimationModel (GameInfo.PrefabEnemyBase);
+		if (this is GamePlayer)
+			this.switchAnimationModel (GameInfo.PrefabMainPlayerBase);
 	}
 
 	/// <summary>
@@ -646,6 +682,8 @@ public abstract class GameCharacter : MonoBehaviour
 
 	protected virtual void Update()
     {
+		// Refresh this every frame.
+		this.canSwitchModels = true;
         this.checkForDeath ();
 		this.executeDesires ();
 	}
