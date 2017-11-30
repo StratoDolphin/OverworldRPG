@@ -113,6 +113,41 @@ namespace com.stratodolphin.overworldrpg.Characters
 			}
 		}
 		#endregion
+
+		#region Stats
+		/// <summary>
+		/// Getter for the UI canvas that allows user to go
+		/// to their Inventory
+		/// </summary>
+		/// <remarks>
+		/// I cache it so that, if it is disactive when it's hidden, it
+		/// can still be retreived.
+		/// </remarks>
+		private static StatsUIViewModel _statsUI;
+		public static StatsUIViewModel StatsUI
+		{
+			get {
+				if (_statsUI != null) { return _statsUI; }
+				StatsUIViewModel ui = GameObject.Find("StatsUICanvas").GetComponent<StatsUIViewModel>();
+				_statsUI = ui;
+				return _statsUI;
+			}
+		}
+
+		/// <summary>
+		/// Shows or hides the Inventory UI Canvas.
+		/// </summary>
+		/// <param name="visibility"></param>
+		public static void toggleStatsUIVisibility() {
+			if (StatsUI.gameObject.activeSelf)
+			{
+				StatsUI.hide();
+			} else
+			{
+				StatsUI.show();
+			}
+		}
+		#endregion
 		// Use this for initialization
 		void Start () {
 			GameInfo.initialize ();
