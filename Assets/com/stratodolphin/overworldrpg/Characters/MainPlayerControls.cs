@@ -7,23 +7,31 @@ public class MainPlayerControls : MonoBehaviour
 	/// <summary>
 	/// The forward control key.
 	/// </summary>
-	public KeyCode Forward = KeyCode.W;
+	public static KeyCode MyForward = KeyCode.W;
 
 	/// <summary>
 	/// The backward control key.
 	/// </summary>
-	public KeyCode Backward = KeyCode.S;
+	public static KeyCode MyBackward = KeyCode.S;
 
 	/// <summary>
 	/// The left control key.
 	/// </summary>
-	public KeyCode Left = KeyCode.A;
+	public static KeyCode MyLeft = KeyCode.A;
 
 	/// <summary>
 	/// The right control key.
 	/// </summary>
-	public KeyCode Right = KeyCode.D;
+	public static KeyCode MyRight = KeyCode.D;
 	#endregion
+
+	bool [] buttonsDown = new bool[] {false, false, false, false}; //top, right, bottom, left (clockwise from top)
+	KeyCode [] directionKeyCodes = new KeyCode[] {MyForward, MyRight, MyBackward, MyLeft};
+
+	bool forwardDown = false;
+	bool rightDown = false;
+	bool backDown = false;
+	bool leftDown = false;
 
 	#region Public Attributes
 	/// <summary>
@@ -34,40 +42,86 @@ public class MainPlayerControls : MonoBehaviour
 
 	#region Control Actions
 	protected void checkInput() {
-		if (Input.GetKeyDown (Forward)) {
-			move (Forward);
-		} else if (Input.GetKeyDown (Backward)) {
-			move (Backward);
-		} else if (Input.GetKeyDown (Left)) {
-			move (Left);
-		} else if (Input.GetKeyDown (Right)) {
-			move (Right);
-		} else {
-			stopMoving ();
+		if (Input.GetKeyDown (MyForward)) {
+			buttonsDown[0] = true;
+			//move (Forward);
 		}
+		if (Input.GetKeyDown (MyRight)) {
+			buttonsDown[1] = true;
+			//move (Right);
+		}
+		if (Input.GetKeyDown (MyBackward)) {
+			buttonsDown[2] = true;
+			//move (Backward);
+		}
+		if (Input.GetKeyDown (MyLeft)) {
+			buttonsDown[3] = true;
+			//move (Left);
+		}
+
+		if (Input.GetKeyUp (MyForward)) {
+			buttonsDown[0] = false;
+			//stopMoving ();
+		}
+		if (Input.GetKeyUp (MyRight)) {
+			buttonsDown[1] = false;
+			//stopMoving ();
+		}
+		if (Input.GetKeyUp (MyBackward)) {
+			buttonsDown[2] = false;
+			//stopMoving ();
+		}
+		if (Input.GetKeyUp (MyLeft)) {
+			buttonsDown[3] = false;
+			//stopMoving ();
+		}
+
+		Vector3 finalMoveTarget = new Vector3 (0, 0, 0);
+		//loop over buttonDown array and combine vectors into a big vector
+		for (int i = 0; i < 4; i++) {
+			if (buttonsDown [i] == true) {
+				Vector3 tempPoint = getPointInDirection (directionKeyCodes[i]);
+				finalMoveTarget += tempPoint;
+			}
+		}
+		Debug.Log (finalMoveTarget);
+		if (finalMoveTarget.x != 0 && finalMoveTarget.y != 0 && finalMoveTarget.z != 0) {
+			//when no buttons are being pressed, a moveTarget of (0,0,0) is passed in and
+			//the player tries to walk to that coodinate. This cancels that.
+			move (finalMoveTarget);
+		} else {
+			this.PlayerScript.setDesireToMove (false);
+		}
+
 	}
 
-	protected void move(KeyCode directionDesire) {
-		Vector3 directionToMove = this.getPointInDirection (directionDesire);
-		this.PlayerScript.setDesireToApproach (directionToMove, true);
+	protected void move(Vector3 moveTarget) {
+	//protected void move(KeyCode directionDesire) {
+		//Vector3 directionToMove = this.getPointInDirection (directionDesire);
+		//this.PlayerScript.setDesireToApproach (directionToMove, true);
+		this.PlayerScript.setDesireToApproach(moveTarget, true);
 	}
 
+	//unused method
 	protected void stopMoving() {
 		this.PlayerScript.setDesireToMove (false);
 	}
 	#endregion
 
-	protected Vector3 getPointInDirection(KeyCode direction) {
-		Vector3 endPoint = transform.forward;
 
-		if (direction == Forward) {
-			endPoint = transform.forward;
-		} else if (direction == Backward) {
-			endPoint = -1 * (transform.forward);
-		} else if (direction == Left) {
-			endPoint = -1 * (transform.right);
-		} else if (direction == Right) {
-			endPoint = transform.right;
+	//we are no longer gonna use this method
+	protected Vector3 getPointInDirection(KeyCode direction) {
+		Transform cameraTransform = this.transform.Find ("Camera");
+		Vector3 endPoint = cameraTransform.forward;
+
+		if (direction == MyForward) {
+			endPoint = cameraTransform.forward;
+		} else if (direction == MyBackward) {
+			endPoint = -1 * (cameraTransform.forward);
+		} else if (direction == MyLeft) {
+			endPoint = -1 * (cameraTransform.right);
+		} else if (direction == MyRight) {
+			endPoint = cameraTransform.right;
 		}
 
 		endPoint.y = transform.position.y;
