@@ -78,6 +78,85 @@ namespace com.stratodolphin.overworldrpg.Characters
 			}
 		}
 		#endregion
+
+		#region Inventory
+		/// <summary>
+		/// Getter for the UI canvas that allows user to go
+		/// to their Inventory
+		/// </summary>
+		/// <remarks>
+		/// I cache it so that, if it is disactive when it's hidden, it
+		/// can still be retreived.
+		/// </remarks>
+		private static InvUIViewModel _invUI;
+		public static InvUIViewModel InvUI
+		{
+			get {
+				if (_invUI != null) { return _invUI; }
+				InvUIViewModel ui = GameObject.Find("InvUICanvas").GetComponent<InvUIViewModel>();
+				_invUI = ui;
+				return _invUI;
+			}
+		}
+
+		/// <summary>
+		/// Shows or hides the Inventory UI Canvas.
+		/// </summary>
+		/// <param name="visibility"></param>
+		public static void toggleInvUIVisibility() {
+			if (InvUI.gameObject.activeSelf)
+			{
+				InvUI.hide();
+			} else
+			{
+				InvUI.show();
+			}
+		}
+		#endregion
+
+		#region Stats
+		/// <summary>
+		/// Getter for the UI canvas that allows user to go
+		/// to their Inventory
+		/// </summary>
+		/// <remarks>
+		/// I cache it so that, if it is disactive when it's hidden, it
+		/// can still be retreived.
+		/// </remarks>
+		private static StatsUIViewModel _statsUI;
+		public static StatsUIViewModel StatsUI
+		{
+			get {
+				if (_statsUI != null) { return _statsUI; }
+				StatsUIViewModel ui = GameObject.Find("StatsUICanvas").GetComponent<StatsUIViewModel>();
+				_statsUI = ui;
+				return _statsUI;
+			}
+		}
+
+		/// <summary>
+		/// Shows or hides the Inventory UI Canvas.
+		/// </summary>
+		/// <param name="visibility"></param>
+		public static void toggleStatsUIVisibility() {
+			if (StatsUI.gameObject.activeSelf)
+			{
+				StatsUI.hide();
+			} else
+			{
+				StatsUI.show();
+			}
+		}
+
+		public void refresh() {
+			_spawnUI = null;
+			_statsUI = null;
+			_pauseUI = null;
+			_invUI = null;
+			SpawnUI.initialize();
+			PauseUI.initialize ();
+		}
+		#endregion
 		// Use this for initialization
 		void Start () {
 			GameInfo.initialize ();

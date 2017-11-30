@@ -13,6 +13,11 @@ using System;
 /// </summary>
 public class EnemyAI : FeistyGameCharacter {
 
+
+	//anthony's variables
+	public int swingFrames = 0; //number of frames since begun swing
+	public const int swingFinish = 90;
+
     #region Constant Variables
     /// <summary>
     /// Integer that designates that this enemy is of the type
@@ -115,7 +120,6 @@ public class EnemyAI : FeistyGameCharacter {
 		this.setDesireToFace (false);
 		this.setDesireToMove (false);
 		this.setDesireStopSwinging ();
-		this.setDesireStopFiringWeapon ();
 	}
 
     /// <summary>
@@ -126,13 +130,14 @@ public class EnemyAI : FeistyGameCharacter {
     /// at him (I haven't implemented archery yet).
     /// </summary>
     protected virtual void think() {
-		this.resetDesires ();
+		//this.resetDesires ();
 		//Debug.Log ("left: " + this._leftHandInventory.ToString () + " but has range: " + this._leftHandInventory.hasItemType (Storable.TYPE_RANGE).ToString());
 		this.thinkAsMelee();
 		if (GameInfo.MainPlayer == null) { return; }
-		this.evaluateRulesForSightOfTarget (this._targetEnemy);
+		//this.evaluateRulesForSightOfTarget (this._targetEnemy);
 	}
 
+	/*
     /// <summary>
     /// <para>
     /// This AI will determine what to do assuming it wants to take
@@ -160,7 +165,7 @@ public class EnemyAI : FeistyGameCharacter {
         {
 			this.approachTarget ();
         }
-    }
+    }*/
 
     /// <summary>
     /// <para>
@@ -171,24 +176,41 @@ public class EnemyAI : FeistyGameCharacter {
     /// </summary>
     protected virtual void thinkAsMelee()
     {
-		if (GameInfo.MainPlayer == null) {
-			return;
+		//phase of swinging
+		if (this.swingFrames > 0 && this.swingFrames < 50) {//if we are currently in a swinging motion
+			swingFrames += 1;
+			if (swingFrames >= swingFinish) {
+				swingFrames = 0;
+			}
+			//phase of just standing still
+		} else if (this.swingFrames >= 50 && this.swingFrames < swingFinish) {
+			this.setDesireStopSwinging ();
+			swingFrames += 1;
+			if (swingFrames >= swingFinish) {
+				swingFrames = 0;
+			}
+			//phase of back to normal
+		} else {
+			if (GameInfo.MainPlayer == null) {
+				return;
+			}
+
+			this.setTargetEnemy(GameInfo.MainPlayer.gameObject);
+
+			//Debug.Log(this.canSeeObject(this._targetEnemy));
+			//Debug.Log(this.isNextToObject(this._targetEnemy));
+			if (this.canSeeObject (this._targetEnemy))
+				this.approachTarget ();
+
+			if (this.isNextToObject(this._targetEnemy))
+			{
+				this.setDesireToSwing();
+				this.swingFrames = 1;
+				this.setDesireToMove(false);
+			}
+			else
+				this.setDesireStopSwinging();
 		}
-
-		this.setTargetEnemy(GameInfo.MainPlayer.gameObject);
-
-		//Debug.Log(this.canSeeObject(this._targetEnemy));
-		//Debug.Log(this.isNextToObject(this._targetEnemy));
-		if (this.canSeeObject (this._targetEnemy))
-			this.approachTarget ();
-
-        if (this.isNextToObject(this._targetEnemy))
-        {
-            this.setDesireToSwing(this._targetEnemy);
-            this.setDesireToMove(false);
-        }
-        else
-            this.setDesireStopSwinging();
     }
 
 	#region Pathfinding
@@ -251,6 +273,7 @@ public class EnemyAI : FeistyGameCharacter {
     protected override void Start () {
         base.Start();
 		this.loadInventory ();
+		this.MovementSpeed = 2;
 	}
 	
 	// Update is called once per frame

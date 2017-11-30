@@ -117,12 +117,15 @@ public class GamePlayer : FeistyGameCharacter
         {
             //Debug.Log ("regular inventory.");
             this._inventory.add(storableScript);
-            storableScript.ApplyActionsOnPickup(this);
+            //storableScript.ApplyActionsOnPickup(this);
         }
     }
 
-    public void showInventory() {
-		uiMessageString = "<color=white>" + this._inventory.ToString () + "</color>";
+	public string showInventory() {
+		
+		//uiMessageString = "<color=white>" + this._inventory.ToString () + "</color>";
+		string mes = "<color=white> " + this._inventory.ToString () + " </color>";
+		return mes;
 	}
 
 	void OnTriggerEnter(Collider otherObjective)
