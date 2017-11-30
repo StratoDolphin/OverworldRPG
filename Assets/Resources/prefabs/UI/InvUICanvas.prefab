@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 223536600395268792}
   - component: {fileID: 114647645996353388}
   - component: {fileID: 114538353739683710}
+  - component: {fileID: 114309796681409234}
   m_Layer: 5
   m_Name: InvUICanvas
   m_TagString: Untagged
@@ -29,6 +30,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &114309796681409234
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1149796500510248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a028aa8331a4814b94e56f761429f7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InvSelectionButtonPrefab: {fileID: 1774230464679640, guid: 9f6814d2f7d1d984e913d63001d71ccf,
+    type: 2}
 --- !u!114 &114538353739683710
 MonoBehaviour:
   m_ObjectHideFlags: 1

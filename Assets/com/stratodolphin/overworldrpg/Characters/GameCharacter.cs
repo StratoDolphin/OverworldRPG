@@ -537,7 +537,7 @@ public abstract class GameCharacter : MonoBehaviour
 			return;
 		}
 
-		if (this is GamePlayer) Debug.Log ("Switching to: " + prefab.tag);
+		//if (this is GamePlayer) Debug.Log ("Switching to: " + prefab.tag);
 		// ==== Health Bar Preservation (Preserve the environment! We're liberals!
 		// Save health bar
 		GameObject healthBar = this.GetComponentInChildren<HealthBar>().gameObject;
