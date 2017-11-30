@@ -76,16 +76,18 @@ public class MainPlayerControls : MonoBehaviour
 			//stopMoving ();
 		}
 
-		Vector3 finalMoveTarget = new Vector3 (0, 0, 0);
+		Vector3 finalMoveTarget = Vector3.zero;
+		bool movementWanted = false;
 		//loop over buttonDown array and combine vectors into a big vector
 		for (int i = 0; i < 4; i++) {
 			if (buttonsDown [i] == true) {
-				Vector3 tempPoint = getPointInDirection (directionKeyCodes[i]);
+				Vector3 tempPoint = getPointInDirection (directionKeyCodes [i]);
 				finalMoveTarget += tempPoint;
+				movementWanted = true;
 			}
 		}
 		Debug.Log (finalMoveTarget);
-		if (finalMoveTarget.x != 0 && finalMoveTarget.y != 0 && finalMoveTarget.z != 0) {
+		if (movementWanted) {
 			//when no buttons are being pressed, a moveTarget of (0,0,0) is passed in and
 			//the player tries to walk to that coodinate. This cancels that.
 			move (finalMoveTarget);
