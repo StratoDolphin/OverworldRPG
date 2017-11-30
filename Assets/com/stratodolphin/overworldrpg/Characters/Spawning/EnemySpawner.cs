@@ -17,7 +17,7 @@ public class EnemySpawner : MonoBehaviour
 	/// If difficulty is ever implemented, this can be incremented on higher levels.
 	/// </para>
 	/// </summary>
-	protected int _maxNumEnemies = 4;
+	public int _maxNumEnemies = 4;
 
 	/// <summary>
 	/// The last time that an enemy was spawned by this spawner. This will be used
@@ -175,6 +175,7 @@ public class EnemySpawner : MonoBehaviour
 
 	protected void spawnInitial() {
 		for (int i = 0; i < this._maxNumEnemies; i++) {
+			Debug.Log ("Spawn");
 			if (!this.isFull()) this.spawnEnemy ();
 		}
 	}
