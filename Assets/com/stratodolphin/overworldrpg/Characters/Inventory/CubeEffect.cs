@@ -31,9 +31,7 @@ namespace com.stratodolphin.overworldrpg.Characters.Inventory
 		/// <param name="character"></param>
 		public void Use(GameCharacter character)
 		{
-			Debug.Log ("Not Applied!!!");
 			this.Apply(character);
-			Debug.Log ("Applied!!!");
 			Destroy(this.gameObject);
 		}
 

@@ -41,10 +41,9 @@ namespace com.stratodolphin.overworldrpg.Characters.UI
 			//get the toString of the GamePlayer, loop through it, and create buttons for them
 			string data = GameInfo.MainPlayer.showInventory();
 			string[] inv = data.Split (' ');
-
 			for (int i = 1; i < inv.Length - 1; i++) {
 				GameObject item = createButtonSelection (this.InvSelectionButtonPrefab, inv[i]);
-				item.GetComponent<Button>().onClick.AddListener(() => { onClickInvGUI(inv[i]); });
+				item.GetComponent<Button>().onClick.AddListener(() => { onClickInvGUI(inv[i - 1]); });
 			}
 		}
 
@@ -149,7 +148,6 @@ namespace com.stratodolphin.overworldrpg.Characters.UI
 				GameLogic.PauseUI.show ();
 			} else {
 				//call an effect
-				Debug.Log("Calling Effect");
 				GameInfo.MainPlayer._inventory.getItemEffect(name);
 			}
 			GameLogic.InvUI.hide();

@@ -201,16 +201,14 @@ namespace com.stratodolphin.overworldrpg.Characters.Inventory
 		/// <returns></returns>
 		public void getItemEffect(string name)
 		{
-			Debug.Log ("In getItemEffect");
 			Storable it;
 
 			for (int i = 0; i < this.all ().Count; i++) {
-				Debug.Log ("In getItemEffect2");
-				if (this.all () [i].Name.Equals (name)) {
-					Debug.Log ("In getItemEffect2");
-					this.all () [i].EffectApplierAccessor.Use (this._owner);
-					break;
+				if (name.Contains (this.all () [i].Name)) {
+					this.all () [i].EffectApplierAccessor.Use(GameInfo.MainPlayer);
 				}
+
+
 			}
 
 		}
