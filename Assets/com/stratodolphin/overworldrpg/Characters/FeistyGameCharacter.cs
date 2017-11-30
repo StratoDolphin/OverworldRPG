@@ -93,14 +93,14 @@ public abstract class FeistyGameCharacter : GameCharacter
     /// </summary>
     /// <param name="target">Target.</param>
     protected void animateSwing() {
-		Debug.Log ("Swinging");
+		//Debug.Log ("Swinging");
 
 		if (this is EnemyAI) {
 			//Debug.Log ("Switching: " + GameInfo.PrefabEnemySwing.ToString ());
 			this.switchAnimationModel (GameInfo.PrefabEnemySwing);
 		}
 		else if (this is GamePlayer)
-			Debug.Log ("Switching: " + GameInfo.PrefabMainPlayerSwing.ToString ());
+			//Debug.Log ("Switching: " + GameInfo.PrefabMainPlayerSwing.ToString ());
 			this.switchAnimationModel (GameInfo.PrefabMainPlayerSwing);
 	}
 

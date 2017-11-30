@@ -19,8 +19,9 @@ public class PlayerSwordScript : MonoBehaviour {
 	void OnTriggerEnter(Collider other) {
 		Debug.Log ("Sword hit!");
 		Debug.Log ("ON!!!!");
-		Debug.Log (other);
-		enemy = other.transform.parent.gameObject;
+		Debug.Log ("object: " + other.ToString());
+		Debug.Log ("other: " + other.tag);
+		enemy = other.transform.gameObject;
 		if (enemy.tag == "AI") {
 			enemyScript = enemy.GetComponent<EnemyAI> ();
 			enemyScript.decreaseHealth ((float)10.0);
