@@ -21,7 +21,7 @@ public abstract class FeistyGameCharacter : GameCharacter
 	/// swing at anything.
 	/// </para>
 	/// </summary>
-	protected bool _wantsToSwing = false;
+	public bool _wantsToSwing = false;
 
     /*
 	/// <summary>
@@ -45,6 +45,7 @@ public abstract class FeistyGameCharacter : GameCharacter
     /// <param name="target">Target.</param>
 	public void setDesireToSwing() {
 		this._wantsToSwing = true;
+		this._canWalk = false;
 	}
 
 	/// <summary>
@@ -52,6 +53,7 @@ public abstract class FeistyGameCharacter : GameCharacter
 	/// </summary>
 	public void setDesireStopSwinging() {
 		this._wantsToSwing = false;
+		this._canWalk = true;
 	}
 
 	/*
@@ -129,10 +131,15 @@ public abstract class FeistyGameCharacter : GameCharacter
     /// </para>
     /// </summary>
     protected void executeSwingDesire() {
-		if (this._wantsToSwing)
+		if (this._wantsToSwing) {
+			this._canWalk = false;
 			this.animateSwing ();
-		else
+			return;
+		}
+
+		if (this.getBody ().tag == "Swing")
 			this.animateStand ();
+		this._canWalk = true;
 	}
 
 	/*
