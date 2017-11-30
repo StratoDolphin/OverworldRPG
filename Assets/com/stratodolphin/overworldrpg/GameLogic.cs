@@ -147,6 +147,15 @@ namespace com.stratodolphin.overworldrpg.Characters
 				StatsUI.show();
 			}
 		}
+
+		public void refresh() {
+			_spawnUI = null;
+			_statsUI = null;
+			_pauseUI = null;
+			_invUI = null;
+			SpawnUI.initialize();
+			PauseUI.initialize ();
+		}
 		#endregion
 		// Use this for initialization
 		void Start () {

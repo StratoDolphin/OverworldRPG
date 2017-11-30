@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using com.stratodolphin.overworldrpg.Characters;
 
 public class titleToGame : MonoBehaviour {
 
@@ -17,5 +18,6 @@ public class titleToGame : MonoBehaviour {
 
 	public void change() {
 		SceneManager.LoadScene("TestScene");
+		GameInfo.refresh ();
 	}
 }
