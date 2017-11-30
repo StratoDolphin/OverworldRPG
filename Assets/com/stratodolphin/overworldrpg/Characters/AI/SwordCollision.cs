@@ -21,8 +21,8 @@ public class SwordCollision : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider other) {
-		Debug.Log ("Sword hit!");
-		Debug.Log (other);
+		//Debug.Log ("Sword hit!");
+		//Debug.Log (other);
 		if(other.tag == "Player")
 			playerScript.decreaseHealth ((float)10.0);
 		//theMainPlayer.decreaseHealth (1.0);
