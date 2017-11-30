@@ -10,6 +10,13 @@ TagManager:
   - Bonfire
   - EnemyBody
   - MainPlayerBody
+  - Undefined
+  - Dead
+  - PrepWalk
+  - Still
+  - PrepMelee
+  - Swing
+  - Walk
   layers:
   - Default
   - TransparentFX
