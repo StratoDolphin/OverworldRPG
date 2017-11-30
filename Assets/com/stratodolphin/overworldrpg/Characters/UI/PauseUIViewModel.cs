@@ -73,6 +73,7 @@ namespace com.stratodolphin.overworldrpg.Characters.UI
 				GameLogic.InvUI.initialize();
 			} else if (name.Equals ("Stats")) {
 				//have to make a stats GUI and show it
+				GameLogic.StatsUI.initialize();
 			} else if (name.Equals ("Quit")) {
 				//NOT Working
 				SceneManager.LoadScene("TitleScreen");
