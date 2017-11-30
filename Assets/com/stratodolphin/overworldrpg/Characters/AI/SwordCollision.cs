@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,6 +20,6 @@ public class SwordCollision : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other) {
 		Debug.Log ("Sword hit!");
-		theMainPlayer.decreaseHealth (1.0);
+		//theMainPlayer.decreaseHealth (1.0);
 	}
 }
