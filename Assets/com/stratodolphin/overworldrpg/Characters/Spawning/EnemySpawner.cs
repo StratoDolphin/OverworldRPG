@@ -183,7 +183,7 @@ public class EnemySpawner : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		this.spawnInitial ();
+		//this.spawnInitial ();
 	}
 	
 	// Update is called once per frame
